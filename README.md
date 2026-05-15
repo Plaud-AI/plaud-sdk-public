@@ -23,6 +23,7 @@ Plaud SDK enables B2B partners to integrate Plaud recording devices into their o
 
 - **`sdk/`** — Precompiled SDK binaries (iOS `.framework` + Android `.aar`)
 - **`plaud-template-app/`** — A complete iOS reference app demonstrating every SDK feature
+- **`backend-templates/`** — One-click token broker servers (Vercel / Cloudflare / Val Town) that hold your `client_id` + `secret_key` server-side. **Use these for production.**
 
 > **Coming soon:** Android Template App and demo video walkthrough.
 
@@ -41,54 +42,75 @@ plaud-sdk-public/
 ├── plaud-template-app/
 │   └── ios/                              # iOS Template App
 │       ├── project.yml                   # Xcodegen config
-│       ├── PartnerConfig.xcconfig        # SDK credentials (edit this!)
-│       └── PlaudTemplateApp/             # Source code
+│       ├── PartnerConfig.xcconfig        # SDK credentials
+│       └── PlaudTemplateApp/             # Source code (incl. BackendTokenProvider)
+├── backend-templates/                    # Token broker server templates
+│   ├── README.md                         # Why & contract
+│   ├── val-town/                         # 30-second browser-only deploy
+│   ├── vercel/                           # ⭐ 1-click button, recommended
+│   └── cloudflare-worker/                # Global edge, max free tier
 ├── LICENSE
 └── README.md
 ```
 
 ## Quick Start
 
-### Prerequisites
+Pick your path based on what you're building.
+
+### 🚀 Path A — Demo Mode (3 minutes, no backend)
+
+For evaluating the SDK or running the bundled demo. **Not for distribution** — the test token is hardcoded into the app and will be extractable from the binary.
+
+1. Install prerequisites:
+   ```bash
+   brew install xcodegen
+   ```
+2. Generate Xcode project and run:
+   ```bash
+   cd plaud-template-app/ios
+   xcodegen generate
+   open PlaudTemplateApp.xcodeproj
+   ```
+3. Connect a physical iPhone (arm64 only — simulator is not supported), select it as destination, and ⌘R.
+
+The app boots with a Plaud-issued test token in `PartnerConfig.local.xcconfig`. Pair a NotePro / NotePinS to record and transcribe.
+
+### 🛠 Path B — Production (10 minutes, deploy a token broker)
+
+For shipping a real app. Your `client_id` + `secret_key` stay on a server you control; your app only ever sees short-lived per-user tokens.
+
+1. **Deploy a broker.** Pick one and follow its README:
+
+   | Template | Deploy in | Why |
+   |---|---|---|
+   | [`backend-templates/vercel/`](./backend-templates/vercel/) ⭐ | 2 min (1-click button) | Recommended — zero CLI, mainstream platform |
+   | [`backend-templates/val-town/`](./backend-templates/val-town/) | 30 sec (browser paste) | Simplest possible — no install, no GitHub |
+   | [`backend-templates/cloudflare-worker/`](./backend-templates/cloudflare-worker/) | 2 min (button) / 5 min (CLI) | Largest free tier (100k req/**day**), global edge |
+
+2. **Configure the iOS app.** Edit `plaud-template-app/ios/PartnerConfig.local.xcconfig`:
+   ```xcconfig
+   BACKEND_TOKEN_ENDPOINT = https://your-broker.example.com/issue-token
+   APP_SHARED_SECRET = <same value you set in the broker>
+   ```
+
+3. **Build & run** (same as Path A steps 2-3). The template app detects the broker config and auto-fetches per-user tokens via [`BackendTokenProvider`](./plaud-template-app/ios/PlaudTemplateApp/Managers/BackendTokenProvider.swift).
+
+### Common Prerequisites
 
 - Xcode 15.0+
 - iOS 14.0+ deployment target
 - [Xcodegen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
-- A Plaud partner account with User Access Token
+- A physical iOS device (SDK frameworks are arm64-only — simulator not supported)
+- A Plaud partner account from the Developer Console
 
-### 1. Configure Credentials
+### Personalize Bundle ID (if signing with Personal Team)
 
-Edit `plaud-template-app/ios/PartnerConfig.xcconfig`:
-
-```xcconfig
-# Required for SDK initialization
-USER_ACCESS_TOKEN = your-jwt-token
-
-# Required for Transcription API (application layer, not SDK)
-PLAUD_CLIENT_ID = your-client-id
-PLAUD_SECRET_KEY = your-secret-key
+If you're not a Plaud team member, you can't sign apps under `com.plaud.*`. Edit `plaud-template-app/ios/project.yml`:
+```yaml
+options:
+  bundleIdPrefix: com.yourcompany    # was: com.plaud
 ```
-
-> **Tip:** Create `plaud-template-app/ios/PartnerConfig.local.xcconfig` with your real credentials — it's gitignored and will override the placeholder values.
-
-### 2. Update Project Settings
-
-Edit `plaud-template-app/ios/project.yml`:
-- Change `bundleIdPrefix: com.plaud` to your own Bundle ID prefix (e.g., `com.yourcompany`)
-- Xcode will auto-assign your Development Team on first build
-
-### 3. Generate Xcode Project
-
-```bash
-cd plaud-template-app/ios
-xcodegen generate
-```
-
-### 4. Build & Run
-
-Open `plaud-template-app/ios/PlaudTemplateApp.xcodeproj` in Xcode, select your physical device, and run.
-
-> **Note:** SDK frameworks are compiled for `arm64` (physical devices only). Simulator is not supported.
+Xcode will auto-assign your Development Team on first build.
 
 ---
 
