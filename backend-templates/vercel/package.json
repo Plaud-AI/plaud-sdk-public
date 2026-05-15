@@ -1,0 +1,9 @@
+{
+  "name": "plaud-token-broker-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plaud SDK token broker — Vercel Edge Function template",
+  "engines": {
+    "node": ">=20"
+  }
+}

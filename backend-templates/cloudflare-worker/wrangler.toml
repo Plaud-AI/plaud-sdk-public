@@ -1,0 +1,14 @@
+name = "plaud-token-broker"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+# Local dev: copy `.dev.vars.example` to `.dev.vars` and fill in real values.
+# Production: set these as secrets via:
+#   wrangler secret put PLAUD_CLIENT_ID
+#   wrangler secret put PLAUD_SECRET_KEY
+#   wrangler secret put MY_APP_SHARED_SECRET
+#
+# Do NOT put real secrets in this file — it is committed to git.
+
+[observability]
+enabled = true

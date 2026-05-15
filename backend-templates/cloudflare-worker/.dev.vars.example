@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local dev with `wrangler dev`. NEVER commit a real .dev.vars.
+# In production, set these as Cloudflare secrets via `wrangler secret put`.
+
+PLAUD_CLIENT_ID=your-client-id-from-plaud-console
+PLAUD_SECRET_KEY=your-secret-key-from-plaud-console
+MY_APP_SHARED_SECRET=generate-with-openssl-rand-hex-32
