@@ -71,8 +71,14 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
     /// Add Device 流程中禁用自动重连
     var suppressAutoReconnect = false
 
-    /// User Access Token — prefers UserAccessToken, falls back to legacy PartnerToken
+    /// User Access Token. In priority order:
+    /// 1. Token cached from a configured backend broker (production path).
+    /// 2. `UserAccessToken` from Info.plist (legacy / demo path).
+    /// 3. `PartnerToken` from Info.plist (deprecated alias).
     var userAccessToken: String {
+        if let cached = BackendTokenProvider.shared.currentCachedToken, !cached.isEmpty {
+            return cached
+        }
         if let token = Bundle.main.object(forInfoDictionaryKey: "UserAccessToken") as? String, !token.isEmpty {
             return token
         }
@@ -91,12 +97,36 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
 
     private let customDomain = "platform-us.plaud.ai"
 
+    /// Initializes the Plaud SDK. Two paths:
+    ///
+    /// - **Backend mode** (recommended for production): if `BackendTokenEndpoint`
+    ///   and `AppSharedSecret` are set in Info.plist, fetches a per-user token
+    ///   from the configured token broker before initializing the SDK. The
+    ///   broker holds `client_id` / `secret_key` server-side — see
+    ///   `backend-templates/README.md`. SDK init completes asynchronously.
+    /// - **Demo mode** (fallback): if no broker is configured, uses the
+    ///   `UserAccessToken` baked into Info.plist. Suitable for the bundled
+    ///   demo only — DO NOT distribute apps with a hardcoded token.
     func configure(userId: String) {
         RecordingStore.shared.userId = userId
-        PlaudDeviceAgent.shared.initSDK(
-            userAccessToken: userAccessToken,
-            customDomain: customDomain
-        )
+
+        if BackendTokenProvider.shared.isConfigured {
+            BackendTokenProvider.shared.fetchToken(userId: userId) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let token):
+                    PlaudDeviceAgent.shared.initSDK(userAccessToken: token, customDomain: self.customDomain)
+                case .failure(let err):
+                    print("[BackendTokenProvider] Fetch failed (\(err.localizedDescription)) — falling back to Info.plist token")
+                    PlaudDeviceAgent.shared.initSDK(userAccessToken: self.userAccessToken, customDomain: self.customDomain)
+                }
+            }
+        } else {
+            PlaudDeviceAgent.shared.initSDK(
+                userAccessToken: userAccessToken,
+                customDomain: customDomain
+            )
+        }
     }
 
     // MARK: - Scanning

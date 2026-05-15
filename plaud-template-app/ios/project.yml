@@ -41,6 +41,10 @@ targets:
       properties:
         UILaunchScreen:
           UIColorName: "systemBackground"
+        # Backend token broker (production-safe; see backend-templates/)
+        BackendTokenEndpoint: $(BACKEND_TOKEN_ENDPOINT)
+        AppSharedSecret: $(APP_SHARED_SECRET)
+        # Legacy hardcoded credentials (demo only; see PartnerConfig.xcconfig)
         UserAccessToken: $(USER_ACCESS_TOKEN)
         PartnerToken: $(PARTNER_TOKEN)
         PlaudClientId: $(PLAUD_CLIENT_ID)

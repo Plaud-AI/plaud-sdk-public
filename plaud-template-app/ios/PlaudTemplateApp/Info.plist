@@ -18,6 +18,10 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>AppSharedSecret</key>
+	<string>$(APP_SHARED_SECRET)</string>
+	<key>BackendTokenEndpoint</key>
+	<string>$(BACKEND_TOKEN_ENDPOINT)</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Bluetooth is required to connect to your Plaud recording device.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>

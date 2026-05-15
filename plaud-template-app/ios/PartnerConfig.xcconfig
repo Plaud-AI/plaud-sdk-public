@@ -2,19 +2,37 @@
 // Plaud SDK Configuration
 //
 // Create "PartnerConfig.local.xcconfig" (git-ignored) with your
-// real credentials. It will override the placeholders below.
-//
-// Or edit the values below directly (not recommended for git).
+// real values. It will override the placeholders below.
 // ============================================================
+//
+// >>> RECOMMENDED: backend-broker mode (production-safe)
+//
+// Deploy a token broker from `backend-templates/` (Vercel / Cloudflare /
+// Val Town — all 1-click). The broker holds your CLIENT_ID + SECRET_KEY
+// server-side. Your app only ever sees short-lived per-user tokens.
+//
+// In PartnerConfig.local.xcconfig set:
+//   BACKEND_TOKEN_ENDPOINT = https://your-broker.example.com/issue-token
+//   APP_SHARED_SECRET      = <openssl rand -hex 32>
+BACKEND_TOKEN_ENDPOINT =
+APP_SHARED_SECRET =
 
-// User Access Token (required for SDK device authentication and file upload)
+// >>> LEGACY: hardcoded-token mode (demo only)
+//
+// USER_ACCESS_TOKEN below ships with a Plaud-issued test credential so the
+// template app boots out of the box. NEVER ship a distributed app with a
+// hardcoded token — it can be extracted from the binary in seconds.
 USER_ACCESS_TOKEN = YOUR_USER_ACCESS_TOKEN_HERE
 
-// Client ID & Secret Key (required for transcription API)
+// >>> LEGACY: client-level secrets (server-side only — see backend-templates/)
+//
+// These fields exist only for backward compatibility with earlier versions
+// of the template app. They MUST be removed from your distributed app.
+// Move them into your backend broker's environment variables instead.
 PLAUD_CLIENT_ID = YOUR_CLIENT_ID_HERE
 PLAUD_SECRET_KEY = YOUR_SECRET_KEY_HERE
 
-// [Deprecated] Backward compatibility alias
+// [Deprecated] Backward compatibility alias for USER_ACCESS_TOKEN
 PARTNER_TOKEN = $(USER_ACCESS_TOKEN)
 
 // Import local overrides (must be LAST to take precedence)

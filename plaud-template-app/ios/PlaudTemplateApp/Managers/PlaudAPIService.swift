@@ -32,8 +32,13 @@ final class PlaudAPIService {
         Bundle.main.object(forInfoDictionaryKey: "PlaudSecretKey") as? String ?? ""
     }
 
-    /// User Access Token (for SDK endpoints and file upload)
+    /// User Access Token (for SDK endpoints and file upload).
+    /// Prefers the cached broker token (production), falls back to Info.plist (demo).
+    /// See `BackendTokenProvider` for the broker integration.
     var userAccessToken: String {
+        if let cached = BackendTokenProvider.shared.currentCachedToken, !cached.isEmpty {
+            return cached
+        }
         if let token = Bundle.main.object(forInfoDictionaryKey: "UserAccessToken") as? String, !token.isEmpty {
             return token
         }
