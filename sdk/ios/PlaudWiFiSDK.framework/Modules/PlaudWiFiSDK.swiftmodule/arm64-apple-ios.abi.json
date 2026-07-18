@@ -1,0 +1,4684 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "PlaudWiFiSDK",
+    "printedName": "PlaudWiFiSDK",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "PenBleSDK",
+        "printedName": "PenBleSDK",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Agent",
+        "printedName": "Agent",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Agent",
+                "printedName": "PlaudWiFiSDK.Agent",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(cpy)shared",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC6sharedACvpZ",
+            "moduleName": "PlaudWiFiSDK",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Agent",
+                    "printedName": "PlaudWiFiSDK.Agent",
+                    "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(cm)shared",
+                "mangledName": "$s12PlaudWiFiSDK5AgentC6sharedACvgZ",
+                "moduleName": "PlaudWiFiSDK",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final",
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "isDeviceConnect",
+            "printedName": "isDeviceConnect()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)isDeviceConnect",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC15isDeviceConnectSbyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "bleDevice",
+            "printedName": "bleDevice()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "PlaudBleSDK.BleDevice?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BleDevice",
+                    "printedName": "PlaudBleSDK.BleDevice",
+                    "usr": "c:@M@PenBleSDK@objc(cs)BleDevice"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)bleDevice",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC9bleDevice0a3BleD00hG0CSgyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getFileList",
+            "printedName": "getFileList(_:_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)getFileList:::",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC11getFileListyySi_SiSbtF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "syncFile",
+            "printedName": "syncFile(_:_:_:_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)syncFile:::::",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC8syncFileyySi_S2iSbSitF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "stopSyncFile",
+            "printedName": "stopSyncFile(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)stopSyncFile::",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC12stopSyncFileyySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "deleteFile",
+            "printedName": "deleteFile(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)deleteFile::",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC10deleteFileyySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sessionId",
+            "printedName": "sessionId()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)sessionId",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC9sessionIdSiyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isDownloading",
+            "printedName": "isDownloading()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)isDownloading",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC13isDownloadingSbyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isRecording",
+            "printedName": "isRecording()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent(im)isRecording",
+            "mangledName": "$s12PlaudWiFiSDK5AgentC11isRecordingSbyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@PlaudWiFiSDK@objc(cs)Agent",
+        "mangledName": "$s12PlaudWiFiSDK5AgentC",
+        "moduleName": "PlaudWiFiSDK",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "SystemConfiguration",
+        "printedName": "SystemConfiguration",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "NetworkReachabilityManager",
+        "printedName": "NetworkReachabilityManager",
+        "children": [
+          {
+            "kind": "TypeDecl",
+            "name": "NetworkReachabilityStatus",
+            "printedName": "NetworkReachabilityStatus",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "unknown",
+                "printedName": "unknown",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus.Type) -> PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "NetworkReachabilityStatus",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                        "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "NetworkReachabilityStatus",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO7unknownyA2EmF",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO7unknownyA2EmF",
+                "moduleName": "PlaudWiFiSDK"
+              },
+              {
+                "kind": "Var",
+                "name": "notReachable",
+                "printedName": "notReachable",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus.Type) -> PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "NetworkReachabilityStatus",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                        "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "NetworkReachabilityStatus",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO12notReachableyA2EmF",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO12notReachableyA2EmF",
+                "moduleName": "PlaudWiFiSDK"
+              },
+              {
+                "kind": "Var",
+                "name": "reachable",
+                "printedName": "reachable",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus.Type) -> (PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType) -> PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType) -> PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "NetworkReachabilityStatus",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "ConnectionType",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "NetworkReachabilityStatus",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO9reachableyAeC14ConnectionTypeOcAEmF",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO9reachableyAeC14ConnectionTypeOcAEmF",
+                "moduleName": "PlaudWiFiSDK"
+              }
+            ],
+            "declKind": "Enum",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Equatable",
+                "printedName": "Equatable",
+                "usr": "s:SQ",
+                "mangledName": "$sSQ"
+              }
+            ]
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "ConnectionType",
+            "printedName": "ConnectionType",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "ethernetOrWiFi",
+                "printedName": "ethernetOrWiFi",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType.Type) -> PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ConnectionType",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                        "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "ConnectionType",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO010ethernetOrbC0yA2EmF",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO010ethernetOrbC0yA2EmF",
+                "moduleName": "PlaudWiFiSDK"
+              },
+              {
+                "kind": "Var",
+                "name": "wwan",
+                "printedName": "wwan",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType.Type) -> PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ConnectionType",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                        "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "ConnectionType",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO4wwanyA2EmF",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO4wwanyA2EmF",
+                "moduleName": "PlaudWiFiSDK"
+              },
+              {
+                "kind": "Function",
+                "name": "==",
+                "printedName": "==(_:_:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ConnectionType",
+                    "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                    "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ConnectionType",
+                    "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType",
+                    "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO2eeoiySbAE_AEtFZ",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO2eeoiySbAE_AEtFZ",
+                "moduleName": "PlaudWiFiSDK",
+                "static": true,
+                "implicit": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Var",
+                "name": "hashValue",
+                "printedName": "hashValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO9hashValueSivp",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO9hashValueSivp",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO9hashValueSivg",
+                    "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO9hashValueSivg",
+                    "moduleName": "PlaudWiFiSDK",
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Function",
+                "name": "hash",
+                "printedName": "hash(into:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Hasher",
+                    "printedName": "Swift.Hasher",
+                    "paramValueOwnership": "InOut",
+                    "usr": "s:s6HasherV"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO4hash4intoys6HasherVz_tF",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO4hash4intoys6HasherVz_tF",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "funcSelfKind": "NonMutating"
+              }
+            ],
+            "declKind": "Enum",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC14ConnectionTypeO",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Equatable",
+                "printedName": "Equatable",
+                "usr": "s:SQ",
+                "mangledName": "$sSQ"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Hashable",
+                "printedName": "Hashable",
+                "usr": "s:SH",
+                "mangledName": "$sSH"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isReachable",
+            "printedName": "isReachable",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC11isReachableSbvp",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC11isReachableSbvp",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC11isReachableSbvg",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC11isReachableSbvg",
+                "moduleName": "PlaudWiFiSDK",
+                "isOpen": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isReachableOnWWAN",
+            "printedName": "isReachableOnWWAN",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC17isReachableOnWWANSbvp",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC17isReachableOnWWANSbvp",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC17isReachableOnWWANSbvg",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC17isReachableOnWWANSbvg",
+                "moduleName": "PlaudWiFiSDK",
+                "isOpen": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isReachableOnEthernetOrWiFi",
+            "printedName": "isReachableOnEthernetOrWiFi",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC023isReachableOnEthernetOrbC0Sbvp",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC023isReachableOnEthernetOrbC0Sbvp",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC023isReachableOnEthernetOrbC0Sbvg",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC023isReachableOnEthernetOrbC0Sbvg",
+                "moduleName": "PlaudWiFiSDK",
+                "isOpen": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "networkReachabilityStatus",
+            "printedName": "networkReachabilityStatus",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NetworkReachabilityStatus",
+                "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC07networkF6StatusAC0efI0Ovp",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC07networkF6StatusAC0efI0Ovp",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NetworkReachabilityStatus",
+                    "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                    "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC07networkF6StatusAC0efI0Ovg",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC07networkF6StatusAC0efI0Ovg",
+                "moduleName": "PlaudWiFiSDK",
+                "isOpen": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "listenerQueue",
+            "printedName": "listenerQueue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "DispatchQueue",
+                "printedName": "Dispatch.DispatchQueue",
+                "usr": "c:objc(cs)OS_dispatch_queue"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13listenerQueueSo17OS_dispatch_queueCvp",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13listenerQueueSo17OS_dispatch_queueCvp",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DispatchQueue",
+                    "printedName": "Dispatch.DispatchQueue",
+                    "usr": "c:objc(cs)OS_dispatch_queue"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13listenerQueueSo17OS_dispatch_queueCvg",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13listenerQueueSo17OS_dispatch_queueCvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DispatchQueue",
+                    "printedName": "Dispatch.DispatchQueue",
+                    "usr": "c:objc(cs)OS_dispatch_queue"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13listenerQueueSo17OS_dispatch_queueCvs",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13listenerQueueSo17OS_dispatch_queueCvs",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13listenerQueueSo17OS_dispatch_queueCvM",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13listenerQueueSo17OS_dispatch_queueCvM",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "listener",
+            "printedName": "listener",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "NetworkReachabilityStatus",
+                        "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                        "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC8listeneryAC0eF6StatusOcSgvp",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC8listeneryAC0eF6StatusOcSgvp",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "NetworkReachabilityStatus",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC8listeneryAC0eF6StatusOcSgvg",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC8listeneryAC0eF6StatusOcSgvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "NetworkReachabilityStatus",
+                            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+                            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC8listeneryAC0eF6StatusOcSgvs",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC8listeneryAC0eF6StatusOcSgvs",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC8listeneryAC0eF6StatusOcSgvM",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC8listeneryAC0eF6StatusOcSgvM",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "flags",
+            "printedName": "flags",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "SystemConfiguration.SCNetworkReachabilityFlags?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SCNetworkReachabilityFlags",
+                    "printedName": "SystemConfiguration.SCNetworkReachabilityFlags",
+                    "usr": "c:@E@SCNetworkReachabilityFlags"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC5flagsSo09SCNetworkF5FlagsVSgvp",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC5flagsSo09SCNetworkF5FlagsVSgvp",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "SystemConfiguration.SCNetworkReachabilityFlags?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SCNetworkReachabilityFlags",
+                        "printedName": "SystemConfiguration.SCNetworkReachabilityFlags",
+                        "usr": "c:@E@SCNetworkReachabilityFlags"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC5flagsSo09SCNetworkF5FlagsVSgvg",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC5flagsSo09SCNetworkF5FlagsVSgvg",
+                "moduleName": "PlaudWiFiSDK",
+                "isOpen": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "previousFlags",
+            "printedName": "previousFlags",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SCNetworkReachabilityFlags",
+                "printedName": "SystemConfiguration.SCNetworkReachabilityFlags",
+                "usr": "c:@E@SCNetworkReachabilityFlags"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13previousFlagsSo09SCNetworkfI0Vvp",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13previousFlagsSo09SCNetworkfI0Vvp",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SCNetworkReachabilityFlags",
+                    "printedName": "SystemConfiguration.SCNetworkReachabilityFlags",
+                    "usr": "c:@E@SCNetworkReachabilityFlags"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13previousFlagsSo09SCNetworkfI0Vvg",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13previousFlagsSo09SCNetworkfI0Vvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SCNetworkReachabilityFlags",
+                    "printedName": "SystemConfiguration.SCNetworkReachabilityFlags",
+                    "usr": "c:@E@SCNetworkReachabilityFlags"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13previousFlagsSo09SCNetworkfI0Vvs",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13previousFlagsSo09SCNetworkfI0Vvs",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13previousFlagsSo09SCNetworkfI0VvM",
+                "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13previousFlagsSo09SCNetworkfI0VvM",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(host:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "PlaudWiFiSDK.NetworkReachabilityManager?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NetworkReachabilityManager",
+                    "printedName": "PlaudWiFiSDK.NetworkReachabilityManager",
+                    "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC4hostACSgSS_tcfc",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC4hostACSgSS_tcfc",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Convenience",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Convenience"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "PlaudWiFiSDK.NetworkReachabilityManager?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NetworkReachabilityManager",
+                    "printedName": "PlaudWiFiSDK.NetworkReachabilityManager",
+                    "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerCACSgycfc",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerCACSgycfc",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Convenience",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Convenience"
+          },
+          {
+            "kind": "Function",
+            "name": "startListening",
+            "printedName": "startListening()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC14startListeningSbyF",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC14startListeningSbyF",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "DiscardableResult",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "stopListening",
+            "printedName": "stopListening()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC13stopListeningyyF",
+            "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC13stopListeningyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC",
+        "mangledName": "$s12PlaudWiFiSDK26NetworkReachabilityManagerC",
+        "moduleName": "PlaudWiFiSDK",
+        "isOpen": true,
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Function",
+        "name": "==",
+        "printedName": "==(_:_:)",
+        "children": [
+          {
+            "kind": "TypeNominal",
+            "name": "Bool",
+            "printedName": "Swift.Bool",
+            "usr": "s:Sb"
+          },
+          {
+            "kind": "TypeNominal",
+            "name": "NetworkReachabilityStatus",
+            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+          },
+          {
+            "kind": "TypeNominal",
+            "name": "NetworkReachabilityStatus",
+            "printedName": "PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus",
+            "usr": "s:12PlaudWiFiSDK26NetworkReachabilityManagerC0eF6StatusO"
+          }
+        ],
+        "declKind": "Func",
+        "usr": "s:12PlaudWiFiSDK2eeoiySbAA26NetworkReachabilityManagerC0fG6StatusO_AFtF",
+        "mangledName": "$s12PlaudWiFiSDK2eeoiySbAA26NetworkReachabilityManagerC0fG6StatusO_AFtF",
+        "moduleName": "PlaudWiFiSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "funcSelfKind": "NonMutating"
+      },
+      {
+        "kind": "Import",
+        "name": "CommonCrypto",
+        "printedName": "CommonCrypto",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "SystemConfiguration.CaptiveNetwork",
+        "printedName": "SystemConfiguration.CaptiveNetwork",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "NetworkExtension",
+        "printedName": "NetworkExtension",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreLocation",
+        "printedName": "CoreLocation",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "PenBleSDK",
+        "printedName": "PenBleSDK",
+        "declKind": "Import",
+        "moduleName": "PlaudWiFiSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "WiFiAgentProtocol",
+        "printedName": "WiFiAgentProtocol",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "wifiCommonErr",
+            "printedName": "wifiCommonErr(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiCommonErr::",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP13wifiCommonErryySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiHandshake",
+            "printedName": "wifiHandshake(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiHandshake:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP13wifiHandshakeyySiF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiPower",
+            "printedName": "wifiPower(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiPower::",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP9wifiPoweryySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiFileListFail",
+            "printedName": "wifiFileListFail(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiFileListFail:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP16wifiFileListFailyySiF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiFileList",
+            "printedName": "wifiFileList(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[PlaudBleSDK.BleFile]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BleFile",
+                    "printedName": "PlaudBleSDK.BleFile",
+                    "usr": "c:@M@PenBleSDK@objc(cs)BleFile"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiFileList:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP12wifiFileListyySay0a3BleD00jH0CGF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiSyncFile",
+            "printedName": "wifiSyncFile(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiSyncFile::",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP12wifiSyncFileyySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiSyncFileData",
+            "printedName": "wifiSyncFileData(_:_:_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Data",
+                "printedName": "Foundation.Data",
+                "usr": "s:10Foundation4DataV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiSyncFileData::::",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP16wifiSyncFileDatayySi_S2i10Foundation0J0VtF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiDataComplete",
+            "printedName": "wifiDataComplete()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiDataComplete",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP16wifiDataCompleteyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiSyncFileStop",
+            "printedName": "wifiSyncFileStop(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiSyncFileStop:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP16wifiSyncFileStopyySiF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiFileDelete",
+            "printedName": "wifiFileDelete(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiFileDelete::",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP14wifiFileDeleteyySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiClientFail",
+            "printedName": "wifiClientFail()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiClientFail",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP14wifiClientFailyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiClose",
+            "printedName": "wifiClose(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiClose:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP9wifiCloseyySiF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiRateFail",
+            "printedName": "wifiRateFail(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiRateFail:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP12wifiRateFailyySiF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiRate",
+            "printedName": "wifiRate(_:_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiRate:::",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP8wifiRateyySi_SiSdtF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiLogsFail",
+            "printedName": "wifiLogsFail(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiLogsFail:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP12wifiLogsFailyySiF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiLogs",
+            "printedName": "wifiLogs(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.Data?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Data",
+                    "printedName": "Foundation.Data",
+                    "usr": "s:10Foundation4DataV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiLogs:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP8wifiLogsyy10Foundation4DataVSgF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiTips",
+            "printedName": "wifiTips(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiTips:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP8wifiTipsyySiF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "penRequestOTAData",
+            "printedName": "penRequestOTAData(start:end:payloadSize:uid:sendRatePPS:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)penRequestOTADataWithStart:end:payloadSize:uid:sendRatePPS:",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP17penRequestOTAData5start3end11payloadSize3uid11sendRatePPSySi_S4itF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "wifiOTAStatus",
+            "printedName": "wifiOTAStatus(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol(im)wifiOTAStatus::",
+            "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP13wifiOTAStatusyySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudWiFiSDK.WiFiAgentProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol",
+        "mangledName": "$s12PlaudWiFiSDK0bC13AgentProtocolP",
+        "moduleName": "PlaudWiFiSDK",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "WiFiAgent",
+        "printedName": "WiFiAgent",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WiFiAgent",
+                "printedName": "PlaudWiFiSDK.WiFiAgent",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(cpy)shared",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC6sharedACvpZ",
+            "moduleName": "PlaudWiFiSDK",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "WiFiAgent",
+                    "printedName": "PlaudWiFiSDK.WiFiAgent",
+                    "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(cm)shared",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC6sharedACvgZ",
+                "moduleName": "PlaudWiFiSDK",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final",
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "connectLoop",
+            "printedName": "connectLoop",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(py)connectLoop",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC11connectLoopSbvp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)connectLoop",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC11connectLoopSbvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)setConnectLoop:",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC11connectLoopSbvs",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK0bC5AgentC11connectLoopSbvM",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC11connectLoopSbvM",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isServerStart",
+            "printedName": "isServerStart",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK0bC5AgentC13isServerStartSbvp",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13isServerStartSbvp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "SetterAccess",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK0bC5AgentC13isServerStartSbvg",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13isServerStartSbvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isClientOpen",
+            "printedName": "isClientOpen",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK0bC5AgentC12isClientOpenSbvp",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC12isClientOpenSbvp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "SetterAccess",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK0bC5AgentC12isClientOpenSbvg",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC12isClientOpenSbvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "wifiVersion",
+            "printedName": "wifiVersion",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK0bC5AgentC11wifiVersionSivp",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC11wifiVersionSivp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "SetterAccess",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK0bC5AgentC11wifiVersionSivg",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC11wifiVersionSivg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isHandshakeOk",
+            "printedName": "isHandshakeOk",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK0bC5AgentC13isHandshakeOkSbvp",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13isHandshakeOkSbvp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "SetterAccess",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK0bC5AgentC13isHandshakeOkSbvg",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13isHandshakeOkSbvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "sessionId",
+            "printedName": "sessionId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(py)sessionId",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC9sessionIdSivp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "SetterAccess",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)sessionId",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC9sessionIdSivg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isDownloading",
+            "printedName": "isDownloading",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(py)isDownloading",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13isDownloadingSbvp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "SetterAccess",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)isDownloading",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13isDownloadingSbvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "delegate",
+            "printedName": "delegate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any PlaudWiFiSDK.WiFiAgentProtocol)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(py)delegate",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC8delegateAA0bcE8Protocol_pSgvp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "ReferenceOwnership",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any PlaudWiFiSDK.WiFiAgentProtocol)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "WiFiAgentProtocol",
+                        "printedName": "any PlaudWiFiSDK.WiFiAgentProtocol",
+                        "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)delegate",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC8delegateAA0bcE8Protocol_pSgvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any PlaudWiFiSDK.WiFiAgentProtocol)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "WiFiAgentProtocol",
+                        "printedName": "any PlaudWiFiSDK.WiFiAgentProtocol",
+                        "usr": "c:@M@PlaudWiFiSDK@objc(pl)WiFiAgentProtocol"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)setDelegate:",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC8delegateAA0bcE8Protocol_pSgvs",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK0bC5AgentC8delegateAA0bcE8Protocol_pSgvM",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC8delegateAA0bcE8Protocol_pSgvM",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "cmdDelegateQueue",
+            "printedName": "cmdDelegateQueue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "DispatchQueue",
+                "printedName": "Dispatch.DispatchQueue",
+                "usr": "c:objc(cs)OS_dispatch_queue"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(py)cmdDelegateQueue",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC16cmdDelegateQueueSo17OS_dispatch_queueCvp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DispatchQueue",
+                    "printedName": "Dispatch.DispatchQueue",
+                    "usr": "c:objc(cs)OS_dispatch_queue"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)cmdDelegateQueue",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC16cmdDelegateQueueSo17OS_dispatch_queueCvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DispatchQueue",
+                    "printedName": "Dispatch.DispatchQueue",
+                    "usr": "c:objc(cs)OS_dispatch_queue"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)setCmdDelegateQueue:",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC16cmdDelegateQueueSo17OS_dispatch_queueCvs",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK0bC5AgentC16cmdDelegateQueueSo17OS_dispatch_queueCvM",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC16cmdDelegateQueueSo17OS_dispatch_queueCvM",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "bleDevice",
+            "printedName": "bleDevice",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "PlaudBleSDK.BleDevice?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BleDevice",
+                    "printedName": "PlaudBleSDK.BleDevice",
+                    "usr": "c:@M@PenBleSDK@objc(cs)BleDevice"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(py)bleDevice",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC9bleDevice0a3BleD00hG0CSgvp",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "PlaudBleSDK.BleDevice?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BleDevice",
+                        "printedName": "PlaudBleSDK.BleDevice",
+                        "usr": "c:@M@PenBleSDK@objc(cs)BleDevice"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)bleDevice",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC9bleDevice0a3BleD00hG0CSgvg",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "PlaudBleSDK.BleDevice?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BleDevice",
+                        "printedName": "PlaudBleSDK.BleDevice",
+                        "usr": "c:@M@PenBleSDK@objc(cs)BleDevice"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)setBleDevice:",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC9bleDevice0a3BleD00hG0CSgvs",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK0bC5AgentC9bleDevice0a3BleD00hG0CSgvM",
+                "mangledName": "$s12PlaudWiFiSDK0bC5AgentC9bleDevice0a3BleD00hG0CSgvM",
+                "moduleName": "PlaudWiFiSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "openReleaseLog",
+            "printedName": "openReleaseLog(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Swift.String) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.String) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)openReleaseLog::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC14openReleaseLogyySb_ySScSgtF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "openLog",
+            "printedName": "openLog(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Swift.String) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.String) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)openLog::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC7openLogyySb_ySScSgtF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "listenPort",
+            "printedName": "listenPort(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)listenPort::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC10listenPortyySS_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "connectWifi",
+            "printedName": "connectWifi(_:_:_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)connectWifi::::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC11connectWifiyySS_SSSiSbtF",
+            "moduleName": "PlaudWiFiSDK",
+            "intro_iOS": "11.0",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "Available",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "cancelConnectWifi",
+            "printedName": "cancelConnectWifi()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)cancelConnectWifi",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC17cancelConnectWifiyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clearAllWiFiConfigurations",
+            "printedName": "clearAllWiFiConfigurations()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)clearAllWiFiConfigurations",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC08clearAllbC14ConfigurationsyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "intro_iOS": "11.0",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "Available",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clearAllWiFiConfigurationsCompat",
+            "printedName": "clearAllWiFiConfigurationsCompat()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)clearAllWiFiConfigurationsCompat",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC08clearAllbC20ConfigurationsCompatyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "disconnect",
+            "printedName": "disconnect()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent(im)disconnect",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC10disconnectyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "serverDidStart",
+            "printedName": "serverDidStart()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)serverDidStart",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC14serverDidStartyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "serverDidStart",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "serverDidFailWithError",
+            "printedName": "serverDidFailWithError(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Error",
+                "printedName": "any Swift.Error",
+                "usr": "s:s5ErrorP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)serverDidFailWithError:",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC22serverDidFailWithErroryys0J0_pF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "serverDidFailWithError:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "serverDidStop",
+            "printedName": "serverDidStop()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)serverDidStop",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13serverDidStopyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "serverDidStop",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clientDidOpen",
+            "printedName": "clientDidOpen()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)clientDidOpen",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13clientDidOpenyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "clientDidOpen",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clientDidReceiveText",
+            "printedName": "clientDidReceiveText(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)clientDidReceiveText:",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC20clientDidReceiveTextyySSF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "clientDidReceiveText:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clientDidReceive",
+            "printedName": "clientDidReceive(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Data",
+                "printedName": "Foundation.Data",
+                "usr": "s:10Foundation4DataV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)clientDidReceiveData:",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC16clientDidReceiveyy10Foundation4DataVF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "clientDidReceiveData:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clientDidFailWithError",
+            "printedName": "clientDidFailWithError(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Error",
+                "printedName": "any Swift.Error",
+                "usr": "s:s5ErrorP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)clientDidFailWithError:",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC22clientDidFailWithErroryys0J0_pF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "clientDidFailWithError:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clientDidClose",
+            "printedName": "clientDidClose(withCode:reason:wasClean:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)clientDidCloseWithCode:reason:wasClean:",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC14clientDidClose8withCode6reason8wasCleanySi_SSSbtF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "clientDidCloseWithCode:reason:wasClean:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isWebSocketConnected",
+            "printedName": "isWebSocketConnected()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)isWebSocketConnected",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC20isWebSocketConnectedSbyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "appGetLogs",
+            "printedName": "appGetLogs(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12PlaudWiFiSDK0bC5AgentC10appGetLogsyySbF",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC10appGetLogsyySbF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "appWiFiRate",
+            "printedName": "appWiFiRate(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)appWiFiRate::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC03appbC4RateyySb_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "appDeleteFile",
+            "printedName": "appDeleteFile(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)appDeleteFile::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC13appDeleteFileyySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "appExtendWifiExitTime",
+            "printedName": "appExtendWifiExitTime()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)appExtendWifiExitTime",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC21appExtendWifiExitTimeyyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "appStopSyncFile",
+            "printedName": "appStopSyncFile(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)appStopSyncFile::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC15appStopSyncFileyySi_SitF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "appSyncFile",
+            "printedName": "appSyncFile(_:_:_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)appSyncFile::::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC11appSyncFileyySi_S3itF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "appGetFileList",
+            "printedName": "appGetFileList(_:_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)appGetFileList:::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC14appGetFileListyySi_SiSbtF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "startPushOTA",
+            "printedName": "startPushOTA(_:_:crc:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)startPushOTA::crc::",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC12startPushOTA__3crc_ySi_S3itF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sendFilePackToPen",
+            "printedName": "sendFilePackToPen(type:start:len:last:uid:binData:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int32",
+                "printedName": "Swift.Int32",
+                "usr": "s:s5Int32V"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int32",
+                "printedName": "Swift.Int32",
+                "usr": "s:s5Int32V"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int32",
+                "printedName": "Swift.Int32",
+                "usr": "s:s5Int32V"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.Data?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Data",
+                    "printedName": "Foundation.Data",
+                    "usr": "s:10Foundation4DataV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)sendFilePackToPenWithType:start:len:last:uid:binData:",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC17sendFilePackToPen4type5start3len4last3uid7binDataySi_s5Int32VALSbAL10Foundation0Q0VSgtF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "sendFilePackToPenWithType:start:len:last:uid:binData:",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getCurrentWiFiName",
+            "printedName": "getCurrentWiFiName()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)getCurrentWiFiName",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC010getCurrentbC4NameSSSgyF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getCurrentWiFiNameWithRetry",
+            "printedName": "getCurrentWiFiNameWithRetry(maxRetries:delay:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudWiFiSDK@objc(cs)WiFiAgent(im)getCurrentWiFiNameWithRetryWithMaxRetries:delay:",
+            "mangledName": "$s12PlaudWiFiSDK0bC5AgentC010getCurrentbC13NameWithRetry10maxRetries5delaySSSgSi_SdtF",
+            "moduleName": "PlaudWiFiSDK",
+            "objc_name": "getCurrentWiFiNameWithRetryWithMaxRetries:delay:",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@PlaudWiFiSDK@objc(cs)WiFiAgent",
+        "mangledName": "$s12PlaudWiFiSDK0bC5AgentC",
+        "moduleName": "PlaudWiFiSDK",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "GCDTool",
+        "printedName": "GCDTool",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "GCDTool",
+                "printedName": "PlaudWiFiSDK.GCDTool",
+                "usr": "s:12PlaudWiFiSDK7GCDToolC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12PlaudWiFiSDK7GCDToolC6sharedACvpZ",
+            "mangledName": "$s12PlaudWiFiSDK7GCDToolC6sharedACvpZ",
+            "moduleName": "PlaudWiFiSDK",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GCDTool",
+                    "printedName": "PlaudWiFiSDK.GCDTool",
+                    "usr": "s:12PlaudWiFiSDK7GCDToolC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12PlaudWiFiSDK7GCDToolC6sharedACvgZ",
+                "mangledName": "$s12PlaudWiFiSDK7GCDToolC6sharedACvgZ",
+                "moduleName": "PlaudWiFiSDK",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "execute",
+            "printedName": "execute(label:_:)",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12PlaudWiFiSDK7GCDToolC7execute5label_yycSS_yyXLtF",
+            "mangledName": "$s12PlaudWiFiSDK7GCDToolC7execute5label_yycSS_yyXLtF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "cancel",
+            "printedName": "cancel(label:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12PlaudWiFiSDK7GCDToolC6cancel5labelySS_tF",
+            "mangledName": "$s12PlaudWiFiSDK7GCDToolC6cancel5labelySS_tF",
+            "moduleName": "PlaudWiFiSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:12PlaudWiFiSDK7GCDToolC",
+        "mangledName": "$s12PlaudWiFiSDK7GCDToolC",
+        "moduleName": "PlaudWiFiSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/Agent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1244,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/Agent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1846,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/Agent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1866,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/Agent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1888,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/Agent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2392,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/Agent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2855,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 692,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 4296,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4349,
+      "length": 2,
+      "value": "30"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4424,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 4584,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 4733,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 4815,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4887,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 4960,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5068,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 5165,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5206,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "StringLiteral",
+      "offset": 5239,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5283,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5324,
+      "length": 2,
+      "value": "-1"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "StringLiteral",
+      "offset": 5872,
+      "length": 27,
+      "value": "\"com.plaud.wifi.send.queue\""
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "StringLiteral",
+      "offset": 6215,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 7594,
+      "length": 2,
+      "value": "30"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9809,
+      "length": 2,
+      "value": "60"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 9833,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 11260,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 15932,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 21780,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 49785,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 50536,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 51143,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 51161,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 51824,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 66084,
+      "length": 1,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "FloatLiteral",
+      "offset": 66109,
+      "length": 3,
+      "value": "1.0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 68141,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 69577,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 69639,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 69695,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 69754,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 69803,
+      "length": 2,
+      "value": "20"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 71176,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 71195,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 74306,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 74377,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 74430,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PenSubmodules\/BlePen\/PenWiFiSdk\/SwiftFiles\/WiFiAgent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 74484,
+      "length": 1,
+      "value": "0"
+    }
+  ]
+}

@@ -1,0 +1,1374 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
+// swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name PlaudBleSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import CommonCrypto
+import CoreBluetooth
+import CryptoKit
+import Foundation
+@_exported import PlaudBleSDK
+import Security
+import Swift
+import SystemConfiguration
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_inheritsConvenienceInitializers @objc open class BleFile : ObjectiveC.NSObject {
+  @objc public var sn: Swift.String
+  @objc public var sessionId: Swift.Int
+  @objc public var size: Swift.Int
+  @objc public var offset: Swift.Int
+  @objc public var timezone: Swift.Int
+  @objc public var zoneMin: Swift.Int
+  @objc public var scenes: Swift.Int
+  @objc public var penCollect: Swift.Int
+  @objc public var channels: Swift.Int
+  @objc public var nsAgc: Swift.Bool
+  @objc public var isOgg: Swift.Bool
+  @objc public var isMusic: Swift.Bool {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc public init(_ sessionId: Swift.Int, _ size: Swift.Int)
+  @objc public init(_ sn: Swift.String, _ sessionId: Swift.Int, _ size: Swift.Int)
+  @objc public init(_ sn: Swift.String, _ sessionId: Swift.Int, _ size: Swift.Int, _ channels: Swift.Int = 1, _ nsAgc: Swift.Bool = false)
+  @objc public init(_ sn: Swift.String, _ sessionId: Swift.Int, _ size: Swift.Int, _ scenes: Swift.Int, _ penCollect: Swift.Int, _ channels: Swift.Int = 1, _ nsAgc: Swift.Bool = false)
+  @objc public func duration() -> Swift.Int
+  @objc public func oggDuration() -> Swift.Int
+  @objc public func toString() -> Swift.String
+  @objc public static func calculateDuration(_ fileSize: Swift.Int, _ channel: Swift.Int, _ isOgg: Swift.Bool, _ scenes: Swift.Int = 0) -> Swift.Int
+  @objc deinit
+}
+extension PlaudBleSDK.BleFile : Foundation.NSCopying {
+  @objc dynamic public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc dynamic public func zoneSecond() -> Swift.Int
+  @objc dynamic public func utsStamp() -> Swift.Int
+}
+@_inheritsConvenienceInitializers @objc open class GlassData : ObjectiveC.NSObject {
+  @objc public var year: Swift.Int
+  @objc public var month: Swift.Int
+  @objc public var day: Swift.Int
+  @objc public var time: Swift.Int
+  @objc override dynamic public init()
+  @objc public init(_ year: Swift.UInt16, _ month: Swift.UInt8, _ day: Swift.UInt8, _ time: Swift.UInt32)
+  @objc deinit
+}
+@objc public class BleRecordMarkingTag : ObjectiveC.NSObject {
+  @objc final public let timestamp: Swift.UInt32
+  @objc final public let type: Swift.UInt8
+  @objc final public let status: Swift.UInt8
+  @objc final public let reserved: [Swift.UInt8]
+  @objc public init(timestamp: Swift.UInt32, type: Swift.UInt8, status: Swift.UInt8, reserved: [Swift.UInt8])
+  @objc deinit
+}
+public func mlog(_ text: Swift.String, data: Foundation.Data? = nil, maxBytes: Swift.Int? = 80)
+public func wlog(_ text: Swift.String, data: Foundation.Data? = nil, maxBytes: Swift.Int? = 80)
+public typealias Int2Void = (Swift.Int) -> Swift.Void
+@objc public protocol BleAgentProtocol {
+  @objc func bleUpdatePowerLowErr()
+  @objc func bleDeviceDisconnectErr()
+  @objc func bleUDiskErr(funcName: Swift.String)
+  @objc func bleAppKeyState(result: Swift.Int)
+  @objc func bleState(powered: Swift.Bool)
+  @objc optional func bleConnectStage(sn: Swift.String?, stage: Swift.String, detail: Swift.String?)
+  @objc func bleConnectState(state: Swift.Int)
+  @objc func bleScanResult(bleDevices: [PlaudBleSDK.BleDevice])
+  @objc func bleScanOverTime()
+  @objc func bleHandshakeWait(timeout: Swift.Int)
+  @objc func bleBind(sn: Swift.String?, status: Swift.Int, protVersion: Swift.Int, timezone: Swift.Int)
+  @objc func bleDeviceName(name: Swift.String?)
+  @objc func bleHeartbeat(status: Swift.Int)
+  @objc func blePowerChange(power: Swift.Int, oldPower: Swift.Int)
+  @objc func bleChargingState(isCharging: Swift.Bool, level: Swift.Int)
+  @objc func blePenState(state: Swift.Int, privacy: Swift.Int, keyState: Swift.Int, uDisk: Swift.Int, findMyToken: Swift.Int, hasSndpKey: Swift.Int, deviceAccessToken: Swift.Int, versionType: Swift.String, versionCode: Swift.Int)
+  @objc func blePenTime(stamp: Swift.Int, timezone: Swift.Int, zoneMin: Swift.Int)
+  @objc func bleStorage(total: Swift.Int, free: Swift.Int, duration: Swift.Int)
+  @objc func blePasswordReset(password: Swift.Int)
+  @objc func bleBacklightDuration(_ duration: Swift.Int)
+  @objc func bleBacklightBright(_ bright: Swift.Int)
+  @objc func bleLanguage(_ type: Swift.Int)
+  @objc func bleRecScene(_ scene: Swift.Int)
+  @objc func bleRecMode(_ mode: Swift.Int)
+  @objc func bleVadSensitivity(_ value: Swift.Int)
+  @objc func bleBatteryMode(_ value: Swift.Int)
+  @objc func bleVpuGain(_ value: Swift.Int)
+  @objc func bleMicGain(_ value: Swift.Int)
+  @objc func bleSwitchHandler(_ id: Swift.Int)
+  @objc func bleAutoPowerOff(_ value: Swift.Int)
+  @objc func bleRawWaveEnabled(_ value: Swift.Int)
+  @objc func bleRecordingAfterDisConnetEnabled(_ value: Swift.Int)
+  @objc func bleSyncWhenIdleEnabled(_ value: Swift.Int)
+  @objc func bleFindMyState(_ value: Swift.Int)
+  @objc func bleVPUCLKState(_ value: Swift.Int)
+  @objc func bleStopRecordingAfterCharging(_ value: Swift.Int)
+  @objc func bleAutoClear(_ open: Swift.Bool)
+  @objc func bleVad(_ open: Swift.Bool)
+  @objc func bleDepair(_ status: Swift.Int)
+  @objc func bleWiFiOpen(_ status: Swift.Int, _ wifiName: Swift.String, _ wholeName: Swift.String, _ wifiPass: Swift.String)
+  @objc func bleWiFiClose(_ status: Swift.Int)
+  @objc func bleSetWiFiSsid(status: Swift.Int)
+  @objc func bleGetWiFiSsid(status: Swift.Int, ssid: Swift.String?)
+  @objc func bleVoiceAbnormal(status: Swift.Int)
+  @objc func bleWebsocketProfile(_ type: Swift.Int, _ conent: Swift.String?)
+  @objc func bleWebsocketTest(_ status: Swift.Int)
+  @objc func bleRecordStart(sessionId: Swift.Int, start: Swift.Int, status: Swift.Int, scene: Swift.Int, startTime: Swift.Int)
+  @objc func bleRecordStop(sessionId: Swift.Int, reason: Swift.Int, fileExist: Swift.Bool, fileSize: Swift.Int)
+  @objc func bleRecordPause(sessionId: Swift.Int, reason: Swift.Int, fileExist: Swift.Bool, fileSize: Swift.Int)
+  @objc func bleRecordResume(sessionId: Swift.Int, start: Swift.Int, status: Swift.Int, scene: Swift.Int, startTime: Swift.Int)
+  @objc func bleLedState(onOff: Swift.Int)
+  @objc func bleSetLedState(onOff: Swift.Int)
+  @objc func bleFileList(bleFiles: [PlaudBleSDK.BleFile])
+  @objc func bleSyncFileHead(sessionId: Swift.Int, status: Swift.Int)
+  @objc func bleSyncFileTail(sessionId: Swift.Int, crc: Swift.Int)
+  @objc func bleMarking(sessionId: Swift.Int, status: Swift.Int, markList: [Swift.UInt32])
+  @objc func bleGetRecordMarkingTags(uid: Swift.Int, totals: Swift.Int, index: Swift.Int, tags: [PlaudBleSDK.BleRecordMarkingTag])
+  @objc func bleAngles(pitchAngle: Swift.Float, rollbackAngle: Swift.Float, yawAngle: Swift.Float)
+  @objc func bleDataComplete()
+  @objc func bleData(sessionId: Swift.Int, start: Swift.Int, data: Foundation.Data)
+  @objc func deviceLogData(start: Swift.Int, data: Foundation.Data, logType: Swift.Int)
+  @objc func blePcmData(sessionId: Swift.Int, millsec: Swift.Int, pcmData: Foundation.Data, isMusic: Swift.Bool)
+  @objc func bleDecodeFail(start: Swift.Int)
+  @objc func bleSyncFileStop()
+  @objc func bleDeleteFile(sessionId: Swift.Int, status: Swift.Int)
+  @objc func bleFotaResult(uid: Swift.Int, status: Swift.Int, errmsg: Swift.String?)
+  @objc func bleFotaPackReq(uid: Swift.Int, start: Swift.Int, end: Swift.Int)
+  @objc func bleFotaPackFin(uid: Swift.Int, status: Swift.Int, errmsg: Swift.String?)
+  @objc func bleOtaDataSendFail()
+  @objc func bleRate(lossRate: Swift.Double, rate: Swift.Int, instantRate: Swift.Int)
+  @objc func blePrivacy(privacy: Swift.Int)
+  @objc func bleClearAllFile(status: Swift.Int)
+  @objc func bleDeviceStatus(status: [Swift.UInt8])
+  @objc func bleNewFeature(data: Foundation.Data)
+  @objc func bleAlarmRec(start: Swift.Int, duration: Swift.Int, repeatMode: Swift.Int)
+  @objc func bleSetActive(status: Swift.Int)
+  @objc func onBinaryFileReq(type: Swift.Int, packageOffset: Swift.Int, packageSize: Swift.Int, endStatus: Swift.Int)
+  @objc func onBinaryFileEnd(result: Swift.Int)
+  @objc func onSyncIdleWifiConfigReceived(index: Swift.UInt32, ssid: Swift.String, password: Swift.String)
+  @objc func onSyncIdleWifiConfigSet(result: Swift.Int)
+  @objc func onSyncIdleWifiListReceived(list: [Swift.UInt32])
+  @objc func onSyncIdleWifiDeleteResult(result: Swift.Int)
+  @objc func onSyncIdleWifiTestStarted(index: Swift.UInt32)
+  @objc func onSyncIdleWillStart(seconds: Swift.Int)
+  @objc func onSyncIdleWifiTestResult(index: Swift.UInt32, result: Swift.Int, rawCode: Swift.Int)
+  @objc func onResetFindmyResult(result: Swift.Int)
+  @objc func onCommonParamsSetResult(success: Swift.Bool, dataType: Swift.Int, value: Swift.String?)
+  @objc func onCommonParamsGetResult(success: Swift.Bool, dataType: Swift.Int, value: Swift.String?)
+  @objc func onSetSoundPlusTokenResult(licenseKey: Swift.String)
+  @objc func onGetSDFlashCIDResult(cid: Swift.String)
+  @objc func onGetDeviceLogList(data: Foundation.Data)
+  @objc func onSyncDeviceLogStart(data: Foundation.Data)
+  @objc func onSyncDeviceLogStop()
+  @objc func onSyncDeviceLogEnd(data: Foundation.Data)
+  @objc func onDeviceLogDeleted(data: Foundation.Data)
+}
+@objc public protocol OtaProtocol {
+  @objc func bleFotaResult(uid: Swift.Int, status: Swift.Int, errmsg: Swift.String?)
+  @objc func bleFotaPackReq(uid: Swift.Int, start: Swift.Int, end: Swift.Int)
+  @objc func bleFotaPackFin(uid: Swift.Int, status: Swift.Int, errmsg: Swift.String?)
+}
+@objc public protocol GlassProtocol {
+  @objc func glassData(_ delFlag: Swift.Int, _ dataArr: [PlaudBleSDK.GlassData])
+  @objc func glassDataClear(_ status: Swift.Int)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BleAgent : ObjectiveC.NSObject {
+  public enum ConnectStage : Swift.String {
+    case start
+    case gattConnect
+    case setNotify
+    case setBatteryNotify
+    case readBattery
+    case setDataNotify
+    case preHandshake
+    case sendRSAPublic
+    case firstHandshake
+    case twoHandshake
+    case handshakeGetSSN
+    case changeHandshakeTimeout
+    case syncTime
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public static let protocolVersionNewBatteryService: Swift.Int
+  public static let protocolVersionV20Features: Swift.Int
+  @objc public static let shared: PlaudBleSDK.BleAgent
+  public var cbManager: CoreBluetooth.CBCentralManager?
+  @objc public var bleDevice: PlaudBleSDK.BleDevice?
+  @objc weak public var delegate: (any PlaudBleSDK.BleAgentProtocol)?
+  @objc weak public var glassDelegate: (any PlaudBleSDK.GlassProtocol)?
+  weak public var otaDelegate: (any PlaudBleSDK.OtaProtocol)?
+  public var bleBlock: PlaudBleSDK.Int2Void?
+  final public let selfSignedHosts: [Swift.String]
+  @objc public var isPoweredOn: Swift.Bool {
+    get
+  }
+  @objc public var isConnected: Swift.Bool {
+    get
+  }
+  @objc public var isBinded: Swift.Bool {
+    get
+  }
+  @objc public var isOnlyOne: Swift.Bool {
+    get
+  }
+  public var userToken: Swift.String? {
+    get
+  }
+  @objc public var isRecording: Swift.Bool {
+    get
+  }
+  @objc public var needDecode: Swift.Bool {
+    get
+  }
+  @objc public var isMusic: Swift.Bool {
+    get
+  }
+  @objc public var scene: Swift.Int {
+    get
+  }
+  @objc public var settingScene: Swift.Int {
+    get
+  }
+  @objc public var sessionId: Swift.Int {
+    get
+  }
+  @objc public var isDownloading: Swift.Bool {
+    get
+  }
+  @objc public var isWiFiOpen: Swift.Bool {
+    get
+  }
+  @objc public var repeatCommondInterval: Swift.Int
+  @objc public var cmdDelegateQueue: Dispatch.DispatchQueue
+  final public let parseQueue: Dispatch.DispatchQueue
+  public var customerToken: Swift.String? {
+    get
+  }
+  @objc public var isUsbState: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc public var isCharging: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc public var flutterMapData: [Swift.String : Any]
+  @objc public var secretPackages: [Foundation.Data]
+  @objc public var secretIndex: Swift.Int
+  @objc public var secretCount: Swift.Int
+  @objc public var chacha20Key: Foundation.Data?
+  @objc public var chacha20Nonce: Foundation.Data?
+  @objc public var chacha20AD: Foundation.Data?
+  @objc public var wifiUseAes: Swift.Bool
+  @objc public var globalSendSeq: Swift.Int
+  @objc public var globalReceiveSeq: Swift.Int
+  @objc public var versionType: Swift.String
+  @objc public var versionCode: Swift.Int
+  @objc public func setWiFiState(_ connected: Swift.Bool)
+  @objc public func setUserIdentifier(_ appKey: Swift.String, _ bindToken: Swift.String, _ hkServer: Swift.Bool = false)
+  @objc public func initBluetooth()
+  @objc public func disInitBluetooth()
+  @objc public func checkAppKey(_ appKey: Swift.String)
+  @objc public func setBinding(_ token: Swift.String)
+  @objc public func setFilter(name: Swift.String?)
+  @objc public func setFilter(_ names: [Swift.String])
+  @objc public func openLog(_ opened: Swift.Bool, logBlock: ((Swift.String) -> Swift.Void)? = nil, wlogBlock: ((Swift.String) -> Swift.Void)? = nil)
+  @objc public func isDeviceConnect() -> Swift.Bool
+  @objc public func startScan()
+  @objc public func startLoopScan()
+  @objc public func stopScan()
+  @objc public func connectBleDevice(bleDevice: PlaudBleSDK.BleDevice, _ devToken: Swift.String? = nil, _ userName: Swift.String? = nil, _ isForceClear: Swift.Bool)
+  @objc public func disconnect()
+  @objc public func isSNTempChecked() -> Swift.Bool
+  @objc public func reCheckSNIfNeed()
+  @objc public func readPower()
+  @objc public func getChargingState()
+  @objc public func getState()
+  @objc public func depair(clear: Swift.Bool = false)
+  @objc public func getStorage()
+  @objc public func appResetPassword()
+  @objc public func readBacklightDuration()
+  @objc public func setBacklightDuration(type: Swift.Int)
+  public func setBacklight(duration: PlaudBleSDK.BacklightDuration)
+  @objc public func readBacklightBright()
+  @objc public func setBacklightBright(type: Swift.Int)
+  public func setBacklight(bright: PlaudBleSDK.BacklightBright)
+  @objc public func readLanguage()
+  @objc public func setLanguage(type: Swift.Int)
+  public func setLanguage(type: PlaudBleSDK.LanguageType)
+  public func openVAD(open: Swift.Bool)
+  @objc public func setRecScene(value: Swift.Int)
+  public func setRecScene(type: PlaudBleSDK.RecScene)
+  @objc public func readRecScene()
+  @objc public func setRecMode(value: Swift.Int)
+  public func setRecMode(type: PlaudBleSDK.RecMode)
+  @objc public func readRecMode()
+  @objc public func setVadSensitivity(sensitivity: Swift.Int)
+  public func setVadSensitivity(sensitivity: PlaudBleSDK.VadSensitivity)
+  @objc public func readVadSensitivity()
+  @objc public func setVpuGain(gain: Swift.Int)
+  public func setVpuGain(gain: PlaudBleSDK.VpuGain)
+  @objc public func readVpuGain()
+  @objc public func setMicGain(value: Swift.Int)
+  @objc public func readBatteryMode()
+  @objc public func setBatteryMode(value: Swift.Int)
+  @objc public func readMicGain()
+  @objc public func setSwitchHandler(id: Swift.Int)
+  @objc public func readSwitchHandler()
+  @objc public func setAutoPowerOff(value: Swift.Int)
+  @objc public func readAutoPowerOff()
+  @objc public func setRawWaveEnabled(value: Swift.Int)
+  @objc public func readRawWaveEnabled()
+  @objc public func readRecordingAfterDisConnetEnabled()
+  @objc public func setRecordingAfterDisConnetEnabled(value: Swift.Int)
+  @objc public func readSyncWhenIdleEnabled()
+  @objc public func setSyncWhenIdleEnabled(value: Swift.Int)
+  @objc public func setFindMyState(value: Swift.Int)
+  @objc public func readFindMyState()
+  @objc public func setVPUCLK(value: Swift.Int)
+  @objc public func readVPUCLK()
+  @objc public func setStopRecordingAfterCharging(value: Swift.Int)
+  @objc public func readStopRecordingAfterCharging()
+  @objc public func setBleName(name: Swift.String)
+  @objc public func getDeviceLogList(logType: Swift.Int)
+  @objc public func startSyncDeviceLogFile(logType: Swift.Int)
+  @objc public func stopSyncDeviceLogFile()
+  @objc public func deleteDeviceLogFile(logType: Swift.Int)
+  @objc public func readBleName()
+  @objc public func operateWiFi(open: Swift.Bool, isOTA: Swift.Bool)
+  @objc public func readGlassData(uid: Swift.Int)
+  @objc public func clearGlassData()
+  @objc public func readAutoClear()
+  @objc public func saveAutoClear(_ open: Swift.Bool)
+  @objc public func startRecord(_ scene: Swift.Int = 0)
+  @objc public func stopRecord()
+  @objc public func pauseRecord(_ sessionId: Swift.Int)
+  @objc public func resumeRecord(_ sessionId: Swift.Int)
+  @objc public func getLedState()
+  @objc public func setLedState(onOff: Swift.Int)
+  @objc public func getFileList(uid: Swift.Int, sessionId: Swift.Int, onlyOne: Swift.Bool = false)
+  @objc public func syncFile(sessionId: Swift.Int, start: Swift.Int, end: Swift.Int, decode: Swift.Bool)
+  @objc public func stopSyncFile()
+  @objc public func deleteFile(sessionId: Swift.Int)
+  @objc public func getMarking(_ sessionId: Swift.Int)
+  @objc public func getRecordMarkingTags(uid: Swift.Int, startTimestamp: Swift.Int, endTimestamp: Swift.Int)
+  @objc public func pushFotaInfo(_ uid: Swift.Int, _ fromVersion: Swift.String, _ toVersion: Swift.String, _ thirdVersion: Swift.Int = 0, _ fileSize: Swift.Int, _ crc: Swift.Int)
+  public func pushFotaInfo(_ uid: Swift.Int, _ fromVersion: Swift.Int, _ fromVersionType: Swift.Character, _ toVersion: Swift.Int, _ toVersionType: Swift.Character, _ thirdVersion: Swift.Int = 0, _ fileSize: Swift.Int, _ crc: Swift.Int)
+  @objc public func pushFotaInfo(_ uid: Swift.Int, _ fromVersion: Swift.Int, _ fromVersionType: Swift.String, _ toVersion: Swift.Int, _ toVersionType: Swift.String, _ thirdVersion: Swift.Int = 0, _ fileSize: Swift.Int, _ crc: Swift.Int)
+  @objc public func pushFotaComplete(_ uid: Swift.Int, _ status: Swift.Int)
+  @objc public func pushFotaPack(_ offset: Swift.Int, packData: Foundation.Data, postDelayUs: Foundation.NSNumber?)
+  @available(iOS 11.0, *)
+  @objc public func canSendWithoutResponse() -> Swift.Bool
+  public func startBleRateTest(_ packSize: Swift.Int = 80)
+  public func stopBleRateTest()
+  @objc public func restoreFactory()
+  @objc public func setPrivacy(onOff: Swift.Int)
+  @objc public func clearAllFile()
+  @objc public func setDeviceActive(status: Swift.Int)
+  @objc public func setHeartBeat(status: Swift.Int)
+  @objc public func setWiFiSsid(ssid: Swift.String, password: Swift.String, isTest: Swift.Bool = false)
+  @objc public func getWiFiSsid()
+  @objc public func getUpdateInfo(_ callback: @escaping (Swift.Int, PlaudBleSDK.UpdateInfo?) -> Swift.Void)
+  @objc public func setWebsocketProfile(type: Swift.Int, content: Swift.String)
+  public func setWebsocketProfile(type: PlaudBleSDK.WebsocketType, content: Swift.String)
+  @objc public func getWebsocketProfile(type: Swift.Int)
+  public func getWebsocketProfile(type: PlaudBleSDK.WebsocketType)
+  @objc public func testWebsocket()
+  @objc public func setAlarmRec(start: Swift.Int, duration: Swift.Int, repeatMode: Swift.Int)
+  @objc public func getAlarmRec()
+  @objc public func sendBinFileInfo(type: Swift.Int, totalSize: Swift.Int)
+  @objc public func sendBinFileData(type: Swift.Int, packageOffset: Swift.Int, packageSize: Swift.Int, data: Foundation.Data)
+  @objc public func sendBinFileCheckSumResult(type: Swift.Int, crc: Swift.Int)
+  @objc public func getSyncInIdleWifiConfig(wifiIndex: Swift.UInt32)
+  @objc public func setSyncInIdleWifiConfig(operation: Swift.Int, wifiIndex: Swift.UInt32, ssid: Swift.String, password: Swift.String)
+  @objc public func deleteSyncInIdleWifiConfig(wifiIndices: [Swift.UInt32])
+  @objc public func resetFindmy()
+  @objc public func getSyncInIdleWifiList()
+  @objc public func setSyncInIdleWifiTest(wifiIndex: Swift.UInt32)
+  @objc public func getSyncInIdleWifiTestResult(wifiIndex: Swift.UInt32)
+  @objc public func setSoundPlusToken(licenseKey: Swift.String)
+  @objc public func setCommonParams(dataType: Swift.Int, value: Swift.String)
+  @objc public func getCommonParams(dataType: Swift.Int)
+  @objc public func getSDFLASHCID()
+  @objc public func getNewFeature(_ data: Foundation.Data)
+  @objc public func getDeviceStatus()
+  @objc deinit
+}
+extension PlaudBleSDK.BleAgent : CoreBluetooth.CBCentralManagerDelegate {
+  @objc dynamic public func centralManagerDidUpdateState(_ central: CoreBluetooth.CBCentralManager)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didDiscover peripheral: CoreBluetooth.CBPeripheral, advertisementData: [Swift.String : Any], rssi RSSI: Foundation.NSNumber)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didConnect peripheral: CoreBluetooth.CBPeripheral)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didFailToConnect peripheral: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didDisconnectPeripheral peripheral: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+}
+extension PlaudBleSDK.BleAgent {
+  @objc dynamic public func isAuthOk() -> Swift.Bool
+  @objc dynamic public func toSingleChannel(_ pcmData: Foundation.Data) -> Foundation.Data
+}
+extension PlaudBleSDK.BleAgent : PlaudBleSDK.JXPcmProcessDelegate {
+  @objc dynamic public func onPcmData(_ sessionId: Swift.Int, _ millSec: Swift.Int, _ pcmData: Foundation.Data)
+  @objc dynamic public func onDecodeErr(_ millSec: Swift.Int)
+}
+extension Foundation.Data {
+  public var hexDescription: Swift.String {
+    get
+  }
+}
+extension Foundation.Date {
+  public var stampMillisec: Swift.Int {
+    get
+  }
+  public var stampSec: Swift.Int {
+    get
+  }
+  public var logTime: Swift.String {
+    get
+  }
+}
+extension Foundation.TimeZone {
+  public var numValue: Swift.Int {
+    get
+  }
+  public func getHourAndMin() -> (Swift.Int, Swift.Int)
+}
+public enum CustomerAuth {
+  case temp
+  case notRestricted
+  case restricted
+  public static func == (a: PlaudBleSDK.CustomerAuth, b: PlaudBleSDK.CustomerAuth) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum SSNAuth {
+  case temp
+  case notRestricted
+  case restricted
+  public static func == (a: PlaudBleSDK.SSNAuth, b: PlaudBleSDK.SSNAuth) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension PlaudBleSDK.BleAgent : Foundation.URLSessionDelegate {
+  @objc dynamic public func urlSession(_ session: Foundation.URLSession, didReceive challenge: Foundation.URLAuthenticationChallenge, completionHandler: @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void)
+  public func selfSignedTrust(session: Foundation.URLSession, challenge: Foundation.URLAuthenticationChallenge) -> (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?)
+}
+extension Swift.String {
+  public var md5Hex: Swift.String {
+    get
+  }
+  public var dictionary: [Swift.String : Any] {
+    get
+  }
+  public var isNotEmpty: Swift.Bool {
+    get
+  }
+}
+extension Foundation.Data {
+  public var dictionary: [Swift.String : Any] {
+    get
+  }
+}
+#if compiler(>=5.3) && $NoncopyableGenerics
+extension Swift.Optional {
+  public var exist: Swift.Bool {
+    get
+  }
+  public var stringValue: Swift.String {
+    get
+  }
+  public var intValue: Swift.Int {
+    get
+  }
+  public var doubleValue: Swift.Double {
+    get
+  }
+  public var boolValue: Swift.Bool {
+    get
+  }
+  public var arrayValue: [[Swift.String : Any]] {
+    get
+  }
+  public var jsonObj: [Swift.String : Any]? {
+    get
+  }
+  public var jsonValue: [Swift.String : Any] {
+    get
+  }
+}
+#else
+extension Swift.Optional {
+  public var exist: Swift.Bool {
+    get
+  }
+  public var stringValue: Swift.String {
+    get
+  }
+  public var intValue: Swift.Int {
+    get
+  }
+  public var doubleValue: Swift.Double {
+    get
+  }
+  public var boolValue: Swift.Bool {
+    get
+  }
+  public var arrayValue: [[Swift.String : Any]] {
+    get
+  }
+  public var jsonObj: [Swift.String : Any]? {
+    get
+  }
+  public var jsonValue: [Swift.String : Any] {
+    get
+  }
+}
+#endif
+@objc open class BleDevice : ObjectiveC.NSObject {
+  public var peripheral: CoreBluetooth.CBPeripheral!
+  @objc public var name: Swift.String
+  @objc public var uuid: Swift.String
+  @objc public var rssi: Swift.Float
+  @objc public var manufacturer: Swift.String
+  @objc public var projectCode: Swift.Int
+  public var versionType: Swift.Character
+  @objc public var versionTypeStr: Swift.String
+  @objc public var versionCode: Swift.Int
+  @objc public var serialNumber: Swift.String
+  @objc public var bindCode: Swift.Int
+  @objc public var power: Swift.Int
+  @objc public var isCharging: Swift.Bool
+  @objc public var total: Swift.Int
+  @objc public var free: Swift.Int
+  @objc public var duration: Swift.Int
+  @objc public var timezone: Swift.Int
+  @objc public var zoneMin: Swift.Int
+  @objc public var channels: Swift.Int
+  @objc public var supportWiFi: Swift.Bool
+  @objc public var nsAgc: Swift.Bool
+  @objc public var isOgg: Swift.Bool
+  @objc public var autoClear: Swift.Int
+  @objc public var hideLed: Swift.Int
+  @objc public var state: Swift.Int
+  @objc public var privacy: Swift.Int
+  @objc public var keyState: Swift.Int
+  @objc public var uDisk: Swift.Int
+  @objc public var findmyToken: Swift.Int
+  @objc public var hasFota: Swift.Bool
+  public var ssn: Swift.String
+  public var protVersion: Swift.Int
+  public var isVadOpen: Swift.Bool
+  @objc public var wholeName: Swift.String {
+    @objc get
+  }
+  @objc public var wifiName: Swift.String {
+    @objc get
+  }
+  @objc public init(sn: Swift.String)
+  public init(peripheral: CoreBluetooth.CBPeripheral, rssi: Foundation.NSNumber, manufacturerData: Foundation.Data, localName: Swift.String?)
+  @objc public func wholeVersion() -> Swift.String
+  @objc public func toString() -> Swift.String
+  @objc public func zoneSecond() -> Swift.Int
+  @objc deinit
+}
+extension PlaudBleSDK.BleDevice : CoreBluetooth.CBPeripheralDelegate {
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverServices error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverCharacteristicsFor service: CoreBluetooth.CBService, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateNotificationStateFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateValueFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didWriteValueFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+}
+public enum CommonType : Swift.Int {
+  case LightDuration
+  case LightBright
+  case Language
+  case AutoClear
+  case VAD
+  case RecScene
+  case RecMode
+  case VadSensitivity
+  case VpuGain
+  case BatteryMode
+  case MicGain
+  case WiFiChannel
+  case SwitchHandle
+  case AutoPowerOff
+  case RawWaveEnabled
+  case RecordingAfterDisConnet
+  case SyncWhenIdle
+  case FindMyState
+  case VPUCLK
+  case StopRecordAfterCharging
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum CommonAction : Swift.Int {
+  case Read
+  case Set
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum BacklightBright : Swift.Int {
+  case Bright1
+  case Bright2, Bright3, Bright4, Bright5, Bright6
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum BacklightDuration : Swift.Int {
+  case Sec10
+  case Sec20, Sec30, SecAlways
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum LanguageType : Swift.Int {
+  case SimpleChinese
+  case TradChinese
+  case English
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum RecScene : Swift.Int {
+  case Unknown
+  case Normal
+  case Interview
+  case Classroom
+  case Music
+  case Meeting
+  case Memo
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum RecMode : Swift.Int {
+  case Normal
+  case NC
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum VadSensitivity : Swift.Int {
+  case Quality
+  case lowBitrate
+  case Normal
+  case Aggressive
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum VpuGain : Swift.Int {
+  case Low
+  case Medium
+  case High
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum SwitchHandlerID : Swift.Int {
+  case CallSceneSwitching
+  case Recording
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum WebsocketType : Swift.UInt8 {
+  case url
+  case serToken
+  case devToken
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum AutoClear : Swift.Int {
+  case Close
+  case Open
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension PlaudBleSDK.BleAgent {
+  public func dataOfGetRecordMarkingTags(uid: Swift.Int, startTimestamp: Swift.Int, endTimestamp: Swift.Int) -> Foundation.Data
+}
+extension Foundation.Data {
+  public func subData(begin: Swift.Int, count: Swift.Int) -> Foundation.Data
+  public func safeSubdata(in range: Swift.Range<Swift.Int>) -> Foundation.Data?
+  public func safeSubdata(offset: Swift.Int, count: Swift.Int) -> Foundation.Data?
+  public var floatValue: Swift.Float {
+    get
+  }
+  public var int8: Swift.Int8 {
+    get
+  }
+  public var uint8: Swift.UInt8 {
+    get
+  }
+  public var uint16: Swift.UInt16 {
+    get
+  }
+  public var uint24: Swift.UInt32 {
+    get
+  }
+  public var uint32: Swift.UInt32 {
+    get
+  }
+  public var uint64: Swift.UInt64 {
+    get
+  }
+  public func int8(at offset: Swift.Int) -> Swift.Int
+  public func uint8(at offset: Swift.Int) -> Swift.UInt8
+  public func int16(at offset: Swift.Int) -> Swift.Int16
+  public func uint16(at offset: Swift.Int) -> Swift.UInt16
+  public func uint24(at offset: Swift.Int) -> Swift.UInt32
+  public func int32(at offset: Swift.Int) -> Swift.Int32
+  public func uint32(at offset: Swift.Int) -> Swift.UInt32
+  public func int64(at offset: Swift.Int) -> Swift.Int64
+  public func uint64(at offset: Swift.Int) -> Swift.UInt64
+  public func float(at offset: Swift.Int) -> Swift.Float
+}
+extension Swift.Int8 {
+  public var data: Foundation.Data {
+    get
+  }
+}
+extension Swift.UInt8 {
+  public var data: Foundation.Data {
+    get
+  }
+}
+extension Swift.UInt16 {
+  public var data: Foundation.Data {
+    get
+  }
+}
+extension Swift.Int16 {
+  public var data: Foundation.Data {
+    get
+  }
+}
+extension Swift.UInt32 {
+  public var data: Foundation.Data {
+    get
+  }
+  public var data24: Foundation.Data {
+    get
+  }
+  public var byteArrayLittleEndian: [Swift.UInt8] {
+    get
+  }
+}
+extension Swift.UInt64 {
+  public var data: Foundation.Data {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class JXFileSoundWave : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.JXFileSoundWave
+  @objc public func hasAvcToSoundWaveTask() -> Swift.Bool
+  @objc public func generateSoundWaveCancel()
+  @objc public func createSoundWave(_ filePath: Swift.String, _ channels: Swift.Int, _ isOgg: Swift.Bool, _ isMusic: Swift.Bool, _ callback: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+  @objc public func avcToSoundWave(avcPath: Swift.String, channels: Swift.Int = 1, completionHandler: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class JXRecordVolumer : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.JXRecordVolumer
+  @objc public var waveInterval: Swift.Int
+  @objc public var volumeArr: [[Swift.Int]]
+  public var volumeMeters: [(sec: Swift.Int, volume: Swift.Int)]
+  @objc public var curSec: Swift.Int {
+    get
+  }
+  @objc public func averageVolume(_ pcmData: Foundation.Data) -> Swift.Int
+  @objc public func append(start: Swift.Int, pcmData: Foundation.Data)
+  public func middleNum(_ volumeArr: inout [Swift.Int]) -> Swift.Int
+  @objc public func reset()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class JXRecordingVolumer : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.JXRecordingVolumer
+  @objc weak public var delegate: (any PlaudBleSDK.VolumeProtocol)?
+  @objc public var waveInterval: Swift.Int
+  @objc public var volumeArr: [[Swift.Int]] {
+    get
+  }
+  public var volumeMeters: [(sec: Swift.Int, volume: Swift.Int)] {
+    get
+  }
+  @objc public var curSec: Swift.Int {
+    get
+  }
+  @objc public var curMillisec: Swift.Int {
+    get
+  }
+  @objc public var curFileSize: Swift.Int {
+    get
+  }
+  @objc public func averageVolume(_ pcmData: Foundation.Data) -> CoreFoundation.CGFloat
+  @objc public func append(start: Swift.Int, pcmData: Foundation.Data, channels: Swift.Int = 1)
+  @objc public func append(_ millSec: Swift.Int, _ pcmData: Foundation.Data)
+  @objc public func setOldVolumeMeters(meters: [[Swift.Int]])
+  public func setOldVolumeMeters(meters: [(sec: Swift.Int, volume: Swift.Int)])
+  @objc public func reset()
+  @objc deinit
+}
+@objc public protocol VolumeProtocol {
+  @objc func onDuration(millisec: Swift.Int)
+  @objc func onVolume(sec: Swift.Int, volume: Swift.Int)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class JXWaveHelper : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.JXWaveHelper
+  @objc public static let tmpPcmPath: Swift.String
+  @objc public static let tmpWavPath: Swift.String
+  @objc public static let leftPath: Swift.String
+  @objc public static let rightPath: Swift.String
+  @objc public static let leftWavPath: Swift.String
+  @objc public static let rightWavPath: Swift.String
+  @objc public static let leftLycPath: Swift.String
+  @objc public static let rightLycPath: Swift.String
+  @objc public func pcmFileToWave(pcmFilePath: Swift.String = JXWaveHelper.tmpPcmPath, wavFilePath: Swift.String = JXWaveHelper.tmpWavPath, channels: Swift.UInt32 = 1, simpleRate: Swift.UInt32 = 16000) -> Swift.Bool
+  public func readWaveHeader(wavePath: Swift.String) -> (fileSize: Swift.Int, channel: Swift.Int, sampleRate: Swift.Int, bitRate: Swift.Int, sampleBit: Swift.Int, dataSize: Swift.Int)
+  @objc public func divideLeftAndRight(_ wavePath: Swift.String, _ leftPath: Swift.String = JXWaveHelper.leftPath, _ rightPath: Swift.String = JXWaveHelper.rightPath, handler: @escaping (Swift.Bool) -> Swift.Void)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class JXCrcHelper : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.JXCrcHelper
+  @objc public func getCrc(path: Swift.String) -> Swift.Int
+  @objc public func checkCrc(crc: Swift.Int, ofFile path: Swift.String) -> Swift.Bool
+  @objc deinit
+}
+extension Foundation.FileManager {
+  public func fileSize(path: Swift.String) -> Swift.Int
+}
+@_hasMissingDesignatedInitializers open class NetworkReachabilityManager {
+  public enum NetworkReachabilityStatus {
+    case unknown
+    case notReachable
+    case reachable(PlaudBleSDK.NetworkReachabilityManager.ConnectionType)
+  }
+  public enum ConnectionType {
+    case ethernetOrWiFi
+    case wwan
+    public static func == (a: PlaudBleSDK.NetworkReachabilityManager.ConnectionType, b: PlaudBleSDK.NetworkReachabilityManager.ConnectionType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public typealias Listener = (PlaudBleSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> Swift.Void
+  open var isReachable: Swift.Bool {
+    get
+  }
+  open var isReachableOnWWAN: Swift.Bool {
+    get
+  }
+  open var isReachableOnEthernetOrWiFi: Swift.Bool {
+    get
+  }
+  open var networkReachabilityStatus: PlaudBleSDK.NetworkReachabilityManager.NetworkReachabilityStatus {
+    get
+  }
+  open var listenerQueue: Dispatch.DispatchQueue
+  open var listener: PlaudBleSDK.NetworkReachabilityManager.Listener?
+  open var flags: SystemConfiguration.SCNetworkReachabilityFlags? {
+    get
+  }
+  open var previousFlags: SystemConfiguration.SCNetworkReachabilityFlags
+  convenience public init?(host: Swift.String)
+  convenience public init?()
+  @objc deinit
+  @discardableResult
+  open func startListening() -> Swift.Bool
+  open func stopListening()
+}
+extension PlaudBleSDK.NetworkReachabilityManager.NetworkReachabilityStatus : Swift.Equatable {
+}
+public func == (lhs: PlaudBleSDK.NetworkReachabilityManager.NetworkReachabilityStatus, rhs: PlaudBleSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> Swift.Bool
+@_inheritsConvenienceInitializers @objc(JXAvcDecoder) public class JXAvcDecoder : ObjectiveC.NSObject {
+  @objc final public let packSize: Swift.Int
+  @objc final public let twoChannelPackSize: Swift.Int
+  @objc final public let fourChannelPackSize: Swift.Int
+  @objc override dynamic public init()
+  @objc public func createDecoderIfNeed(_ channels: Swift.Int = 1)
+  @objc public func decode(_ data: Foundation.Data, _ channels: Swift.Int) -> Foundation.Data?
+  @objc public func releaseDecoder()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class JXFileDecoder : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.JXFileDecoder
+  @objc public func pcmToWav(pcmPath: Swift.String, wavPath: Swift.String, channels: Swift.UInt32 = 1, simpleRate: Swift.UInt32 = 16000, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
+  @objc public func resetWavHead(_ wavPath: Swift.String, _ channels: Swift.UInt32, _ sampleRate: Swift.UInt32 = 16000)
+  @objc deinit
+}
+extension PlaudBleSDK.JXFileDecoder {
+  @objc dynamic public func hasOggMulToSingleTask() -> Swift.Bool
+  @objc dynamic public func oggMulToSingleCancel()
+  @objc dynamic public func oggMulToSingle(_ mulPath: Swift.String, _ singlePath: Swift.String, _ channels: Swift.Int32, _ callback: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+}
+extension PlaudBleSDK.JXFileDecoder {
+  @objc dynamic public func hasAvcToOggTask() -> Swift.Bool
+  @objc dynamic public func convertAvcToOggCancel()
+  @objc dynamic public func oggToOpus(_ oggPath: Swift.String, _ opusPath: Swift.String, _ channels: Swift.Int32, _ callback: @escaping (Swift.Bool) -> Swift.Void)
+  @objc dynamic public func avcToOgg(_ avcPath: Swift.String, _ oggPath: Swift.String, clearUnfinished: Swift.Bool = true, _ iflyToolongCut: Swift.Bool = true, _ channels: Swift.Int32 = 1, _ targetChannels: Swift.Int32 = 1, _ ns_agc: Swift.Bool = false, _ callback: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+}
+extension PlaudBleSDK.JXFileDecoder {
+  @objc dynamic public func hasOggToMp3Task() -> Swift.Bool
+  @objc dynamic public func convertOggToMp3Cancel()
+  @objc dynamic public func oggToMp3(_ oggPath: Swift.String, _ mp3Path: Swift.String, _ channels: Swift.Int32, _ quality: Swift.Int32 = 4, _ callback: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+}
+extension PlaudBleSDK.JXFileDecoder {
+  @objc dynamic public func hasAvcToMp3Task() -> Swift.Bool
+  @objc dynamic public func convertAvcToMp3Cancel()
+  @objc dynamic public func avcToMp3(avcPath: Swift.String, mp3Path: Swift.String, clearUnfinished: Swift.Bool = true, quality: Swift.Int32 = 4, channels: Swift.Int32 = 1, ns_agc: Swift.Bool = false, completionHandler: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+}
+extension PlaudBleSDK.JXFileDecoder {
+  @objc dynamic public func hasPcmToMp3Task() -> Swift.Bool
+  @objc dynamic public func convertPcmToMp3Cancel()
+  @objc dynamic public func pcmToMp3(pcmPath: Swift.String, mp3Path: Swift.String, clearUnfinished: Swift.Bool = true, quality: Swift.Int32 = 4, channels: Swift.Int32 = 1, completionHandler: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+}
+extension PlaudBleSDK.JXFileDecoder {
+  @objc dynamic public func hasAvcToPcmTask() -> Swift.Bool
+  @objc dynamic public func convertAvcToPcmCancel()
+  @objc dynamic public func avcToPcm(avcPath: Swift.String, pcmPath: Swift.String, clearUnfinished: Swift.Bool = true, channels: Swift.Int32 = 1, ns_agc: Swift.Bool = false, completionHandler: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+  @objc dynamic public func oggToPcm(avcPath: Swift.String, pcmPath: Swift.String, clearUnfinished: Swift.Bool = true, channels: Swift.Int32 = 1, ns_agc: Swift.Bool = false, completionHandler: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+}
+extension PlaudBleSDK.JXFileDecoder {
+  @objc dynamic public func hasAvcToWavTask() -> Swift.Bool
+  @objc dynamic public func convertAvcToWavCancel()
+  @objc dynamic public func avcToWav(avcPath: Swift.String, wavPath: Swift.String, channels: Swift.Int32 = 1, ns_agc: Swift.Bool = false, clearUnfinished: Swift.Bool = true, completionHandler: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+}
+extension PlaudBleSDK.JXFileDecoder {
+  @objc dynamic public func hasAvcToNoiseReductionWav() -> Swift.Bool
+  @objc dynamic public func convertAvcToNoiseReductionWavCancel()
+  @objc dynamic public func avcToNoiseReductionWav(avcPath: Swift.String, wavPath: Swift.String, channels: Swift.Int32 = 1, sound_plus: Swift.Bool = false, noiseReductionGain: Swift.Int = 6, clearUnfinished: Swift.Bool = true, completionHandler: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+}
+@objc public protocol JXPcmProcessDelegate {
+  @objc func onPcmData(_ sessionId: Swift.Int, _ millSec: Swift.Int, _ pcmData: Foundation.Data)
+  @objc func onDecodeErr(_ millSec: Swift.Int)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class JXPcmProcess : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.JXPcmProcess
+  @objc weak public var delegate: (any PlaudBleSDK.JXPcmProcessDelegate)?
+  @objc public var callbackQueue: Dispatch.DispatchQueue
+  @objc public func resetWith(_ sessionId: Swift.Int, _ channel: Swift.Int, _ isOgg: Swift.Bool, _ nsAgc: Swift.Bool = false)
+  @objc public func receiveData(_ sessionId: Swift.Int, _ start: Swift.Int, _ data: Foundation.Data)
+  @objc public func receiveDataBytes(_ sessionId: Swift.Int, _ start: Swift.Int, _ data: Foundation.Data)
+  @objc deinit
+}
+extension PlaudBleSDK.JXPcmProcess : PlaudBleSDK.JXPcmProcessDelegate {
+  @objc dynamic public func onPcmData(_ sessionId: Swift.Int, _ millSec: Swift.Int, _ pcmData: Foundation.Data)
+  @objc dynamic public func onDecodeErr(_ millSec: Swift.Int)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class JXWave2PcmProcess : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.JXWave2PcmProcess
+  @objc weak public var delegate: (any PlaudBleSDK.JXPcmProcessDelegate)?
+  @objc public var callbackQueue: Dispatch.DispatchQueue
+  @objc public func resetWith(_ sessionId: Swift.Int)
+  @objc public func receiveData(_ sessionId: Swift.Int, _ start: Swift.Int, _ data: Foundation.Data)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class PDFileSoundWave : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.PDFileSoundWave
+  @objc public func hasAvcToSoundWaveTask() -> Swift.Bool
+  @objc public func generateSoundWaveCancel()
+  @objc public func createSoundWave(_ filePath: Swift.String, _ channels: Swift.Int, _ isOgg: Swift.Bool, _ isMusic: Swift.Bool, _ callback: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+  @objc public func avcToSoundWave(avcPath: Swift.String, channels: Swift.Int = 1, completionHandler: @escaping (Swift.Bool, Swift.Int) -> Swift.Void)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class PDRecordVolumer : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.PDRecordVolumer
+  @objc public var waveInterval: Swift.Int
+  @objc public var volumeArr: [[Swift.Int]]
+  public var volumeMeters: [(sec: Swift.Int, volume: Swift.Int)]
+  @objc public var curSec: Swift.Int {
+    get
+  }
+  @objc public func averageVolume(_ pcmData: Foundation.Data) -> Swift.Int
+  @objc public func append(start: Swift.Int, pcmData: Foundation.Data)
+  public func middleNum(_ volumeArr: inout [Swift.Int]) -> Swift.Int
+  @objc public func reset()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class PDRecordingVolumer : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudBleSDK.PDRecordingVolumer
+  @objc weak public var delegate: (any PlaudBleSDK.PDVolumeProtocol)?
+  @objc public var waveInterval: Swift.Int
+  @objc public var volumeArr: [[Swift.Int]] {
+    get
+  }
+  public var volumeMeters: [(sec: Swift.Int, volume: Swift.Int)] {
+    get
+  }
+  public var volumePerTwentyMsecs: [(perTwentyMsec: Swift.Int, volume: Swift.Int)] {
+    get
+  }
+  @objc public var curSec: Swift.Int {
+    get
+  }
+  @objc public var curMillisec: Swift.Int {
+    get
+  }
+  @objc public var curFileSize: Swift.Int {
+    get
+  }
+  @objc public func averageVolume(_ pcmData: Foundation.Data) -> CoreFoundation.CGFloat
+  @objc public func append(start: Swift.Int, pcmData: Foundation.Data, channels: Swift.Int = 1)
+  @objc public func append(_ millSec: Swift.Int, _ pcmData: Foundation.Data)
+  @objc public func setOldVolumeMeters(meters: [[Swift.Int]])
+  public func setOldVolumeMeters(meters: [(sec: Swift.Int, volume: Swift.Int)])
+  @objc public func reset()
+  @objc deinit
+}
+@objc public protocol PDVolumeProtocol {
+  @objc func onDuration(millisec: Swift.Int)
+  @objc func onVolume(sec: Swift.Int, volume: Swift.Int)
+  @objc func onVolumePerTwentyMsec(mescSecond: Swift.Int, volume: Swift.Int)
+}
+@_hasMissingDesignatedInitializers public class SecretUtil {
+  public static func decryptWithPrivateKey(_ encryptedData: Foundation.Data, privateKeyPem: Swift.String) throws -> Foundation.Data
+  public static func encryptWithChaChaPoly1305Separate(_ data: Foundation.Data, key: Foundation.Data, nonce: Foundation.Data, ad: Foundation.Data? = nil) throws -> (ciphertext: Foundation.Data, tag: Foundation.Data)
+  public static func decryptWithChaChaPoly1305Separate(_ ciphertext: Foundation.Data, tag: Foundation.Data, key: Foundation.Data, nonce: Foundation.Data, ad: Foundation.Data? = nil) throws -> Foundation.Data
+  public static func encryptWithAES256Separate(_ data: Foundation.Data, key: Foundation.Data, nonce: Foundation.Data, ad: Foundation.Data? = nil) throws -> (ciphertext: Foundation.Data, tag: Foundation.Data)
+  public static func decryptWithAES256Separate(_ ciphertext: Foundation.Data, tag: Foundation.Data, key: Foundation.Data, nonce: Foundation.Data, ad: Foundation.Data? = nil) throws -> Foundation.Data
+  public static func decryptWithFallback(ciphertext: Foundation.Data, tag: Foundation.Data, key: Foundation.Data, nonce: Foundation.Data, ad: Foundation.Data? = nil, preferAes: Swift.Bool) throws -> Foundation.Data
+  public static func decryptWithChaCha20Stream(_ ciphertext: Foundation.Data, key: Foundation.Data, nonce: Foundation.Data, counter: Swift.UInt32 = 0) throws -> Foundation.Data
+  @objc deinit
+}
+public class Signature {
+  public enum DigestType {
+    case sha1
+    case sha224
+    case sha256
+    case sha384
+    case sha512
+    public static func == (a: PlaudBleSDK.Signature.DigestType, b: PlaudBleSDK.Signature.DigestType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  final public let data: Foundation.Data
+  public init(data: Foundation.Data)
+  convenience public init(base64Encoded base64String: Swift.String) throws
+  public var base64String: Swift.String {
+    get
+  }
+  @objc deinit
+}
+public class PublicKey : PlaudBleSDK.Key {
+  final public let reference: Security.SecKey
+  final public let originalData: Foundation.Data?
+  public func pemString() throws -> Swift.String
+  required public init(reference: Security.SecKey) throws
+  required public init(data: Foundation.Data) throws
+  public static func publicKeys(pemEncoded pemString: Swift.String) -> [PlaudBleSDK.PublicKey]
+  @objc deinit
+}
+extension Foundation.Data {
+  public func prependx509Header() -> Foundation.Data
+  public func hasX509Header() throws -> Swift.Bool
+  public func isAnHeaderlessKey() throws -> Swift.Bool
+}
+public class PrivateKey : PlaudBleSDK.Key {
+  final public let reference: Security.SecKey
+  final public let originalData: Foundation.Data?
+  public func pemString() throws -> Swift.String
+  required public init(reference: Security.SecKey) throws
+  required public init(data: Foundation.Data) throws
+  @objc deinit
+}
+public protocol Message {
+  var data: Foundation.Data { get }
+  var base64String: Swift.String { get }
+  init(data: Foundation.Data)
+  init(base64Encoded base64String: Swift.String) throws
+}
+extension PlaudBleSDK.Message {
+  public var base64String: Swift.String {
+    get
+  }
+  public init(base64Encoded base64String: Swift.String) throws
+}
+public enum SwiftyRSAError : Swift.Error {
+  case pemDoesNotContainKey
+  case keyRepresentationFailed(error: CoreFoundation.CFError?)
+  case keyGenerationFailed(error: CoreFoundation.CFError?)
+  case keyCreateFailed(error: CoreFoundation.CFError?)
+  case keyAddFailed(status: Darwin.OSStatus)
+  case keyCopyFailed(status: Darwin.OSStatus)
+  case tagEncodingFailed
+  case asn1ParsingFailed
+  case invalidAsn1RootNode
+  case invalidAsn1Structure
+  case invalidBase64String
+  case chunkDecryptFailed(index: Swift.Int)
+  case chunkEncryptFailed(index: Swift.Int)
+  case stringToDataConversionFailed
+  case dataToStringConversionFailed
+  case invalidDigestSize(digestSize: Swift.Int, maxChunkSize: Swift.Int)
+  case signatureCreateFailed(status: Darwin.OSStatus)
+  case signatureVerifyFailed(status: Darwin.OSStatus)
+  case pemFileNotFound(name: Swift.String)
+  case derFileNotFound(name: Swift.String)
+  case notAPublicKey
+  case notAPrivateKey
+  case x509CertificateFailed
+}
+public class EncryptedMessage : PlaudBleSDK.Message {
+  final public let data: Foundation.Data
+  required public init(data: Foundation.Data)
+  public func decrypted(with key: PlaudBleSDK.PrivateKey, padding: PlaudBleSDK.Padding) throws -> PlaudBleSDK.ClearMessage
+  @objc deinit
+}
+public typealias Padding = Security.SecPadding
+public enum SwiftyRSA {
+  @available(iOS 10.0, watchOS 3.0, tvOS 10.0, *)
+  public static func generateRSAKeyPair(sizeInBits size: Swift.Int) throws -> (privateKey: PlaudBleSDK.PrivateKey, publicKey: PlaudBleSDK.PublicKey)
+}
+public class ClearMessage : PlaudBleSDK.Message {
+  final public let data: Foundation.Data
+  required public init(data: Foundation.Data)
+  convenience public init(string: Swift.String, using encoding: Swift.String.Encoding) throws
+  public func string(encoding: Swift.String.Encoding) throws -> Swift.String
+  public func encrypted(with key: PlaudBleSDK.PublicKey, padding: PlaudBleSDK.Padding) throws -> PlaudBleSDK.EncryptedMessage
+  public func signed(with key: PlaudBleSDK.PrivateKey, digestType: PlaudBleSDK.Signature.DigestType) throws -> PlaudBleSDK.Signature
+  public func verify(with key: PlaudBleSDK.PublicKey, signature: PlaudBleSDK.Signature, digestType: PlaudBleSDK.Signature.DigestType) throws -> Swift.Bool
+  @objc deinit
+}
+public protocol Key : AnyObject {
+  var reference: Security.SecKey { get }
+  var originalData: Foundation.Data? { get }
+  init(data: Foundation.Data) throws
+  init(reference: Security.SecKey) throws
+  init(base64Encoded base64String: Swift.String) throws
+  init(pemEncoded pemString: Swift.String) throws
+  init(pemNamed pemName: Swift.String, in bundle: Foundation.Bundle) throws
+  init(derNamed derName: Swift.String, in bundle: Foundation.Bundle) throws
+  func pemString() throws -> Swift.String
+  func data() throws -> Foundation.Data
+  func base64String() throws -> Swift.String
+}
+extension PlaudBleSDK.Key {
+  public func base64String() throws -> Swift.String
+  public func data() throws -> Foundation.Data
+  public init(base64Encoded base64String: Swift.String) throws
+  public init(pemEncoded pemString: Swift.String) throws
+  public init(pemNamed pemName: Swift.String, in bundle: Foundation.Bundle = Bundle.main) throws
+  public init(derNamed derName: Swift.String, in bundle: Foundation.Bundle = Bundle.main) throws
+}
+@_hasMissingDesignatedInitializers final public class BleLogger {
+  public static let shared: PlaudBleSDK.BleLogger
+  final public func setLog(opened: Swift.Bool, logBlock: ((Swift.String) -> Swift.Void)? = nil, wlogBlock: ((Swift.String) -> Swift.Void)? = nil, sync: Swift.Bool = false)
+  final public func log(_ text: Swift.String, data: Foundation.Data? = nil, maxBytes: Swift.Int? = 80)
+  final public func wLog(_ text: Swift.String, data: Foundation.Data? = nil, maxBytes: Swift.Int? = 80)
+  @objc deinit
+}
+public protocol BleFeatureProvider {
+  func isFeatureFlagEnabled(_ key: Swift.String) -> Swift.Bool
+  func getFeatureFlag(_ key: Swift.String) -> Any?
+  func isAppFeatureConfigEnabled(_ key: Swift.String) -> Swift.Bool
+  func getAppFeatureConfig(_ key: Swift.String) -> Any?
+}
+@_hasMissingDesignatedInitializers public class PenBleConfig {
+  public static var featureProvider: (any PlaudBleSDK.BleFeatureProvider)?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc open class UpdateInfo : ObjectiveC.NSObject {
+  @objc public var sn: Swift.String
+  @objc public var swVersion: Swift.String
+  @objc public var currentVersion: Swift.String
+  @objc public var version: Swift.String
+  @objc public var url: Swift.String
+  @objc public var size: Swift.Int
+  @objc public var modifyDesc: Swift.String
+  @objc public var updateDesc: Swift.String
+  @objc public var updatePreTip: Swift.String
+  @objc public var updatingTip: Swift.String
+  @objc public var failureTip: Swift.String
+  @objc public var fromVersion: Swift.String
+  @objc public var toVersion: Swift.String
+  @objc public var md5: Swift.String
+  @objc override dynamic public init()
+  @objc public func hasNewVersion(_ device: PlaudBleSDK.BleDevice) -> Swift.Bool
+  @objc public func checkMD5(path: Swift.String) -> Swift.Bool
+  @objc public func toString() -> Swift.String
+  @objc deinit
+}
+@objc(PublicKey) public class _objc_PublicKey : ObjectiveC.NSObject, PlaudBleSDK.Key {
+  @objc public var reference: Security.SecKey {
+    @objc get
+  }
+  @objc public var originalData: Foundation.Data? {
+    @objc get
+  }
+  @objc public func pemString() throws -> Swift.String
+  @objc public func data() throws -> Foundation.Data
+  @objc public func base64String() throws -> Swift.String
+  required public init(swiftValue: PlaudBleSDK.PublicKey)
+  @objc required public init(data: Foundation.Data) throws
+  @objc required public init(reference: Security.SecKey) throws
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc required public init(pemEncoded pemString: Swift.String) throws
+  @objc required public init(pemNamed pemName: Swift.String, in bundle: Foundation.Bundle) throws
+  @objc required public init(derNamed derName: Swift.String, in bundle: Foundation.Bundle) throws
+  @objc public static func publicKeys(pemEncoded pemString: Swift.String) -> [PlaudBleSDK._objc_PublicKey]
+  @objc deinit
+}
+@objc(PrivateKey) public class _objc_PrivateKey : ObjectiveC.NSObject, PlaudBleSDK.Key {
+  @objc public var reference: Security.SecKey {
+    @objc get
+  }
+  @objc public var originalData: Foundation.Data? {
+    @objc get
+  }
+  @objc public func pemString() throws -> Swift.String
+  @objc public func data() throws -> Foundation.Data
+  @objc public func base64String() throws -> Swift.String
+  required public init(swiftValue: PlaudBleSDK.PrivateKey)
+  @objc required public init(data: Foundation.Data) throws
+  @objc required public init(reference: Security.SecKey) throws
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc required public init(pemEncoded pemString: Swift.String) throws
+  @objc required public init(pemNamed pemName: Swift.String, in bundle: Foundation.Bundle) throws
+  @objc required public init(derNamed derName: Swift.String, in bundle: Foundation.Bundle) throws
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc(VerificationResult) public class _objc_VerificationResult : ObjectiveC.NSObject {
+  @objc final public let isSuccessful: Swift.Bool
+  @objc deinit
+}
+@objc(ClearMessage) public class _objc_ClearMessage : ObjectiveC.NSObject, PlaudBleSDK.Message {
+  @objc public var base64String: Swift.String {
+    @objc get
+  }
+  @objc public var data: Foundation.Data {
+    @objc get
+  }
+  required public init(swiftValue: PlaudBleSDK.ClearMessage)
+  @objc required public init(data: Foundation.Data)
+  @objc required public init(string: Swift.String, using rawEncoding: Swift.UInt) throws
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc public func string(encoding rawEncoding: Swift.UInt) throws -> Swift.String
+  @objc public func encrypted(with key: PlaudBleSDK._objc_PublicKey, padding: PlaudBleSDK.Padding) throws -> PlaudBleSDK._objc_EncryptedMessage
+  @objc public func signed(with key: PlaudBleSDK._objc_PrivateKey, digestType: PlaudBleSDK._objc_Signature.DigestType) throws -> PlaudBleSDK._objc_Signature
+  @objc public func verify(with key: PlaudBleSDK._objc_PublicKey, signature: PlaudBleSDK._objc_Signature, digestType: PlaudBleSDK._objc_Signature.DigestType) throws -> PlaudBleSDK._objc_VerificationResult
+  @objc deinit
+}
+@objc(EncryptedMessage) public class _objc_EncryptedMessage : ObjectiveC.NSObject, PlaudBleSDK.Message {
+  @objc public var base64String: Swift.String {
+    @objc get
+  }
+  @objc public var data: Foundation.Data {
+    @objc get
+  }
+  required public init(swiftValue: PlaudBleSDK.EncryptedMessage)
+  @objc required public init(data: Foundation.Data)
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc public func decrypted(with key: PlaudBleSDK._objc_PrivateKey, padding: PlaudBleSDK.Padding) throws -> PlaudBleSDK._objc_ClearMessage
+  @objc deinit
+}
+@objc(Signature) public class _objc_Signature : ObjectiveC.NSObject {
+  @objc public enum DigestType : Swift.Int {
+    case sha1
+    case sha224
+    case sha256
+    case sha384
+    case sha512
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public var base64String: Swift.String {
+    @objc get
+  }
+  @objc public var data: Foundation.Data {
+    @objc get
+  }
+  required public init(swiftValue: PlaudBleSDK.Signature)
+  @objc public init(data: Foundation.Data)
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc deinit
+}
+extension PlaudBleSDK.BleAgent.ConnectStage : Swift.Equatable {}
+extension PlaudBleSDK.BleAgent.ConnectStage : Swift.Hashable {}
+extension PlaudBleSDK.BleAgent.ConnectStage : Swift.RawRepresentable {}
+extension PlaudBleSDK.CustomerAuth : Swift.Equatable {}
+extension PlaudBleSDK.CustomerAuth : Swift.Hashable {}
+extension PlaudBleSDK.SSNAuth : Swift.Equatable {}
+extension PlaudBleSDK.SSNAuth : Swift.Hashable {}
+extension PlaudBleSDK.CommonType : Swift.Equatable {}
+extension PlaudBleSDK.CommonType : Swift.Hashable {}
+extension PlaudBleSDK.CommonType : Swift.RawRepresentable {}
+extension PlaudBleSDK.CommonAction : Swift.Equatable {}
+extension PlaudBleSDK.CommonAction : Swift.Hashable {}
+extension PlaudBleSDK.CommonAction : Swift.RawRepresentable {}
+extension PlaudBleSDK.BacklightBright : Swift.Equatable {}
+extension PlaudBleSDK.BacklightBright : Swift.Hashable {}
+extension PlaudBleSDK.BacklightBright : Swift.RawRepresentable {}
+extension PlaudBleSDK.BacklightDuration : Swift.Equatable {}
+extension PlaudBleSDK.BacklightDuration : Swift.Hashable {}
+extension PlaudBleSDK.BacklightDuration : Swift.RawRepresentable {}
+extension PlaudBleSDK.LanguageType : Swift.Equatable {}
+extension PlaudBleSDK.LanguageType : Swift.Hashable {}
+extension PlaudBleSDK.LanguageType : Swift.RawRepresentable {}
+extension PlaudBleSDK.RecScene : Swift.Equatable {}
+extension PlaudBleSDK.RecScene : Swift.Hashable {}
+extension PlaudBleSDK.RecScene : Swift.RawRepresentable {}
+extension PlaudBleSDK.RecMode : Swift.Equatable {}
+extension PlaudBleSDK.RecMode : Swift.Hashable {}
+extension PlaudBleSDK.RecMode : Swift.RawRepresentable {}
+extension PlaudBleSDK.VadSensitivity : Swift.Equatable {}
+extension PlaudBleSDK.VadSensitivity : Swift.Hashable {}
+extension PlaudBleSDK.VadSensitivity : Swift.RawRepresentable {}
+extension PlaudBleSDK.VpuGain : Swift.Equatable {}
+extension PlaudBleSDK.VpuGain : Swift.Hashable {}
+extension PlaudBleSDK.VpuGain : Swift.RawRepresentable {}
+extension PlaudBleSDK.SwitchHandlerID : Swift.Equatable {}
+extension PlaudBleSDK.SwitchHandlerID : Swift.Hashable {}
+extension PlaudBleSDK.SwitchHandlerID : Swift.RawRepresentable {}
+extension PlaudBleSDK.WebsocketType : Swift.Equatable {}
+extension PlaudBleSDK.WebsocketType : Swift.Hashable {}
+extension PlaudBleSDK.WebsocketType : Swift.RawRepresentable {}
+extension PlaudBleSDK.AutoClear : Swift.Equatable {}
+extension PlaudBleSDK.AutoClear : Swift.Hashable {}
+extension PlaudBleSDK.AutoClear : Swift.RawRepresentable {}
+extension PlaudBleSDK.NetworkReachabilityManager.ConnectionType : Swift.Equatable {}
+extension PlaudBleSDK.NetworkReachabilityManager.ConnectionType : Swift.Hashable {}
+extension PlaudBleSDK.Signature.DigestType : Swift.Equatable {}
+extension PlaudBleSDK.Signature.DigestType : Swift.Hashable {}
+extension PlaudBleSDK._objc_Signature.DigestType : Swift.Equatable {}
+extension PlaudBleSDK._objc_Signature.DigestType : Swift.Hashable {}
+extension PlaudBleSDK._objc_Signature.DigestType : Swift.RawRepresentable {}

@@ -1,0 +1,63 @@
+name: PlaudTemplateApp
+options:
+  bundleIdPrefix: com.plaud
+  projectFormat: Xcode 14.0
+  postGenCommand: perl -0pi -e 's/objectVersion = \d+;/objectVersion = 56;/; s/\n\t\t\tpreferredProjectObjectVersion = \d+;//; s/\n\t\t\tminimizedProjectReferenceProxies = 1;//; s/\n\t\t\tcompatibilityVersion = "Xcode 14.0";//g; s|(\/\* Begin PBXProject section \*\/.*?buildConfigurationList = .*?;\n)|$1\t\t\tcompatibilityVersion = "Xcode 14.0";\n|s' PlaudTemplateApp.xcodeproj/project.pbxproj
+  deploymentTarget:
+    iOS: "14.0"
+  createIntermediateGroups: true
+
+configFiles:
+  Debug: PartnerConfig.xcconfig
+  Release: PartnerConfig.xcconfig
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  PlaudTemplateApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    entitlements:
+      path: PlaudTemplateApp/PlaudTemplateApp.entitlements
+      properties:
+        com.apple.developer.networking.HotspotConfiguration: true
+        com.apple.developer.networking.wifi-info: true
+    sources:
+      - path: PlaudTemplateApp
+    resources:
+      - path: ../../sdk/ios/PlaudDeviceBasicSDK.bundle
+    dependencies:
+      - framework: ../../sdk/ios/PlaudDeviceBasicSDK.framework
+        embed: true
+      - framework: ../../sdk/ios/PlaudBleSDK.framework
+        embed: true
+      - framework: ../../sdk/ios/PlaudWiFiSDK.framework
+        embed: true
+    info:
+      path: PlaudTemplateApp/Info.plist
+      properties:
+        UILaunchScreen:
+          UIColorName: "systemBackground"
+        UserAccessToken: $(USER_ACCESS_TOKEN)
+        PartnerToken: $(PARTNER_TOKEN)
+        PlaudClientId: $(PLAUD_CLIENT_ID)
+        PlaudApiKey: $(PLAUD_API_KEY)
+        NSBluetoothAlwaysUsageDescription: Bluetooth is required to connect to your Plaud recording device.
+        NSBluetoothPeripheralUsageDescription: Bluetooth is required to connect to your Plaud recording device.
+        NSLocalNetworkUsageDescription: Local network access is required for WiFi fast transfer.
+        NSLocationWhenInUseUsageDescription: Location access is required for WiFi fast transfer to identify and connect to your Plaud device hotspot.
+        UIBackgroundModes:
+          - bluetooth-central
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate

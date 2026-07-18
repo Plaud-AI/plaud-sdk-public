@@ -1,0 +1,168 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
+// swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name PlaudWiFiSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import SystemConfiguration.CaptiveNetwork
+import CommonCrypto
+import CoreLocation
+import Foundation
+import NetworkExtension
+import PlaudBleSDK
+@_exported import PlaudWiFiSDK
+import Swift
+import SystemConfiguration
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class Agent : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudWiFiSDK.Agent
+  @objc public func isDeviceConnect() -> Swift.Bool
+  @objc public func bleDevice() -> PlaudBleSDK.BleDevice?
+  @objc public func getFileList(_ uid: Swift.Int, _ sessionId: Swift.Int, _ single: Swift.Bool = false)
+  @objc public func syncFile(_ sessionId: Swift.Int, _ start: Swift.Int, _ end: Swift.Int = 0, _ decode: Swift.Bool = false, _ scene: Swift.Int = 1)
+  @objc public func stopSyncFile(_ sessionId: Swift.Int, _ scene: Swift.Int = 1)
+  @objc public func deleteFile(_ sessionId: Swift.Int, _ scene: Swift.Int = 1)
+  @objc public func sessionId() -> Swift.Int
+  @objc public func isDownloading() -> Swift.Bool
+  @objc public func isRecording() -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers open class NetworkReachabilityManager {
+  public enum NetworkReachabilityStatus {
+    case unknown
+    case notReachable
+    case reachable(PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType)
+  }
+  public enum ConnectionType {
+    case ethernetOrWiFi
+    case wwan
+    public static func == (a: PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType, b: PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public typealias Listener = (PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> Swift.Void
+  open var isReachable: Swift.Bool {
+    get
+  }
+  open var isReachableOnWWAN: Swift.Bool {
+    get
+  }
+  open var isReachableOnEthernetOrWiFi: Swift.Bool {
+    get
+  }
+  open var networkReachabilityStatus: PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus {
+    get
+  }
+  open var listenerQueue: Dispatch.DispatchQueue
+  open var listener: PlaudWiFiSDK.NetworkReachabilityManager.Listener?
+  open var flags: SystemConfiguration.SCNetworkReachabilityFlags? {
+    get
+  }
+  open var previousFlags: SystemConfiguration.SCNetworkReachabilityFlags
+  convenience public init?(host: Swift.String)
+  convenience public init?()
+  @objc deinit
+  @discardableResult
+  open func startListening() -> Swift.Bool
+  open func stopListening()
+}
+extension PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus : Swift.Equatable {
+}
+public func == (lhs: PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus, rhs: PlaudWiFiSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> Swift.Bool
+@objc public protocol WiFiAgentProtocol {
+  @objc func wifiCommonErr(_ cmd: Swift.Int, _ status: Swift.Int)
+  @objc func wifiHandshake(_ status: Swift.Int)
+  @objc func wifiPower(_ power: Swift.Int, _ voltage: Swift.Int)
+  @objc func wifiFileListFail(_ status: Swift.Int)
+  @objc func wifiFileList(_ files: [PlaudBleSDK.BleFile])
+  @objc func wifiSyncFile(_ sessionId: Swift.Int, _ status: Swift.Int)
+  @objc func wifiSyncFileData(_ sessionId: Swift.Int, _ offset: Swift.Int, _ count: Swift.Int, _ binData: Foundation.Data)
+  @objc func wifiDataComplete()
+  @objc func wifiSyncFileStop(_ status: Swift.Int)
+  @objc func wifiFileDelete(_ sessionId: Swift.Int, _ status: Swift.Int)
+  @objc func wifiClientFail()
+  @objc func wifiClose(_ status: Swift.Int)
+  @objc func wifiRateFail(_ status: Swift.Int)
+  @objc func wifiRate(_ instantRate: Swift.Int, _ averageRate: Swift.Int, _ lossRate: Swift.Double)
+  @objc func wifiLogsFail(_ status: Swift.Int)
+  @objc func wifiLogs(_ logData: Foundation.Data?)
+  @objc func wifiTips(_ tips: Swift.Int)
+  @objc func penRequestOTAData(start: Swift.Int, end: Swift.Int, payloadSize: Swift.Int, uid: Swift.Int, sendRatePPS: Swift.Int)
+  @objc func wifiOTAStatus(_ status: Swift.Int, _ uid: Swift.Int)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class WiFiAgent : ObjectiveC.NSObject {
+  @objc public static let shared: PlaudWiFiSDK.WiFiAgent
+  @objc public var connectLoop: Swift.Bool
+  public var isServerStart: Swift.Bool {
+    get
+  }
+  public var isClientOpen: Swift.Bool {
+    get
+  }
+  public var wifiVersion: Swift.Int {
+    get
+  }
+  public var isHandshakeOk: Swift.Bool {
+    get
+  }
+  @objc public var sessionId: Swift.Int {
+    get
+  }
+  @objc public var isDownloading: Swift.Bool {
+    get
+  }
+  @objc weak public var delegate: (any PlaudWiFiSDK.WiFiAgentProtocol)?
+  @objc public var cmdDelegateQueue: Dispatch.DispatchQueue
+  @objc public var bleDevice: PlaudBleSDK.BleDevice? {
+    @objc get
+    @objc set
+  }
+  @objc public func openReleaseLog(_ opened: Swift.Bool, _ backBlock: ((Swift.String) -> Swift.Void)? = nil)
+  @objc public func openLog(_ opened: Swift.Bool, _ backBlock: ((Swift.String) -> Swift.Void)? = nil)
+  @objc public func listenPort(_ ssid: Swift.String, _ overtimeSec: Swift.Int = 30)
+  @available(iOS 11.0, *)
+  @objc public func connectWifi(_ ssid: Swift.String, _ passphrase: Swift.String, _ overtimeSec: Swift.Int = 60, _ needRetry: Swift.Bool = true)
+  @objc public func cancelConnectWifi()
+  @available(iOS 11.0, *)
+  @objc public func clearAllWiFiConfigurations()
+  @objc public func clearAllWiFiConfigurationsCompat()
+  @objc public func disconnect()
+  @objc deinit
+}
+extension PlaudWiFiSDK.WiFiAgent : PlaudWiFiSDK.JXWebSocketServerDelegate {
+  @objc dynamic public func serverDidStart()
+  @objc dynamic public func serverDidFailWithError(_ error: any Swift.Error)
+  @objc dynamic public func serverDidStop()
+  @objc dynamic public func clientDidOpen()
+  @objc dynamic public func clientDidReceiveText(_ text: Swift.String)
+  @objc dynamic public func clientDidReceive(_ data: Foundation.Data)
+  @objc dynamic public func clientDidFailWithError(_ error: any Swift.Error)
+  @objc dynamic public func clientDidClose(withCode code: Swift.Int, reason: Swift.String, wasClean: Swift.Bool)
+}
+extension PlaudWiFiSDK.WiFiAgent {
+  @objc dynamic public func isWebSocketConnected() -> Swift.Bool
+  public func appGetLogs(_ begin: Swift.Bool)
+  @objc dynamic public func appWiFiRate(_ onOff: Swift.Bool, _ packSize: Swift.Int)
+  @objc dynamic public func appDeleteFile(_ sessionId: Swift.Int, _ scene: Swift.Int = 1)
+  @objc dynamic public func appExtendWifiExitTime()
+  @objc dynamic public func appStopSyncFile(_ sessionId: Swift.Int, _ scene: Swift.Int = 1)
+  @objc dynamic public func appSyncFile(_ sessionId: Swift.Int, _ start: Swift.Int, _ end: Swift.Int = 0, _ scene: Swift.Int = 1)
+  @objc dynamic public func appGetFileList(_ uid: Swift.Int, _ sessionId: Swift.Int, _ single: Swift.Bool = false)
+  @objc dynamic public func startPushOTA(_ uid: Swift.Int, _ fileSize: Swift.Int, crc: Swift.Int, _ toVersion: Swift.Int)
+  @objc dynamic public func sendFilePackToPen(type: Swift.Int, start: Swift.Int32, len: Swift.Int32, last: Swift.Bool, uid: Swift.Int32, binData: Foundation.Data?)
+}
+extension PlaudWiFiSDK.WiFiAgent {
+  @objc dynamic public func getCurrentWiFiName() -> Swift.String?
+  @objc dynamic public func getCurrentWiFiNameWithRetry(maxRetries: Swift.Int = 3, delay: Foundation.TimeInterval = 1.0) -> Swift.String?
+}
+@_hasMissingDesignatedInitializers public class GCDTool {
+  public static let shared: PlaudWiFiSDK.GCDTool
+  public typealias AnythingBlock = () -> Swift.Void
+  public func execute(label identifier: Swift.String, _ work: @escaping @convention(block) () -> Swift.Void) -> PlaudWiFiSDK.GCDTool.AnythingBlock
+  public func cancel(label identifier: Swift.String)
+  @objc deinit
+}
+extension PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType : Swift.Equatable {}
+extension PlaudWiFiSDK.NetworkReachabilityManager.ConnectionType : Swift.Hashable {}
