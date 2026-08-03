@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Converted from iOS Assets.xcassets/scan_outer.imageset/scan_outer.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="194dp" android:height="194dp"
+    android:viewportWidth="194.0" android:viewportHeight="194.0">
+    <path
+        android:pathData="M194 97C194 150.572 150.572 194 97 194C43.4284 194 0 150.572 0 97C0 43.4284 43.4284 0 97 0C150.572 0 194 43.4284 194 97Z" />
+    <path
+        android:pathData="M194 97H193C193 150.019 150.019 193 97 193V194V195C151.124 195 195 151.124 195 97H194ZM97 194V193C43.9807 193 1 150.019 1 97H0H-1C-1 151.124 42.8761 195 97 195V194ZM0 97H1C1 43.9807 43.9807 1 97 1V0V-1C42.8761 -1 -1 42.8761 -1 97H0ZM97 0V1C150.019 1 193 43.9807 193 97H194H195C195 42.8761 151.124 -1 97 -1V0Z"
+        android:fillColor="#FF000000" />
+    <path
+        android:pathData="M194 97H193C193 150.019 150.019 193 97 193V194V195C151.124 195 195 151.124 195 97H194ZM97 194V193C43.9807 193 1 150.019 1 97H0H-1C-1 151.124 42.8761 195 97 195V194ZM0 97H1C1 43.9807 43.9807 1 97 1V0V-1C42.8761 -1 -1 42.8761 -1 97H0ZM97 0V1C150.019 1 193 43.9807 193 97H194H195C195 42.8761 151.124 -1 97 -1V0Z" />
+</vector>

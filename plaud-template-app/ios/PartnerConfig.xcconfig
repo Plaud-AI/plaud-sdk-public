@@ -1,0 +1,21 @@
+// ============================================================
+// Plaud SDK Configuration
+//
+// Create "PartnerConfig.local.xcconfig" (git-ignored) with your
+// real credentials. It will override the placeholders below.
+//
+// Or edit the values below directly (not recommended for git).
+// ============================================================
+
+// User Access Token (required for SDK device authentication and file upload)
+USER_ACCESS_TOKEN = YOUR_USER_ACCESS_TOKEN_HERE
+
+// Client ID & API Key (required for transcription API)
+PLAUD_CLIENT_ID = YOUR_CLIENT_ID_HERE
+PLAUD_API_KEY = YOUR_API_KEY_HERE
+
+// [Deprecated] Backward compatibility alias
+PARTNER_TOKEN = $(USER_ACCESS_TOKEN)
+
+// Import local overrides (must be LAST to take precedence)
+#include? "PartnerConfig.local.xcconfig"

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme colors -->
+    <color name="bg_primary">#F9F9F9</color>
+    <color name="text_primary">#1F1F1F</color>
+    <color name="text_secondary">#A3A3A3</color>
+    <color name="separator">#EBEBEB</color>
+    <color name="green">#6CAE85</color>
+    <color name="red">#FF503F</color>
+    <color name="light_gray">#D6D6D6</color>
+    <color name="dark_gray">#3D3D3D</color>
+    <color name="gray5">#858585</color>
+    <color name="gray7">#7A7A7A</color>
+    <color name="gray_ad">#ADADAD</color>
+
+    <!-- Functional colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="scan_ring_light">#99C1E8FE</color><!-- #C1E8FE 60% -->
+    <color name="scan_arc_dark">#B34B90B8</color><!-- #4B90B8 70% -->
+    <color name="recording_dark_bg">#1A1A1A</color>
+    <color name="sync_dash_border">#CCCCCC</color>
+    <color name="recording_banner_fill">#1AFF503F</color><!-- red 10% -->
+    <color name="recording_banner_stroke">#4DFF503F</color><!-- red 30% -->
+    <color name="status_synced_bg">#1A6CAE85</color><!-- green 10% -->
+    <color name="status_pending_bg">#1AFF9500</color><!-- orange 10% -->
+    <color name="tab_selected_bg">#1F3D3D3D</color><!-- #3D3D3D @ 12% (iOS) -->
+    <color name="tab_unselected">#7A7A7A</color>
+    <color name="gray_medium">#7A7A7A</color>
+    <color name="tab_bar_white">#E6FFFFFF</color><!-- white 90%: closest flat approximation of iOS blur+white70% (RenderEffect needs API31+) --><!-- white 70% -->
+    <color name="orange">#FF9500</color>
+    <color name="ic_launcher_background">#1F1F1F</color>
+</resources>

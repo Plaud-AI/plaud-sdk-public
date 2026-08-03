@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Date group header — aligned with iOS: 24sp light, #3D3D3D.
+     Top spacing is applied per-position in the adapter (40dp between groups, 0 for the first). -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dateHeaderLabel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="sans-serif-light"
+    android:paddingBottom="20dp"
+    android:textColor="@color/dark_gray"
+    android:textSize="24sp" />

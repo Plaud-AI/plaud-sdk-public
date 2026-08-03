@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Converted from iOS Assets.xcassets/icon_ble_scan.imageset/icon_ble_scan.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="44dp" android:height="44dp"
+    android:viewportWidth="44.0" android:viewportHeight="44.0">
+    <path
+        android:pathData="M12.8333 12.8333L31.1667 31.1667L22 40.3333V3.66667L31.1667 12.8333L12.8333 31.1667"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

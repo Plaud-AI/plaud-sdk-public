@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Play/pause button background: dark rounded rect (#3D3D3D, radius 20), matches iOS -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#3D3D3D" />
+    <corners android:radius="20dp" />
+</shape>

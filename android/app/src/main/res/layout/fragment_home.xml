@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="100dp"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <!-- "Home" large title -->
+        <TextView
+            android:id="@+id/titleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/home"
+            android:textColor="@color/black"
+            android:textSize="44sp" />
+
+        <!-- ===== Device card (collapsed/expanded) ===== -->
+        <LinearLayout
+            android:id="@+id/deviceCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_card"
+            android:clipChildren="true"
+            android:clipToPadding="true"
+            android:orientation="vertical">
+
+            <!-- Collapsed row: device icon + name + status + chevron -->
+            <RelativeLayout
+                android:id="@+id/deviceCardHeader"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <ImageView
+                    android:id="@+id/deviceIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="Device"
+                    android:src="@drawable/ic_device" />
+
+                <TextView
+                    android:id="@+id/deviceNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_toEndOf="@id/deviceIcon"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <!-- Status dot + Connected -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/deviceNameLabel"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toEndOf="@id/deviceIcon"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/statusDot"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/bg_status_dot" />
+
+                    <TextView
+                        android:id="@+id/statusLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/connected"
+                        android:textColor="@color/gray_ad"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/deviceChevron"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="Expand"
+                    android:src="@drawable/ic_chevron_right"
+                    android:tint="@color/gray7" />
+            </RelativeLayout>
+
+            <!-- Expanded content -->
+            <LinearLayout
+                android:id="@+id/deviceExpandedContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp"
+                android:visibility="gone">
+
+                <!-- Battery -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/battery"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/batteryValueLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/gray_ad"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <!-- Battery Bar -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_progress_track">
+
+                    <View
+                        android:id="@+id/batteryFill"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_progress_fill_green" />
+                </FrameLayout>
+
+                <!-- Storage -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/storage"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/storageValueLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/gray_ad"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <!-- Storage Bar -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_progress_track">
+
+                    <View
+                        android:id="@+id/storageFill"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_progress_fill_dark" />
+                </FrameLayout>
+
+                <!-- Manage device button (TextView with border to avoid MaterialButton inset clipping) -->
+                <TextView
+                    android:id="@+id/manageButton"
+                    android:layout_width="133dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_manage_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="@string/manage_device"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <!-- Other paired devices + Add device (rendered programmatically, mirrors iOS) -->
+                <LinearLayout
+                    android:id="@+id/otherDevicesList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===== Recording entry card (dark): rounded black card, bg image aspect-fills ===== -->
+        <FrameLayout
+            android:id="@+id/recordCard"
+            android:layout_width="match_parent"
+            android:layout_height="142dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_record_card"
+            android:clipToOutline="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/record_card_bg" />
+
+            <ImageView
+                android:id="@+id/recordMicIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="Record"
+                android:src="@drawable/icon_record_mic"
+                android:tint="@color/white" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="Go"
+                android:src="@drawable/ic_chevron_right"
+                android:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/recordTitleLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/capture_moments"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/recordSubtitleLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/record_via_device"
+                    android:textColor="@color/gray5"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- ===== Sync Banner ===== -->
+        <include
+            android:id="@+id/syncBanner"
+            layout="@layout/view_sync_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
+
+        <!-- ===== Recording Banner ===== -->
+        <LinearLayout
+            android:id="@+id/recordingBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_recording_banner"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/pulseDot"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/bg_pulse_dot" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/recording_ellipsis"
+                android:textColor="@color/red"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/recordingTimerLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="sans-serif"
+                android:text="00:00"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:contentDescription="Go"
+                android:src="@drawable/ic_chevron_right"
+                android:tint="@color/text_secondary" />
+        </LinearLayout>
+
+        <!-- ===== Recent Files Section ===== -->
+        <TextView
+            android:id="@+id/recentFilesHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/recent_files"
+            android:textColor="@color/dark_gray"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:id="@+id/recentFilesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/emptyFilesLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="@string/no_recordings_yet"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>

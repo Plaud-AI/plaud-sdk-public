@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_export"
+        android:title="@string/export_audio" />
+    <item
+        android:id="@+id/action_rename"
+        android:title="@string/rename" />
+    <item
+        android:id="@+id/action_copy_summary"
+        android:title="@string/copy_summary" />
+    <item
+        android:id="@+id/action_copy_transcript"
+        android:title="@string/copy_transcript" />
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/delete_recording" />
+</menu>

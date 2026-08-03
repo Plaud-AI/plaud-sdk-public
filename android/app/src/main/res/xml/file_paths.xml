@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Encrypted .plaud log packages are written to cacheDir by the SDK exporter -->
+    <cache-path name="cache" path="." />
+    <files-path name="files" path="." />
+</paths>

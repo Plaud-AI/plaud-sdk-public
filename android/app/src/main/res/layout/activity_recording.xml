@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Recording page — dark full screen, aligned item-by-item with iOS RecordingViewController:
+  - Title is at about 58.5% of the screen (iOS top=494/844), subtitle 16dp below it
+  - Waveform is at about 75.6% (iOS top=638/844), nearly full width, height 28dp
+  - Record button sits 48dp above the bottom (iOS bottom safeArea-48), white circle 72dp (shrinks to 64dp while recording)
+  - Close button in the top-right corner
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1B1B1B">
+
+    <!-- Background image (centerCrop = iOS scaleAspectFill) -->
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/recording_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Close button: top-right corner (iOS top safeArea+10, trailing -24, 24x24) -->
+    <ImageButton
+        android:id="@+id/closeButton"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="14dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Close"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_close"
+        android:tint="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Title vertical guideline: 58.5% of screen (aligned with iOS 494/844) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/titleGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.585" />
+
+    <!-- Waveform vertical guideline: 75.6% of screen (aligned with iOS 638/844) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/waveformGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.756" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/recordingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/start_recording"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="@id/titleGuideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Subtitle / timer -->
+    <TextView
+        android:id="@+id/recordingSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/record_via_device"
+        android:textColor="#858585"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@id/recordingTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Waveform view placeholder (replaced at runtime by WaveformView): nearly full width, height 28dp -->
+    <View
+        android:id="@+id/waveformView"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="@id/waveformGuideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Pause / Resume (visible only while recording or paused) -->
+    <TextView
+        android:id="@+id/pauseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:text="@string/pause"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@id/recordButton"
+        app:layout_constraintTop_toTopOf="@id/recordButton"
+        app:layout_constraintEnd_toStartOf="@id/recordButton" />
+
+    <!-- Record button: 48dp above the bottom, centered -->
+    <FrameLayout
+        android:id="@+id/recordButton"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- White circular background (shrinks to 64dp while recording) -->
+        <View
+            android:id="@+id/recordButtonBg"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_record_button" />
+
+        <!-- Stop icon (shown while recording) -->
+        <View
+            android:id="@+id/stopIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_stop_icon"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
