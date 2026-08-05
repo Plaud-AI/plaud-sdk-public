@@ -127,9 +127,9 @@ final class RecordingStore {
         set { UserDefaults.standard.set(newValue, forKey: "serverDomainOverride") }
     }
 
-    /// Default = test environment (cloud bind/unbind testing); switch via Settings → Environment.
+    /// Default = prod environment (cloud bind/unbind testing); switch via Settings → Environment.
     var activeServerDomain: String {
-        serverDomainOverride ?? Self.testServerDomain
+        serverDomainOverride ?? Self.prodServerDomain
     }
 
     // MARK: - File List
