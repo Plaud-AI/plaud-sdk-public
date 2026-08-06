@@ -130,9 +130,9 @@ object RecordingStore {
         get() = prefs.getString("server_domain_override", null)
         set(value) = prefs.edit().putString("server_domain_override", value).apply()
 
-    /** Default = test environment (cloud bind/unbind testing); switch via Settings → Environment. */
+    /** Default = prod environment (cloud bind/unbind testing); switch via Settings → Environment. */
     val activeServerDomain: String
-        get() = serverDomainOverride ?: TEST_SERVER_DOMAIN
+        get() = serverDomainOverride ?: PROD_SERVER_DOMAIN
 
     /** Entered the app from Welcome without pairing a device ("Connect device later"). */
     var hasSkippedOnboarding: Boolean
