@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.43</string>
+	<string>1.0.47</string>
 	<key>CFBundleVersion</key>
-	<string>43</string>
+	<string>47</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Bluetooth is required to connect to your Plaud recording device.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>

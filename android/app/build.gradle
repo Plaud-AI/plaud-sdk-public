@@ -11,8 +11,8 @@ android {
         applicationId "com.plaud.template"
         minSdk 21
         targetSdk 34
-        versionCode 42
-        versionName "1.0.42"
+        versionCode 47
+        versionName "1.0.47"
 
         // User Access Token comes from local.properties (git-ignored), mirroring iOS
         // PartnerConfig.local.xcconfig — QA can swap tokens without editing source.
