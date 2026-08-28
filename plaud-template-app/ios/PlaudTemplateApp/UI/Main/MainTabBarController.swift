@@ -15,6 +15,24 @@ final class MainTabBarController: UITabBarController {
         setupFloatingBar()
         tabBar.isHidden = true // Hide native Tab Bar
 
+        // Auto-reconnect hit a device locked by another account: offer the recovery flow
+        // (lifecycle guide §3.3) — the connect sheet is not open on this path.
+        DeviceManager.shared.recoveryOfferPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] device in
+                let alert = UIAlertController(
+                    title: "Device Locked",
+                    message: "\(device.name) may still be locked by a previous account. Try to recover it?",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "Recover", style: .default) { _ in
+                    DeviceManager.shared.startDeviceRecovery(device)
+                })
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                self?.present(alert, animated: true)
+            }
+            .store(in: &cancellables)
+
         // Cloud binding alerts (e.g. device bound to another account)
         DeviceManager.shared.cloudAlertPublisher
             .receive(on: DispatchQueue.main)

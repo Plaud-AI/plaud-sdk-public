@@ -1156,6 +1156,7 @@ extension PlaudDeviceBasicSDK.ChaCha20 {
   @objc optional func bleScanResult(bleDevices: [PlaudBleSDK.BleDevice])
   @objc optional func bleScanOverTime()
   @objc optional func bleConnectState(state: Swift.Int)
+  @objc optional func bleConnectStage(sn: Swift.String?, stage: Swift.String, detail: Swift.String?)
   @objc optional func bleBind(sn: Swift.String?, status: Swift.Int, protVersion: Swift.Int, timezone: Swift.Int)
   @objc optional func bleMicGain(_ value: Swift.Int)
   @objc optional func bleStorage(total: Swift.Int, free: Swift.Int, duration: Swift.Int)
@@ -1238,6 +1239,7 @@ extension PlaudDeviceBasicSDK.ChaCha20 {
   @objc public func isConnected() -> Swift.Bool
   @objc public func connectBleDevice(bleDevice: PlaudBleSDK.BleDevice, deviceToken: Swift.String)
   @objc public func connectBleDevice(bleDevice: PlaudBleSDK.BleDevice)
+  @objc public func recoveryConnectBleDevice(bleDevice: PlaudBleSDK.BleDevice, historicalUserId: Swift.String)
   @objc public func disconnect()
   @objc public func tryReconnectLastDevice()
   @objc public func getState()
@@ -1279,6 +1281,7 @@ extension PlaudDeviceBasicSDK.PlaudDeviceAgent : PlaudBleSDK.BleAgentProtocol {
   @objc dynamic public func bleScanResult(bleDevices: [PlaudBleSDK.BleDevice])
   @objc dynamic public func bleScanOverTime()
   @objc dynamic public func bleAppKeyState(result: Swift.Int)
+  @objc dynamic public func bleConnectStage(sn: Swift.String?, stage: Swift.String, detail: Swift.String?)
   @objc dynamic public func bleConnectState(state: Swift.Int)
   @objc dynamic public func bleBind(sn: Swift.String?, status: Swift.Int, protVersion: Swift.Int, timezone: Swift.Int)
   @objc dynamic public func blePenState(state: Swift.Int, privacy: Swift.Int, keyState: Swift.Int, uDisk: Swift.Int, findMyToken: Swift.Int, hasSndpKey: Swift.Int, deviceAccessToken: Swift.Int, versionType: Swift.String, versionCode: Swift.Int)

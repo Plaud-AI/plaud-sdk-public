@@ -195,8 +195,31 @@ class HomeFragment : Fragment() {
                         updateRecentFiles(synced)
                     }
                 }
+
+                // Auto-reconnect rejected by a locked device — offer recovery (lifecycle guide §3.3)
+                launch {
+                    deviceManager.recoveryOffers.collect { device ->
+                        offerRecovery(device)
+                    }
+                }
             }
         }
+    }
+
+    /**
+     * Auto-reconnect was rejected before the handshake completed — the device is likely
+     * still locked by a previous account. Mirrors iOS MainTabBarController's offer.
+     */
+    private fun offerRecovery(device: ScannedDevice) {
+        if (!isAdded) return
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Device Locked")
+            .setMessage("${device.name} may still be locked by a previous account. Try to recover it?")
+            .setPositiveButton("Recover") { _, _ ->
+                deviceManager.startDeviceRecovery(device)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
     // MARK: - Device card

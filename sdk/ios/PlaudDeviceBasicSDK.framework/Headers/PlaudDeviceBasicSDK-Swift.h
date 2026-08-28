@@ -611,6 +611,28 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaudDeviceA
 /// @see    Callback bleBind
 ///
 - (void)connectBleDeviceWithBleDevice:(BleDevice * _Nonnull)bleDevice;
+/// 砖机恢复连接：以历史绑定用户的身份发起一次连接，并让设备清除其存量的绑定密钥材料
+/// 适用场景：设备曾被用户 A 绑定、云端已解绑但固件仍保留 A 的绑定信息（“砖机”），
+/// 当前用户 B 正常连接会在加密预握手阶段被设备拒绝/断开（设备 pin 了 A 的 RSA 公钥）。
+/// 行为：
+/// <ol>
+///   <li>
+///     historicalUserId 接受 bind_history 的 client_user_id 原文或 32hex 两种形式，统一变换后临时钉住为握手 token；
+///   </li>
+///   <li>
+///     以 isForceClear=true 发起连接（预握手使用 PRE_HANDSHAKE_AND_CLEAR 0xFE20，设备清除存量密钥材料）；
+///   </li>
+///   <li>
+///     加密材料（sn-sign / RSA 密钥对）仍使用当前登录用户的，无需为历史用户签发；
+///   </li>
+///   <li>
+///     连接结束（depair 后断开、或失败）时自动还原当前用户握手身份。
+///   </li>
+/// </ol>
+/// 成功握手后调用 depair() 清除设备绑定，等设备重新广播（depair 后 MAC 会变化，必须重新扫描），
+/// 再以当前用户正常 connectBleDevice 完成重新绑定。
+/// @see Callback bleConnectState / bleBind / bleConnectStage
+- (void)recoveryConnectBleDeviceWithBleDevice:(BleDevice * _Nonnull)bleDevice historicalUserId:(NSString * _Nonnull)historicalUserId;
 /// Disconnect bluetooth connection
 - (void)disconnect;
 - (void)tryReconnectLastDevice;
@@ -865,6 +887,7 @@ enum PlaudFirmwarePhase : NSInteger;
 - (void)bleScanResultWithBleDevices:(NSArray<BleDevice *> * _Nonnull)bleDevices;
 - (void)bleScanOverTime;
 - (void)bleAppKeyStateWithResult:(NSInteger)result;
+- (void)bleConnectStageWithSn:(NSString * _Nullable)sn stage:(NSString * _Nonnull)stage detail:(NSString * _Nullable)detail;
 - (void)bleConnectStateWithState:(NSInteger)state;
 - (void)bleBindWithSn:(NSString * _Nullable)sn status:(NSInteger)status protVersion:(NSInteger)protVersion timezone:(NSInteger)timezone;
 - (void)blePenStateWithState:(NSInteger)state privacy:(NSInteger)privacy keyState:(NSInteger)keyState uDisk:(NSInteger)uDisk findMyToken:(NSInteger)findMyToken hasSndpKey:(NSInteger)hasSndpKey deviceAccessToken:(NSInteger)deviceAccessToken versionType:(NSString * _Nonnull)versionType versionCode:(NSInteger)versionCode;
@@ -1007,6 +1030,17 @@ SWIFT_PROTOCOL("_TtP19PlaudDeviceBasicSDK24PlaudDeviceAgentProtocol_")
 ///   </li>
 /// </ul>
 - (void)bleConnectStateWithState:(NSInteger)state;
+/// Bluetooth connection stage (diagnostics)
+/// \param sn device serial number (may be nil before it is known)
+///
+/// \param stage start / gatt_connect / set_notify / set_battery_notify / read_battery / set_data_notify /
+/// pre_handshake / send_rsa_public / first_handshake / two_handshake / handshake_get_ssn /
+/// change_handshake_timeout / sync_time
+///
+/// \param detail stage detail or failure reason, e.g. sn_signature_empty / sn_signature_invalid /
+/// user_rsa_public_key_empty / bind_token_empty / ok / status_1 (1 = token mismatch)
+///
+- (void)bleConnectStageWithSn:(NSString * _Nullable)sn stage:(NSString * _Nonnull)stage detail:(NSString * _Nullable)detail;
 /// Connection callback
 /// \param status Status, 0: success, >0: rejected 1: Token mismatch 2: Screen project, currently recording, user cannot confirm temporarily 3: Screen project, user manually rejected 255: Recorder not in connection mode, reject handshake request in non-connection mode (unique to Heili three-stage switch) <0 verification failed -1: no SSN -2: network exception -3: server data exception or verification incorrect
 ///

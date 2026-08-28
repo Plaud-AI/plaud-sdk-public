@@ -229,8 +229,24 @@ final class DeviceConnectSheetViewController: UIViewController {
         deviceManager.connectionStatePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
-                if case .connecting = state {
-                    self?.showConnectingState()
+                guard let self else { return }
+                switch state {
+                case .connecting:
+                    self.showConnectingState()
+                case .failed(let message):
+                    self.restoreConnectState()
+                    if self.recoveryRunning {
+                        // The recovery flow itself finished with a failure: show its reason.
+                        self.recoveryRunning = false
+                        self.presentAlert(title: "Device Recovery", message: message)
+                    } else if self.awaitingConnectResult {
+                        // A user-initiated connect failed: the device may still be locked by a
+                        // previous account (lifecycle guide §3.3) — offer the brick-recovery flow.
+                        self.awaitingConnectResult = false
+                        self.offerRecovery()
+                    }
+                default:
+                    break
                 }
             }
             .store(in: &cancellables)
@@ -253,6 +269,44 @@ final class DeviceConnectSheetViewController: UIViewController {
         activityIndicator.startAnimating()
     }
 
+    /// Failed: restore the pick UI so the user can retry (mirrors Android).
+    private func restoreConnectState() {
+        connectButton.isHidden = false
+        titleLabel.isHidden = false
+        connectingRow.isHidden = true
+        pageDotsView.isHidden = devices.count <= 1
+        activityIndicator.stopAnimating()
+    }
+
+    /// Set on a user-initiated connect; a Failed while set offers the recovery flow once.
+    private var awaitingConnectResult = false
+
+    /// Recovery flow in flight; a Failed while set is the recovery outcome, shown as an alert.
+    private var recoveryRunning = false
+
+    private func offerRecovery() {
+        guard currentIndex < devices.count else { return }
+        let device = devices[currentIndex]
+        let alert = UIAlertController(
+            title: "Connection Failed",
+            message: "The device may still be locked by a previous account. Try to recover it?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Recover", style: .default) { [weak self] _ in
+            guard let self else { return }
+            self.recoveryRunning = true
+            self.deviceManager.startDeviceRecovery(device)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
+    }
+
+    private func presentAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
     // MARK: - Actions
 
     @objc private func closeTapped() {
@@ -262,6 +316,7 @@ final class DeviceConnectSheetViewController: UIViewController {
     @objc private func connectTapped() {
         guard let userId = RecordingStore.shared.userId else { return }
         let device = devices[currentIndex]
+        awaitingConnectResult = true
         deviceManager.connect(device, userId: userId)
     }
 

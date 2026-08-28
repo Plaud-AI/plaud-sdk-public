@@ -352,6 +352,24 @@ PlaudDeviceAgent.shared.connectBleDevice(bleDevice: device)
 | `bleBind(sn:status:...)` | Device bound successfully |
 | `blePenState(state:...)` | Handshake complete |
 
+#### Device Recovery
+
+Recover a device still locked to a previous account — unbound in the cloud, but the firmware retains the old identity, so the current account is rejected at the encrypted handshake.
+
+```swift
+// 1. Query cloud binding; proceed only if is_bind == false, then try each historical account:
+//    GET /open/partner/sdk/binding  ->  { is_bind, bind_history: [...] }
+PlaudDeviceAgent.shared.recoveryConnectBleDevice(bleDevice: device, historicalUserId: historicalId)
+
+// 2. On bleBind(status: 0) — the historical id matched the firmware lock — wipe the stale bond:
+PlaudDeviceAgent.shared.depair(clear: false)
+
+// 3. depair changes the MAC — rescan, then connect normally as the current user to rebind.
+PlaudDeviceAgent.shared.connectBleDevice(bleDevice: rescannedDevice)
+```
+
+> `historicalUserId` accepts the raw `client_user_...` id from `bind_history`. See the Template App's `DeviceManager` for the full loop.
+
 #### File Synchronization
 
 ```swift
@@ -440,6 +458,24 @@ PlaudDeviceAgent.listener = object : PlaudDeviceAgentListener {
 PlaudDeviceAgent.startScan()
 PlaudDeviceAgent.connectBleDevice(bleDevice)
 ```
+
+#### Device Recovery
+
+Recover a device still locked to a previous account — unbound in the cloud, but the firmware retains the old identity, so the current account is rejected at the encrypted handshake.
+
+```kotlin
+// 1. Query cloud binding; proceed only if is_bind == false, then try each historical account:
+//    GET /open/partner/sdk/binding  ->  { is_bind, bind_history: [...] }
+PlaudDeviceAgent.recoveryConnectBleDevice(device, historicalId)
+
+// 2. On bleBind(status = 0) — the historical id matched the firmware lock — wipe the stale bond:
+PlaudDeviceAgent.depair(false)
+
+// 3. depair changes the MAC — rescan, then connect normally as the current user to rebind.
+PlaudDeviceAgent.connectBleDevice(rescannedDevice)
+```
+
+> `historicalUserId` accepts the raw `client_user_...` id from `bind_history`. See the Template App's `DeviceManager` for the full loop.
 
 #### File Synchronization
 

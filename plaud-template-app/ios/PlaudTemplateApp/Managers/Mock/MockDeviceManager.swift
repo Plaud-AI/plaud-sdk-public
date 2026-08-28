@@ -41,6 +41,7 @@ final class MockDeviceManager: DeviceManagerProtocol {
     func connect(_ device: ScannedDevice, userId: String) {}
     func disconnect() {}
     func unpair() {}
+    func startDeviceRecovery(_ device: ScannedDevice) {}
     func switchDevice(sn: String) {}
     func getPairedDevices() -> [PairedDeviceInfo] { [] }
     func refreshDeviceInfo() {}

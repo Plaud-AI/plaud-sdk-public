@@ -52,6 +52,18 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
         private const val CONNECT_TIMEOUT = 30_000L
         private const val HANDSHAKE_TIMEOUT = 60_000L
 
+        /** Device recovery (lifecycle guide §3.3): bound the per-attempt handshake wait. */
+        private const val RECOVERY_HANDSHAKE_TIMEOUT_MS = 25_000L
+
+        /** Device recovery: newest-first bind_history entries to try before giving up. */
+        private const val RECOVERY_MAX_ATTEMPTS = 5
+
+        /** Device recovery: wait for the device's depair confirmation before moving on. */
+        private const val RECOVERY_DEPAIR_TIMEOUT_MS = 5_000L
+
+        /** Device recovery: wait for the device to re-advertise (new MAC) after depair. */
+        private const val RECOVERY_RESCAN_TIMEOUT_MS = 20_000L
+
         /** Failure text used when a scan is refused because the phone's Bluetooth is off. */
         const val BLUETOOTH_OFF_MESSAGE = "Bluetooth is off. Turn it on to find your device."
 
@@ -100,6 +112,9 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
 
     private val _cloudAlerts = MutableSharedFlow<String>(extraBufferCapacity = 1)
     override val cloudAlerts: SharedFlow<String> = _cloudAlerts.asSharedFlow()
+
+    private val _recoveryOffers = MutableSharedFlow<ScannedDevice>(extraBufferCapacity = 1)
+    override val recoveryOffers: SharedFlow<ScannedDevice> = _recoveryOffers.asSharedFlow()
 
     /** Firmware update info from the latest check, reused by startFirmwareUpdate. */
     private var pendingUpdateInfo: FirmwareUpdateInfo? = null
@@ -180,6 +195,23 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
     @Volatile
     private var pendingConnectSN: String? = null
 
+    /**
+     * Connect in flight, E2EE handshake not yet confirmed. GATT-level connect (bleConnectState 1)
+     * is NOT success: a firmware locked by another account accepts the GATT link, rejects the
+     * handshake and silently drops — which used to read as connected→disconnected and never
+     * produced a Failed, so the recovery offer was unreachable.
+     */
+    @Volatile
+    private var awaitingHandshake = false
+
+    /** The in-flight connect was started by auto-reconnect (no connect sheet is open). */
+    @Volatile
+    private var isAutoReconnectAttempt = false
+
+    /** Device of the in-flight connect, kept for the recovery offer on rejection. */
+    @Volatile
+    private var pendingConnectDevice: ScannedDevice? = null
+
     private val agentListener = object : PlaudDeviceAgentListener {
 
         override fun bleScanResult(devices: List<BleDevice>) {
@@ -208,30 +240,90 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
                 // Sort by signal strength (mirrors iOS RSSI-descending ordering)
                 _scannedDevices.value = scanned.sortedByDescending { it.rssi }
 
+                // Recovery post-depair rescan: the device re-advertises under a new MAC. Hand the
+                // fresh BleDevice to the recovery flow and skip auto-reconnect for this result.
+                val rescanSN = recoveryRescanSN
+                if (rescanSN != null) {
+                    supported.firstOrNull { it.getSerialNumber() == rescanSN }?.let { fresh ->
+                        recoveryRescanSN = null
+                        recoveryRescanSignal?.complete(fresh)
+                        return@launch
+                    }
+                }
+
                 // Auto-reconnect to the last bound device (not triggered while adding a device / during a user-initiated disconnect)
                 val lastSN = RecordingStore.lastConnectedDeviceSN
                 if (!suppressAutoReconnect && lastSN != null &&
                     _connectionState.value is DeviceConnectionState.Scanning
                 ) {
                     scanned.firstOrNull { it.serialNumber == lastSN }
-                        ?.let { connect(it, RecordingStore.userId ?: "") }
+                        ?.let { connect(it, RecordingStore.userId ?: "", userInitiated = false) }
                 }
             }
         }
 
         override fun bleConnectState(state: Int) {
             AppLog.i(TAG, "bleConnectState: $state")
+            if (recoveryInProgress) {
+                // Recovery handshake attempt. GATT connect (state 1) is NOT proof the historical
+                // id matched the firmware lock — depair sent before the handshake completes is
+                // ignored by the device. Success is only signaled by bleBind(status 0); here we
+                // only report failures (drop / error before the handshake finished).
+                when (state) {
+                    0, 2 -> recoverySignal?.complete(false)
+                }
+                return
+            }
             scope.launch {
                 when (state) {
-                    1 -> onDeviceConnected(pendingConnectSN ?: RecordingStore.lastConnectedDeviceSN)
-                    0 -> onDeviceDisconnected()
-                    2 -> _connectionState.value = DeviceConnectionState.Failed("Connection failed")
+                    1 -> {
+                        if (awaitingHandshake) {
+                            // GATT connected — success is only declared on bleBind(status 0),
+                            // after the E2EE handshake actually completes.
+                            AppLog.i(TAG, "GATT connected, awaiting handshake")
+                        } else {
+                            onDeviceConnected(pendingConnectSN ?: RecordingStore.lastConnectedDeviceSN)
+                        }
+                    }
+                    0 -> {
+                        if (awaitingHandshake) {
+                            // Dropped before the handshake completed: a firmware locked by another
+                            // account rejects us this way. Surface it as a handshake rejection.
+                            onHandshakeRejected()
+                        } else {
+                            onDeviceDisconnected()
+                        }
+                    }
+                    2 -> {
+                        if (awaitingHandshake) {
+                            // A brick manifests differently per platform: iOS drops after GATT
+                            // (state 1 -> 0), Android reports a connect failure (state 2, ~10s
+                            // timeout) without ever reaching the handshake stages. Treat both the
+                            // same — offer recovery rather than a dead "Connection failed".
+                            onHandshakeRejected()
+                        } else {
+                            awaitingHandshake = false
+                            _connectionState.value = DeviceConnectionState.Failed("Connection failed")
+                        }
+                    }
                 }
             }
         }
 
+        override fun bleConnectStage(sn: String?, stage: String, detail: String?) {
+            // Fine-grained connect stage (preHandshake / sendRsaPublic / firstHandshake with a detail
+            // such as sn_signature_invalid). Logged for diagnostics — this reveals which layer refused
+            // a rejected handshake (RSA pre-handshake vs the userToken handshake).
+            AppLog.i(TAG, "bleConnectStage sn=${sn ?: "-"} stage=$stage detail=${detail ?: "-"}")
+        }
+
         override fun bleBind(sn: String?, status: Int, protVersion: Int, timezone: Int) {
             AppLog.i(TAG, "bleBind: sn=$sn, status=$status")
+            if (recoveryInProgress) {
+                recoverySignal?.complete(status == 0)
+                return
+            }
+            if (status == 0) awaitingHandshake = false
             if (status == 0 && sn != null) {
                 scope.launch { onDeviceConnected(sn) }
                 // Report cloud binding on every successful connect (idempotent for the same owner)
@@ -304,6 +396,26 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
     /** One-shot depair completion hook used by unpair(). */
     @Volatile
     private var onDepairResult: ((Int) -> Unit)? = null
+
+    /**
+     * Device recovery (lifecycle guide §3.3) in flight. While set, the connect/bind callbacks are
+     * rerouted to [recoverySignal] instead of the normal connected-handling: the handshake is being
+     * made with a HISTORICAL client_user_id, so treating it as a real connection would cloud-bind
+     * the device to the current user and persist pairing state before the stale bond is wiped.
+     */
+    @Volatile
+    private var recoveryInProgress = false
+
+    /** Completes with the outcome of the current recovery handshake attempt. */
+    @Volatile
+    private var recoverySignal: CompletableDeferred<Boolean>? = null
+
+    /** depair changes the device's MAC, so the cached BleDevice is stale afterwards. During the
+     *  post-depair rescan we wait for the SN to re-advertise and complete with the fresh BleDevice. */
+    @Volatile
+    private var recoveryRescanSN: String? = null
+    @Volatile
+    private var recoveryRescanSignal: CompletableDeferred<BleDevice>? = null
 
     // MARK: - Successful-connection handling
 
@@ -518,6 +630,26 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
         }
     }
 
+    /**
+     * The connect reached us but never completed the E2EE handshake — a firmware still locked to a
+     * previous account rejects the current user this way (iOS: GATT then drop; Android: connect-fail
+     * timeout). Surface a Failed and, when this was a background auto-reconnect (no connect sheet is
+     * watching), stop the reconnect loop and offer the recovery flow on Home (lifecycle guide §3.3).
+     */
+    private fun onHandshakeRejected() {
+        awaitingHandshake = false
+        val wasAuto = isAutoReconnectAttempt
+        isAutoReconnectAttempt = false
+        AppLog.w(TAG, "handshake rejected (auto=$wasAuto)")
+        _connectionState.value = DeviceConnectionState.Failed(
+            "The device refused the connection — it may still be locked by another account."
+        )
+        if (wasAuto) {
+            suppressAutoReconnect = true
+            pendingConnectDevice?.let { _recoveryOffers.tryEmit(it) }
+        }
+    }
+
     private fun onDeviceDisconnected() {
         _connectionState.value = DeviceConnectionState.Disconnected
         _connectedDevice.value = null
@@ -679,7 +811,9 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
     }
 
 
-    override fun connect(device: ScannedDevice, userId: String) {
+    override fun connect(device: ScannedDevice, userId: String, userInitiated: Boolean) {
+        isAutoReconnectAttempt = !userInitiated
+        pendingConnectDevice = device
         // Explicit user connect: re-enable auto-reconnect
         suppressAutoReconnect = false
         reconnectAttempts = 0
@@ -696,6 +830,7 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
         val deviceType = getDeviceType(sn)
 
         pendingConnectSN = sn
+        awaitingHandshake = true
         scope.launch(Dispatchers.IO) {
             try {
                 // Step 1: wait for the partner RSA key pair to be ready.
@@ -915,6 +1050,168 @@ class DeviceManager private constructor() : DeviceManagerProtocol {
         scope.launch {
             _firmwareProgress.value = progress
             _firmwareUpdateState.value = FirmwareUpdateUiState(progress, phase, message, error)
+        }
+    }
+
+    // MARK: - Device recovery (lifecycle guide §3.3 / §4.5)
+
+    /** GET /sdk/binding result: three-state is_bind + newest-first client_user_id history. */
+    private data class CloudBindingInfo(val isBind: Boolean?, val bindHistory: List<String>)
+
+    /**
+     * GET /open/partner/sdk/binding — authoritative cloud binding state for (type, sn).
+     * Returns null on any failure. Doc caveats honored here: a missing device is a BARE 404 with no
+     * ErrorCode body, and bind_history is NOT client-scoped — entries may belong to other clients.
+     */
+    private fun queryCloudBinding(sn: String): CloudBindingInfo? = try {
+        val deviceType = getDeviceType(sn)
+        val url = "$platformHost/developer/api/open/partner/sdk/binding?type=$deviceType&sn=$sn"
+        AppLog.i(TAG, "cloud binding >>> GET $url")
+        val request = okhttp3.Request.Builder().url(url)
+            .header("Authorization", "Bearer $partnerToken")
+            .get().build()
+        okhttp3.OkHttpClient().newCall(request).execute().use { resp ->
+            val body = resp.body?.string() ?: ""
+            AppLog.i(TAG, "cloud binding <<< HTTP ${resp.code} ${body.take(300)}")
+            if (!resp.isSuccessful) null
+            else {
+                val json = JSONObject(body)
+                CloudBindingInfo(
+                    isBind = if (json.isNull("is_bind")) null else json.optBoolean("is_bind"),
+                    bindHistory = json.optJSONArray("bind_history")?.let { arr ->
+                        (0 until arr.length()).mapNotNull { arr.optString(it).takeIf { id -> id.isNotBlank() } }
+                    } ?: emptyList()
+                )
+            }
+        }
+    } catch (e: Exception) {
+        AppLog.w(TAG, "cloud binding query failed", e)
+        null
+    }
+
+    /**
+     * Brick recovery (lifecycle guide §3.3): the firmware still holds some previous user's
+     * client_user_id, so the current user's handshake is rejected. Query bind_history, handshake
+     * with each historical id (transformed the same way the SDK derives the token from the JWT:
+     * strip the client_user_ prefix, drop hyphens), and on success wipe the stale bond with depair —
+     * then reconnect as the current user. No reflashing tool needed.
+     */
+    override fun startDeviceRecovery(device: ScannedDevice) {
+        val sn = device.serialNumber
+        AppLog.i(TAG, "recovery: start for sn=$sn")
+        _connectionState.value = DeviceConnectionState.Connecting(device)
+
+        scope.launch(Dispatchers.IO) {
+            val info = queryCloudBinding(sn)
+            if (info == null) {
+                failRecovery("Recovery failed: could not query the cloud binding state."); return@launch
+            }
+            if (info.isBind == true) {
+                failRecovery("This device is bound to another account. That owner must unbind it first."); return@launch
+            }
+            // bind_history has one entry PER device.bind event, so the same id repeats for every
+            // past connect (live-verified: 50+ duplicates of one id) — dedupe before bounding,
+            // otherwise the attempts would try the same key five times.
+            val history = info.bindHistory.distinct().take(RECOVERY_MAX_ATTEMPTS)
+            if (history.isEmpty()) {
+                failRecovery("Recovery not possible: the device has no bind history."); return@launch
+            }
+            val bleDevice = scannedBleDevices.firstOrNull { it.getSerialNumber() == sn }
+            if (bleDevice == null) {
+                failRecovery("Device not found, please rescan."); return@launch
+            }
+
+            suppressAutoReconnect = true
+            recoveryInProgress = true
+            try {
+                for ((index, historicalId) in history.withIndex()) {
+                    AppLog.i(TAG, "recovery: attempt ${index + 1}/${history.size} with ${historicalId.take(20)}…")
+                    val signal = CompletableDeferred<Boolean>()
+                    recoverySignal = signal
+                    try {
+                        // SDK 1.0.13: recoveryConnectBleDevice pins the historical id as the handshake
+                        // token and connects with isForceClear (PRE_HANDSHAKE_AND_CLEAR) so the firmware
+                        // wipes its stale key material; the current user's sn-sign / RSA material is
+                        // reused (no backend signing for the historical user), and the SDK auto-restores
+                        // the current user's identity when the attempt ends.
+                        PlaudDeviceAgent.recoveryConnectBleDevice(bleDevice, historicalId)
+                    } catch (e: Exception) {
+                        AppLog.w(TAG, "recovery: recoveryConnectBleDevice threw", e)
+                        continue
+                    }
+                    val unlocked = withTimeoutOrNull(RECOVERY_HANDSHAKE_TIMEOUT_MS) { signal.await() } ?: false
+                    if (!unlocked) {
+                        AppLog.i(TAG, "recovery: attempt ${index + 1} rejected")
+                        try { PlaudDeviceAgent.disconnect() } catch (e: Exception) { }
+                        delay(1_000)
+                        continue
+                    }
+
+                    AppLog.i(TAG, "recovery: handshake OK — wiping the stale bond (depair)")
+                    val confirmed = depairAndAwait()
+                    if (!confirmed) AppLog.w(TAG, "recovery: no depair confirmation, proceeding anyway")
+                    recoveryInProgress = false
+                    delay(1_500)
+
+                    // depair changes the device's MAC, so the cached BleDevice is now stale — rescan
+                    // and match by SN before reconnecting as the current user (SDK doc requirement).
+                    AppLog.i(TAG, "recovery: bond wiped — rescanning (MAC changes after depair)")
+                    val fresh = rescanForDevice(sn)
+                    if (fresh == null) {
+                        failRecovery("The device was unlocked but did not reappear — please rescan and connect it.")
+                        return@launch
+                    }
+                    AppLog.i(TAG, "recovery: device reappeared — reconnecting as the current user")
+                    withContext(Dispatchers.Main) {
+                        suppressAutoReconnect = false
+                        connect(device, RecordingStore.userId ?: "")
+                    }
+                    return@launch
+                }
+                failRecovery("Recovery failed: none of the previous accounts matched the device lock.")
+            } finally {
+                recoveryInProgress = false
+                recoverySignal = null
+            }
+        }
+    }
+
+    /** Depair the (recovery-) connected device and wait for its confirmation. */
+    private suspend fun depairAndAwait(): Boolean {
+        val signal = CompletableDeferred<Boolean>()
+        onDepairResult = { signal.complete(true) }
+        return try {
+            PlaudDeviceAgent.depair(false)
+            withTimeoutOrNull(RECOVERY_DEPAIR_TIMEOUT_MS) { signal.await() } ?: false
+        } catch (e: Exception) {
+            AppLog.w(TAG, "recovery: depair threw", e)
+            false
+        } finally {
+            onDepairResult = null
+            try { PlaudDeviceAgent.disconnect() } catch (e: Exception) { }
+        }
+    }
+
+    /** Scan until the given SN re-advertises (post-depair the MAC changes), returning the fresh
+     *  BleDevice, or null on timeout. */
+    private suspend fun rescanForDevice(sn: String): BleDevice? {
+        val signal = CompletableDeferred<BleDevice>()
+        recoveryRescanSN = sn
+        recoveryRescanSignal = signal
+        return try {
+            withContext(Dispatchers.Main) { try { PlaudDeviceAgent.startScan() } catch (e: Exception) { } }
+            withTimeoutOrNull(RECOVERY_RESCAN_TIMEOUT_MS) { signal.await() }
+        } finally {
+            recoveryRescanSN = null
+            recoveryRescanSignal = null
+            withContext(Dispatchers.Main) { try { PlaudDeviceAgent.stopScan() } catch (e: Exception) { } }
+        }
+    }
+
+    private suspend fun failRecovery(message: String) {
+        AppLog.w(TAG, "recovery: $message")
+        withContext(Dispatchers.Main) {
+            _connectionState.value = DeviceConnectionState.Failed(message)
         }
     }
 

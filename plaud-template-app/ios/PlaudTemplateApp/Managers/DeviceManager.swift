@@ -21,6 +21,10 @@ protocol DeviceManagerProtocol: AnyObject {
     func connect(_ device: ScannedDevice, userId: String)
     func disconnect()
     func unpair()
+    /// Brick recovery (lifecycle guide §3.3): queries GET /sdk/binding for bind_history,
+    /// handshakes with each historical id, wipes the stale bond (depair), then reconnects as the
+    /// current user. Progress/outcome surface through connectionStatePublisher.
+    func startDeviceRecovery(_ device: ScannedDevice)
     /// Switch to another paired device (disconnect current -> scan -> connect target SN)
     func switchDevice(sn: String)
     /// Get list of paired devices
@@ -81,6 +85,37 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
     private var autoReconnectAttempts = 0
     /// Add Device 流程中禁用自动重连
     var suppressAutoReconnect = false
+
+    /// Offer the brick-recovery flow for a device whose handshake was rejected during
+    /// AUTO-reconnect (no connect sheet is open to catch the Failed state, so Home/MainTab
+    /// subscribes and presents the offer).
+    private let recoveryOfferSubject = PassthroughSubject<ScannedDevice, Never>()
+    var recoveryOfferPublisher: AnyPublisher<ScannedDevice, Never> { recoveryOfferSubject.eraseToAnyPublisher() }
+
+    /// The in-flight connect was started by auto-reconnect (no user in front of a sheet).
+    private var isAutoReconnectAttempt = false
+
+    /// User-initiated connect awaiting the E2EE handshake. GATT-level connect (bleConnectState 1)
+    /// is NOT success for these devices: a firmware locked by another account accepts the GATT
+    /// link, rejects the handshake, and silently drops — which used to read as connected→
+    /// disconnected and never produced a Failed, so the recovery offer was unreachable.
+    private var awaitingHandshakeSN: String?
+
+    /// Device recovery (lifecycle guide §3.3) in flight. While set, connect/bind/pen-state
+    /// callbacks are rerouted to the recovery continuation instead of the normal
+    /// connected-handling: the handshake uses a HISTORICAL client_user_id, so treating it as a
+    /// real connection would cloud-bind the device to the current user and persist pairing state
+    /// before the stale bond is wiped.
+    private var recoveryInProgress = false
+    /// One-shot outcome hook for the current recovery handshake attempt.
+    private var recoveryAttemptResult: ((Bool) -> Void)?
+    /// One-shot hook for the device's depair confirmation during recovery.
+    private var recoveryDepairDone: (() -> Void)?
+    /// depair changes the device's MAC, so the cached BleDevice is stale afterwards. During the
+    /// post-depair rescan we wait for the SN to re-advertise and capture the fresh BleDevice.
+    private var recoveryRescanSN: String?
+    private var recoveryRescanHook: ((BleDevice) -> Void)?
+    private let recoveryQueue = DispatchQueue(label: "com.plaud.template.device-recovery")
     /// Phone Bluetooth power state, relayed by the SDK's bleState(powered:) callback.
     private(set) var isBluetoothPowered = true
 
@@ -126,6 +161,12 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
             maxFileAge: 7 * 24 * 60 * 60,
             maxFileSize: 20 * 1024 * 1024
         )
+        // Route the BLE SDK's internal handshake logs (mlog/wlog) to NSLog so they are captured
+        // in the exported .plaud file. Without this the export only holds scan-level NSLog and the
+        // RSA pre-handshake / first-handshake / disconnect-reason lines — the detail needed to
+        // diagnose a rejected connection — live only in the live Xcode console.
+        BleAgent.shared.openLog(true, logBlock: { NSLog("[BLE] %@", $0) },
+                                wlogBlock: { NSLog("[BLE] %@", $0) })
     }
 
     // MARK: - Scanning
@@ -155,6 +196,8 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
 
     func connect(_ device: ScannedDevice, userId: String) {
         guard let bleDevice = cachedBleDevices[device.serialNumber] else { return }
+        awaitingHandshakeSN = device.serialNumber
+        isAutoReconnectAttempt = false
         connectionStateSubject.send(.connecting(device))
         PlaudDeviceAgent.shared.connectBleDevice(bleDevice: bleDevice, deviceToken: userId)
     }
@@ -278,6 +321,156 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: work)
     }
 
+    // MARK: - Device Recovery (lifecycle guide §3.3 / §4.5)
+
+    /// Fire the current recovery attempt's outcome exactly once (bind / pen-state / connect-state
+    /// can all report for the same handshake).
+    private func fireRecoveryAttempt(_ unlocked: Bool) {
+        let callback = recoveryAttemptResult
+        recoveryAttemptResult = nil
+        callback?(unlocked)
+    }
+
+    /// Brick recovery (lifecycle guide §3.3): the firmware still holds some previous user's
+    /// client_user_id, so the current user's handshake is rejected. Query bind_history, handshake
+    /// with each historical id (transformed the same way the SDK derives the token from the JWT:
+    /// strip the client_user_ prefix, drop hyphens), and on success wipe the stale bond with
+    /// depair — then reconnect as the current user. No reflashing tool needed.
+    func startDeviceRecovery(_ device: ScannedDevice) {
+        let sn = device.serialNumber
+        AppLog.log("[DeviceManager] recovery: start for sn=\(sn)")
+        connectionStateSubject.send(.connecting(device))
+
+        PlaudAPIService.shared.queryDeviceBinding(
+            type: PairedDeviceInfo.deviceType(for: sn), sn: sn
+        ) { [weak self] result in
+            guard let self else { return }
+            guard let result = result else {
+                self.failRecovery("Recovery failed: could not query the cloud binding state."); return
+            }
+            if result.isBind == true {
+                self.failRecovery("This device is bound to another account. That owner must unbind it first."); return
+            }
+            // bind_history has one entry PER device.bind event, so the same id repeats for every
+            // past connect (live-verified: 50+ duplicates of one id) — dedupe before bounding,
+            // otherwise the attempts would try the same key five times.
+            var seen = Set<String>()
+            let history = Array(result.bindHistory.filter { seen.insert($0).inserted }
+                .prefix(Self.recoveryMaxAttempts))
+            if history.isEmpty {
+                self.failRecovery("Recovery not possible: the device has no bind history."); return
+            }
+            guard let bleDevice = self.cachedBleDevices[sn] else {
+                self.failRecovery("Device not found, please rescan."); return
+            }
+            self.recoveryQueue.async { self.runRecovery(device: device, bleDevice: bleDevice, history: history) }
+        }
+    }
+
+    /// Blocking orchestration on recoveryQueue: one recoveryConnect attempt per historical id.
+    /// SDK 1.0.13+ `recoveryConnectBleDevice` pins the historical id as the handshake token and
+    /// connects with isForceClear (PRE_HANDSHAKE_AND_CLEAR 0xFE20) so the firmware wipes its stale
+    /// key material; the current user's sn-sign / RSA material is reused (no backend signing for the
+    /// historical user), and the SDK auto-restores the current user's identity when the attempt
+    /// ends. On a matching id the device accepts the handshake (bleBind / blePenState). We then
+    /// depair, rescan (depair changes the MAC, so the cached BleDevice is stale) and reconnect as
+    /// the current user.
+    private func runRecovery(device: ScannedDevice, bleDevice: BleDevice, history: [String]) {
+        suppressAutoReconnect = true
+        recoveryInProgress = true
+        defer { recoveryInProgress = false; recoveryAttemptResult = nil }
+
+        for (index, historicalId) in history.enumerated() {
+            AppLog.log("[DeviceManager] recovery: attempt \(index + 1)/\(history.count) with \(historicalId.prefix(20))…")
+
+            let semaphore = DispatchSemaphore(value: 0)
+            var unlocked = false
+            recoveryAttemptResult = { ok in unlocked = ok; semaphore.signal() }
+            DispatchQueue.main.async {
+                PlaudDeviceAgent.shared.recoveryConnectBleDevice(bleDevice: bleDevice, historicalUserId: historicalId)
+            }
+            _ = semaphore.wait(timeout: .now() + Self.recoveryHandshakeTimeout)
+            recoveryAttemptResult = nil
+
+            if !unlocked {
+                AppLog.log("[DeviceManager] recovery: attempt \(index + 1) rejected")
+                DispatchQueue.main.async { PlaudDeviceAgent.shared.disconnect() }
+                Thread.sleep(forTimeInterval: 1.0)
+                continue
+            }
+
+            AppLog.log("[DeviceManager] recovery: handshake OK — wiping the stale bond (depair)")
+            let depairSemaphore = DispatchSemaphore(value: 0)
+            recoveryDepairDone = { depairSemaphore.signal() }
+            DispatchQueue.main.async { PlaudDeviceAgent.shared.depair(clear: false) }
+            if depairSemaphore.wait(timeout: .now() + Self.recoveryDepairTimeout) == .timedOut {
+                AppLog.log("[DeviceManager] recovery: no depair confirmation, proceeding anyway")
+            }
+            recoveryDepairDone = nil
+            recoveryInProgress = false
+            DispatchQueue.main.async { PlaudDeviceAgent.shared.disconnect() }
+            Thread.sleep(forTimeInterval: 1.5)
+
+            // depair changes the device's MAC, so the cached BleDevice is now stale — rescan and
+            // match by SN before reconnecting as the current user (SDK doc requirement).
+            let sn = device.serialNumber
+            AppLog.log("[DeviceManager] recovery: bond wiped — rescanning (MAC changes after depair)")
+            let rescanSemaphore = DispatchSemaphore(value: 0)
+            var freshDevice: BleDevice?
+            recoveryRescanSN = sn
+            recoveryRescanHook = { dev in freshDevice = dev; rescanSemaphore.signal() }
+            DispatchQueue.main.async { PlaudDeviceAgent.shared.startScan() }
+            let rescanned = rescanSemaphore.wait(timeout: .now() + Self.recoveryRescanTimeout)
+            recoveryRescanSN = nil
+            recoveryRescanHook = nil
+            DispatchQueue.main.async { PlaudDeviceAgent.shared.stopScan() }
+
+            guard rescanned == .success, let fresh = freshDevice else {
+                failRecovery("The device was unlocked but did not reappear — please rescan and connect it.")
+                return
+            }
+            AppLog.log("[DeviceManager] recovery: device reappeared — reconnecting as the current user")
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.suppressAutoReconnect = false
+                let scanned = ScannedDevice(
+                    name: Self.scanDisplayName(rawName: fresh.name, sn: sn),
+                    serialNumber: sn, rssi: fresh.rssi
+                )
+                self.connect(scanned, userId: RecordingStore.shared.userId ?? "")
+            }
+            return
+        }
+        failRecovery("Recovery failed: none of the previous accounts matched the device lock.")
+    }
+
+    private func failRecovery(_ message: String) {
+        AppLog.log("[DeviceManager] recovery: \(message)")
+        DispatchQueue.main.async { [weak self] in
+            self?.connectionStateSubject.send(.failed(message))
+        }
+    }
+
+    /// Depair confirmation from the device (only consumed during recovery; the normal unpair
+    /// flow does not wait for it).
+    func bleDepair(status: Int) {
+        AppLog.log("[DeviceManager] bleDepair: status=\(status)")
+        recoveryDepairDone?()
+    }
+
+    private static let recoveryHandshakeTimeout: TimeInterval = 25
+    private static let recoveryDepairTimeout: TimeInterval = 5
+    private static let recoveryRescanTimeout: TimeInterval = 20
+    private static let recoveryMaxAttempts = 5
+
+    /// Fine-grained connect stage relayed by the SDK (bleConnectStage), e.g.
+    /// `preHandshake` / `sendRSAPublic` / `firstHandshake` with a detail such as
+    /// `sn_signature_invalid`. Logged for diagnostics — this is where a rejected handshake
+    /// reveals which layer refused (RSA pre-handshake vs the userToken handshake).
+    @objc func bleConnectStage(sn: String?, stage: String, detail: String?) {
+        AppLog.log("[DeviceManager] bleConnectStage sn=\(sn ?? "-") stage=\(stage) detail=\(detail ?? "-")")
+    }
+
     // MARK: - Cloud Binding (device lifecycle guide §3.1/§3.2)
 
     /// POST /sdk/bind after every successful connect. Same-owner rebind is idempotent server-side.
@@ -380,6 +573,17 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
             self?.scannedDevicesSubject.send(devices)
         }
 
+        // Recovery post-depair rescan: the device re-advertises under a new MAC. Capture the fresh
+        // BleDevice for the recovery flow's reconnect and skip auto-reconnect for this result.
+        if let rescanSN = recoveryRescanSN,
+           let fresh = bleDevices.first(where: { $0.serialNumber == rescanSN }) {
+            let hook = recoveryRescanHook
+            recoveryRescanSN = nil
+            recoveryRescanHook = nil
+            hook?(fresh)
+            return
+        }
+
         // Auto reconnect: connect automatically when the last bound device is found
         // suppressAutoReconnect = true 时跳过（Add Device 流程中不自动重连旧设备）
         if !suppressAutoReconnect,
@@ -388,6 +592,10 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
            case .scanning = connectionStateSubject.value {
             let userId = RecordingStore.shared.userId ?? ""
             let scanned = ScannedDevice(name: match.name, serialNumber: match.serialNumber, rssi: match.rssi)
+            // Auto-reconnect is also handshake-gated: a rejection surfaces the recovery offer on
+            // Home instead of looping silently (the user asked for launch-path recovery too).
+            awaitingHandshakeSN = match.serialNumber
+            isAutoReconnectAttempt = true
             connectionStateSubject.send(.connecting(scanned))
             PlaudDeviceAgent.shared.connectBleDevice(bleDevice: match, deviceToken: userId)
         }
@@ -418,6 +626,14 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
         #if DEBUG
         AppLog.log("[DeviceManager] bleConnectState: \(state), isOTA=\(isOTAInProgress)")
         #endif
+        if recoveryInProgress {
+            // Recovery handshake attempt. GATT connect (state 1) is NOT proof the historical id
+            // matched the firmware lock — depair sent before the handshake completes is ignored
+            // by the device. Success is only signaled by bleBind(status 0) / blePenState; here we
+            // only report failures (drop / error before the handshake finished).
+            if state == 0 || state == 2 { fireRecoveryAttempt(false) }
+            return
+        }
         switch state {
         case 0:
             hasPopulatedDevice = false
@@ -437,6 +653,25 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
                 #endif
                 return
             }
+            // Dropped before the handshake completed on a user-initiated connect: this is how a
+            // firmware locked by another account rejects us. Surface a Failed (which offers the
+            // recovery flow) instead of a silent disconnected→reconnect loop.
+            if let sn = awaitingHandshakeSN {
+                awaitingHandshakeSN = nil
+                let wasAuto = isAutoReconnectAttempt
+                isAutoReconnectAttempt = false
+                stopAutoReconnect()
+                AppLog.log("[DeviceManager] handshake rejected for sn=\(sn) (dropped before completion, auto=\(wasAuto))")
+                let display = cachedBleDevices[sn].map { Self.scanDisplayName(rawName: $0.name, sn: sn) } ?? sn
+                let device = ScannedDevice(name: display, serialNumber: sn, rssi: cachedBleDevices[sn]?.rssi ?? 0)
+                DispatchQueue.main.async { [weak self] in
+                    self?.connectionStateSubject.send(.failed(
+                        "The device refused the connection — it may still be locked by another account."))
+                    // No sheet is watching during auto-reconnect — offer recovery on Home instead.
+                    if wasAuto { self?.recoveryOfferSubject.send(device) }
+                }
+                return
+            }
             let wasUserDisconnect = isUserDisconnect
             isUserDisconnect = false
             DispatchQueue.main.async { [weak self] in
@@ -447,12 +682,31 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
                 }
             }
         case 1:
+            // GATT connected — NOT success yet. The E2EE handshake follows and can still be
+            // rejected by a firmware locked to another account. .connected is sent from
+            // bleBind(status 0) once the handshake actually completes.
             stopAutoReconnect()
             isUserDisconnect = false
-            DispatchQueue.main.async { [weak self] in
-                self?.connectionStateSubject.send(.connected)
-            }
+            AppLog.log("[DeviceManager] GATT connected, awaiting handshake")
         case 2, -1, -2:
+            // A brick can also surface as a connect failure (never reaching GATT) rather than a
+            // GATT-then-drop. If a connect was awaiting the handshake, treat it like the state-0
+            // rejection: offer recovery instead of a dead "Connection failed".
+            if let sn = awaitingHandshakeSN {
+                awaitingHandshakeSN = nil
+                let wasAuto = isAutoReconnectAttempt
+                isAutoReconnectAttempt = false
+                stopAutoReconnect()
+                AppLog.log("[DeviceManager] handshake rejected for sn=\(sn) (connect failed code=\(state), auto=\(wasAuto))")
+                let display = cachedBleDevices[sn].map { Self.scanDisplayName(rawName: $0.name, sn: sn) } ?? sn
+                let device = ScannedDevice(name: display, serialNumber: sn, rssi: cachedBleDevices[sn]?.rssi ?? 0)
+                DispatchQueue.main.async { [weak self] in
+                    self?.connectionStateSubject.send(.failed(
+                        "The device refused the connection — it may still be locked by another account."))
+                    if wasAuto { self?.recoveryOfferSubject.send(device) }
+                }
+                return
+            }
             DispatchQueue.main.async { [weak self] in
                 self?.connectionStateSubject.send(.failed("Connection failed (code: \(state))"))
             }
@@ -513,7 +767,13 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
     }
 
     func bleBind(sn: String?, status: Int, protVersion: Int, timezone: Int) {
+        if recoveryInProgress { fireRecoveryAttempt(status == 0); return }
         guard status == 0, let sn = sn else { return }
+        // Handshake complete — THIS is connection success (see bleConnectState case 1).
+        awaitingHandshakeSN = nil
+        DispatchQueue.main.async { [weak self] in
+            self?.connectionStateSubject.send(.connected)
+        }
         if pendingDeviceWiFiClose {
             pendingDeviceWiFiClose = false
             PlaudDeviceAgent.shared.setDeviceWiFi(open: false)
@@ -618,6 +878,7 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
 
     func blePenState(state: Int, privacy: Int, keyState: Int, uDisk: Int, findMyToken: Int, hasSndpKey: Int, deviceAccessToken: Int) {
         AppLog.log("[DeviceManager] ✅ blePenState called! state=\(state)")
+        if recoveryInProgress { fireRecoveryAttempt(true); return }
         // Handshake complete, populate device info + check firmware + report metadata
         DispatchQueue.main.async { [weak self] in
             self?.populateDeviceFromCache()

@@ -240,6 +240,41 @@ final class PlaudAPIService {
         }.resume()
     }
 
+    /// GET /open/partner/sdk/binding — authoritative cloud binding state for (type, sn).
+    /// Three-state isBind (true / false / nil = signed but never bound) + newest-first history.
+    /// Doc caveats: a missing device is a BARE 404 with no ErrorCode body, and bind_history is
+    /// NOT client-scoped — entries may belong to other partner clients.
+    func queryDeviceBinding(
+        type: String, sn: String,
+        completion: @escaping ((isBind: Bool?, bindHistory: [String])?) -> Void
+    ) {
+        guard let url = URL(string: "\(baseURL)/open/partner/sdk/binding?type=\(type)&sn=\(sn)") else {
+            completion(nil); return
+        }
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(userAccessToken)", forHTTPHeaderField: "Authorization")
+        AppLog.log("[PlaudAPI] cloud binding >>> GET \(url.absoluteString)")
+
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                AppLog.log("[PlaudAPI] cloud binding <<< transport error: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+            let body = data.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+            AppLog.log("[PlaudAPI] cloud binding <<< HTTP \(status) \(body.prefix(300))")
+            guard status == 200, let data = data,
+                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                completion(nil)
+                return
+            }
+            let isBind = json["is_bind"] as? Bool   // JSON null → nil (three-state)
+            let history = (json["bind_history"] as? [String]) ?? []
+            completion((isBind: isBind, bindHistory: history))
+        }.resume()
+    }
+
     // MARK: - Generic Request
 
     private func perform<T: Decodable>(_ request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {

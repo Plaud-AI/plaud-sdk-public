@@ -41314,6 +41314,67 @@
           },
           {
             "kind": "Function",
+            "name": "bleConnectStage",
+            "printedName": "bleConnectStage(sn:stage:detail:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudDeviceBasicSDK@objc(pl)PlaudDeviceAgentProtocol(im)bleConnectStageWithSn:stage:detail:",
+            "mangledName": "$s19PlaudDeviceBasicSDK0aB13AgentProtocolP15bleConnectStage2sn5stage6detailySSSg_SSAHtF",
+            "moduleName": "PlaudDeviceBasicSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : PlaudDeviceBasicSDK.PlaudDeviceAgentProtocol>",
+            "sugared_genericSig": "<Self where Self : PlaudDeviceBasicSDK.PlaudDeviceAgentProtocol>",
+            "protocolReq": true,
+            "objc_name": "bleConnectStageWithSn:stage:detail:",
+            "declAttributes": [
+              "Optional",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "bleBind",
             "printedName": "bleBind(sn:status:protVersion:timezone:)",
             "children": [
@@ -44316,6 +44377,41 @@
           },
           {
             "kind": "Function",
+            "name": "recoveryConnectBleDevice",
+            "printedName": "recoveryConnectBleDevice(bleDevice:historicalUserId:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "BleDevice",
+                "printedName": "PlaudBleSDK.BleDevice",
+                "usr": "c:@M@PlaudBleSDK@objc(cs)BleDevice"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@PlaudDeviceBasicSDK@objc(cs)PlaudDeviceAgent(im)recoveryConnectBleDeviceWithBleDevice:historicalUserId:",
+            "mangledName": "$s19PlaudDeviceBasicSDK0aB5AgentC018recoveryConnectBleB003bleB016historicalUserIdy0ahD00hB0C_SStF",
+            "moduleName": "PlaudDeviceBasicSDK",
+            "objc_name": "recoveryConnectBleDeviceWithBleDevice:historicalUserId:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "disconnect",
             "printedName": "disconnect()",
             "children": [
@@ -45388,6 +45484,64 @@
             "mangledName": "$s19PlaudDeviceBasicSDK0aB5AgentC14bleAppKeyState6resultySi_tF",
             "moduleName": "PlaudDeviceBasicSDK",
             "objc_name": "bleAppKeyStateWithResult:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "bleConnectStage",
+            "printedName": "bleConnectStage(sn:stage:detail:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@PlaudDeviceBasicSDK@objc(cs)PlaudDeviceAgent(im)bleConnectStageWithSn:stage:detail:",
+            "mangledName": "$s19PlaudDeviceBasicSDK0aB5AgentC15bleConnectStage2sn5stage6detailySSSg_SSAHtF",
+            "moduleName": "PlaudDeviceBasicSDK",
+            "objc_name": "bleConnectStageWithSn:stage:detail:",
             "declAttributes": [
               "Dynamic",
               "ObjC",
@@ -74359,217 +74513,224 @@
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 19328,
+      "offset": 20029,
       "length": 4,
       "value": "0x14"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 19379,
+      "offset": 20080,
       "length": 2,
       "value": "-1"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "StringLiteral",
-      "offset": 19428,
+      "offset": 20129,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 19802,
+      "offset": 20503,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 19903,
+      "offset": 20604,
       "length": 3,
       "value": "512"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 20023,
+      "offset": 20724,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 20175,
+      "offset": 20876,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 20464,
+      "offset": 21165,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "FloatLiteral",
-      "offset": 20513,
+      "offset": 21214,
       "length": 3,
       "value": "0.0"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "StringLiteral",
-      "offset": 20588,
+      "offset": 21289,
       "length": 21,
       "value": "\"com.plaud.ble.speed\""
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "Array",
-      "offset": 23026,
+      "offset": 23727,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 23145,
+      "offset": 23846,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "StringLiteral",
-      "offset": 23218,
+      "offset": 23919,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "StringLiteral",
-      "offset": 23246,
+      "offset": 23947,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "StringLiteral",
-      "offset": 23277,
+      "offset": 23978,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "BooleanLiteral",
-      "offset": 23460,
+      "offset": 24161,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "BooleanLiteral",
-      "offset": 23653,
+      "offset": 24462,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 24655,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 23835,
+      "offset": 24837,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "BooleanLiteral",
-      "offset": 24000,
+      "offset": 25002,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "Dictionary",
-      "offset": 25369,
+      "offset": 26371,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "Dictionary",
-      "offset": 26374,
+      "offset": 27376,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "StringLiteral",
-      "offset": 27218,
+      "offset": 28220,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "Dictionary",
-      "offset": 27249,
+      "offset": 28251,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "BooleanLiteral",
-      "offset": 32187,
+      "offset": 33574,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "BooleanLiteral",
-      "offset": 32652,
+      "offset": 34039,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "BooleanLiteral",
-      "offset": 33126,
+      "offset": 34513,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 55830,
+      "offset": 62904,
       "length": 2,
       "value": "-1"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "StringLiteral",
-      "offset": 55875,
+      "offset": 62949,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 55971,
+      "offset": 63045,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "IntegerLiteral",
-      "offset": 57105,
+      "offset": 64179,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/panyue\/Desktop\/project\/TOB\/private\/flutter-tob\/tb-plaud-mobile\/ios\/SDK\/SDKLibs\/PlaudDeviceBasicSDK\/swiftfiles\/PlaudDeviceAgent.swift",
       "kind": "Dictionary",
-      "offset": 74317,
+      "offset": 81391,
       "length": 3,
       "value": "[]"
     },

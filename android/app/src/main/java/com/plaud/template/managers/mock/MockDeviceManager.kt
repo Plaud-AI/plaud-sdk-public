@@ -90,7 +90,9 @@ class MockDeviceManager : DeviceManagerProtocol {
     }
 
     /** Simulated connect: enters Connecting immediately, becomes Connected after 1 second */
-    override fun connect(device: ScannedDevice, userId: String) {
+    override val recoveryOffers = kotlinx.coroutines.flow.MutableSharedFlow<ScannedDevice>()
+
+    override fun connect(device: ScannedDevice, userId: String, userInitiated: Boolean) {
         Log.d(TAG, "connect: ${device.serialNumber} (mock)")
         _connectionState.value = DeviceConnectionState.Connecting(device)
 
@@ -116,6 +118,10 @@ class MockDeviceManager : DeviceManagerProtocol {
 
     override fun refreshFirmwareCheck() {
         Log.d(TAG, "refreshFirmwareCheck (mock)")
+    }
+
+    override fun startDeviceRecovery(device: ScannedDevice) {
+        Log.d(TAG, "startDeviceRecovery (mock)")
     }
 
     override fun refreshDeviceInfo() {
