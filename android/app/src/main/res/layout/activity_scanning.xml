@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <!-- Back button -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="start|top"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back"
+        android:src="@drawable/ic_chevron_left"
+        android:tint="@color/text_primary" />
+
+    <!-- Center content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="80dp">
+
+        <!-- Prompt text -->
+        <TextView
+            android:id="@+id/subtitleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/scanning_subtitle"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp" />
+
+        <!-- Scan animation area 194x194dp -->
+        <FrameLayout
+            android:id="@+id/scanAnimationContainer"
+            android:layout_width="194dp"
+            android:layout_height="194dp"
+            android:layout_marginTop="88dp">
+
+            <!-- Inner glow (pulse) -->
+            <ImageView
+                android:id="@+id/glowView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/scan_inner_ellipse" />
+
+            <!-- Static ring -->
+            <View
+                android:id="@+id/staticRing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Spinning arc -->
+            <View
+                android:id="@+id/spinningArc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- BLE icon -->
+            <ImageView
+                android:id="@+id/bleIcon"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:contentDescription="Bluetooth"
+                android:src="@drawable/icon_ble_scan" />
+        </FrameLayout>
+
+        <!-- Status text -->
+        <TextView
+            android:id="@+id/statusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="137dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/searching"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Bottom warning bar -->
+    <LinearLayout
+        android:id="@+id/warningBar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_warning_outline"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="Warning"
+            android:src="@drawable/ic_warning"
+            android:tint="@color/text_secondary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:text="@string/warning_unbound"
+            android:textColor="@color/dark_gray"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Theme -->
+    <style name="Theme.PlaudTemplate" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#1F1F1F</item>
+        <item name="colorPrimaryVariant">#1F1F1F</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#6CAE85</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Recording dark theme -->
+    <style name="Theme.PlaudTemplate.Recording" parent="Theme.PlaudTemplate">
+        <item name="android:windowBackground">@color/recording_dark_bg</item>
+        <item name="android:statusBarColor">@color/recording_dark_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Simple microphone shape as a placeholder app icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,28 C48.5,28 44,32.5 44,38 L44,54 C44,59.5 48.5,64 54,64 C59.5,64 64,59.5 64,54 L64,38 C64,32.5 59.5,28 54,28 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,54 C38,62.8 45.2,70 54,70 C62.8,70 70,62.8 70,54 L66,54 C66,60.6 60.6,66 54,66 C47.4,66 42,60.6 42,54 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M51,70 L51,80 L57,80 L57,70 Z" />
+</vector>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_sync_banner"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Row 1: icon + title + count -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/syncIcon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="Sync"
+            android:src="@drawable/ic_sync"
+            android:tint="@color/dark_gray" />
+
+        <TextView
+            android:id="@+id/syncTitleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@id/syncIcon"
+            android:fontFamily="sans-serif"
+            android:text="@string/syncing_recordings"
+            android:textColor="@color/dark_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/syncCountLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/gray7"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <!-- Row 2: progress bar -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_progress_track">
+
+        <View
+            android:id="@+id/syncProgressFill"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_progress_fill_dark" />
+    </FrameLayout>
+
+    <!-- Row 3: speed + fast transfer -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/syncSpeedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/gray7"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/fastTransferButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/bg_fast_transfer_button"
+            android:drawableStart="@drawable/ic_wifi"
+            android:drawablePadding="4dp"
+            android:fontFamily="sans-serif"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/fast_transfer"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+</LinearLayout>

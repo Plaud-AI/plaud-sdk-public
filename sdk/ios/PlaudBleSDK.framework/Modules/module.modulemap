@@ -1,0 +1,11 @@
+framework module PlaudBleSDK {
+  umbrella header "PlaudBleSDK.h"
+  export *
+
+  module * { export * }
+}
+
+module PlaudBleSDK.Swift {
+  header "PlaudBleSDK-Swift.h"
+  requires objc
+}

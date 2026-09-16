@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <!-- Top decorative ellipse -->
+    <ImageView
+        android:id="@+id/topDecoration"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="-30dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/success_bg_ellipse" />
+
+    <!-- Center content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="60dp">
+
+        <!-- Green check icon -->
+        <ImageView
+            android:id="@+id/checkIcon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="Success"
+            android:src="@drawable/ic_check_circle" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:alpha="0"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/youre_all_set"
+            android:textColor="@color/text_primary"
+            android:textSize="24sp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/subtitleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:alpha="0"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/success_subtitle"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- Explore Intelligence button -->
+    <Button
+        android:id="@+id/exploreButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_primary_button"
+        app:backgroundTint="@null"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/explore_intelligence"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</FrameLayout>

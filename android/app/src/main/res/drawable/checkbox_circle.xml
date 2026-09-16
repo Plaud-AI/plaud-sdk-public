@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/black" />
+                    <size android:width="20dp" android:height="20dp" />
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_check_white" android:gravity="center" />
+        </layer-list>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+            <stroke android:width="1.5dp" android:color="#D6D6D6" />
+            <size android:width="20dp" android:height="20dp" />
+        </shape>
+    </item>
+</selector>

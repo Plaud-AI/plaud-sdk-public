@@ -1,0 +1,11 @@
+framework module PlaudWiFiSDK {
+  umbrella header "PlaudWiFiSDK.h"
+  export *
+
+  module * { export * }
+}
+
+module PlaudWiFiSDK.Swift {
+  header "PlaudWiFiSDK-Swift.h"
+  requires objc
+}

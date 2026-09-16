@@ -1,0 +1,149 @@
+// Common
+"ok" = "OK";
+"cancel" = "Cancel";
+"confirm" = "Confirm";
+"error" = "Error";
+
+// Permission
+"permission_init_failed" = "SDK permission initialization failed, please contact developer platform";
+"permission_denied" = "No permission for this feature, please contact developer platform";
+
+// Print
+"print_error" = "Print Error";
+"print_success" = "Print Success";
+"print_cancelled" = "Print Cancelled";
+"print_test_framework" = "Testing Static Library --framework";
+
+// SDK Resource
+"sdk_resource_init_failed" = "Resource initialization failed. Please check if the Host App has correctly added PlaudDeviceBasicSDK.bundle";
+
+// Binary File
+"binary_file_empty" = "Binary file data is empty";
+"binary_data_not_available" = "Error: Binary data is not available";
+"invalid_package_offset_size" = "Error: Invalid package offset or size";
+"binary_file_transfer_complete" = "transfer binary file complete";
+"binary_file_transfer_succeed" = "transfer binary file succeed";
+
+
+// Device Scanning and Connection
+"scan_device" = "Scan Device";
+"refresh" = "Refresh";
+"connect" = "Connect";
+"signal_strength_format" = "Signal Strength: %ld dBm";
+"sn_format" = "SN: %@";
+"status_unbound" = "Status: Unbound";
+"status_bound" = "Status: Bound";
+"device_connecting" = "Device Connecting";
+"device_disconnected" = "Device Disconnected";
+"device_connect_failed" = "Device Connection Failed";
+"device_connect_unknown" = "Unknown Connection Status";
+"device_already_bound" = "Device is already bound, cannot bind to a new device";
+
+// WiFi Settings
+"wifi_setup" = "Wi-Fi Setup";
+"wifi_24g_only" = "Only supports 2.4GHz networks";
+"wifi_name" = "Name";
+"wifi_password" = "Password";
+"wifi_name_placeholder" = "Enter Wi-Fi name";
+"wifi_password_placeholder" = "Enter Wi-Fi password";
+"wifi_test_connection" = "Test Connection";
+"wifi_connected" = "Connected";
+"wifi_connecting" = "Connecting, please wait...";
+"wifi_forget" = "Ignore Network";
+"wifi_edit" = "Edit";
+"wifi_done" = "Done";
+"wifi_alert_title" = "Notice";
+"wifi_alert_input_required" = "Please enter both Wi-Fi name and password";
+"wifi_alert_connection_success" = "Connection Success";
+"wifi_alert_connection_success_message" = "Wi-Fi connection test successful";
+"wifi_alert_connection_failed" = "Connection Failed";
+"wifi_alert_forget_title" = "Ignore Network";
+"wifi_alert_forget_message" = "Are you sure you want to forget this Wi-Fi network?";
+"wifi_alert_forget_confirm" = "Forget";
+
+// WiFi Setting Page
+"wifi_cloud_title" = "Wi-Fi Cloud Sync";
+"wifi_cloud_desc" = "NotePin will automatically connect to your configured Wi-Fi networks to upload recordings to the cloud. You can add multiple networks (e.g., home, work). Only 2.4GHz networks are supported.";
+"wifi_cloud_switch" = "Wi-Fi Cloud Sync";
+"wifi_cloud_set_address" = "Set Sync Address";
+"wifi_cloud_info" = "Private Cloud Sync is Plaud.AI's dedicated private cloud space for each user, ensuring secure data backup and preventing loss.";
+"wifi_configure" = "Configure Wi-Fi";
+"wifi_network_list" = "Network List";
+"wifi_other" = "Other...";
+"wifi_set_address_title" = "Set Sync Address";
+"wifi_set_address_message" = "Please enter server address";
+"wifi_test_timeout" = "Timeout Error";
+"wifi_test_not_found" = "Connection failed: Wi-Fi not found";
+"wifi_test_wrong_password" = "Connection failed: Wrong Wi-Fi password";
+"wifi_test_failed" = "Wi-Fi connection failed";
+"wifi_test_data_failed" = "Connection failed: Data transfer error";
+"wifi_add_limit_title" = "Add Failed";
+"wifi_add_limit_message" = "Maximum 5 Wi-Fi networks allowed. Please delete one first";
+
+// Audio Player
+"audio_player_title" = "Audio Player";
+"audio_status_ready" = "Ready to Play";
+"audio_status_playing" = "Playing...";
+"audio_status_paused" = "Paused";
+"audio_status_finished" = "Finished";
+"audio_status_complete" = "Playback Complete";
+"audio_status_error" = "Playback Error";
+"audio_load_failed_format" = "Audio Load Failed: %@";
+"audio_decode_error_format" = "Decode Error: %@";
+"audio_unknown_error" = "Unknown Error";
+
+// WiFi Test
+"wifi_test_timeout" = "Timeout Error";
+
+// File Download
+"file_downloading" = "Stream file downloading in progress";
+"file_transcoding" = "Transcoding...";
+"file_download_complete" = "Download file complete";
+"file_transcode_error" = "Transcoding error";
+"file_transcode_error_no_permission" = "Transcoding error, no permission";
+
+
+// Workflow Status
+"pending" = "Pending";
+"running" = "Running";
+"progress" = "In Progress";
+"success" = "Success";
+"failure" = "Failed";
+"cancelled" = "Cancelled";
+"timeout" = "Timeout";
+
+// Workflow Task Types
+"ai_etl" = "AI ETL";
+"audio_merge" = "Audio Merge";
+"custom" = "Custom";
+"unknown" = "Unknown";
+"audio_transcribe" = "Audio Transcription";
+"ai_summarize" = "AI Summary";
+
+// Workflow Errors
+"invalid_url" = "Invalid URL";
+"network_error" = "Network Error";
+"invalid_response" = "Invalid Response";
+"server_error" = "Server Error";
+"workflow_not_found" = "Workflow Not Found";
+"workflow_failed" = "Workflow Failed";
+"no_api_token" = "No API Token";
+
+// Update Manager
+"update.message.no_update_available" = "No update available";
+"update.message.user_cancelled" = "Update cancelled by user";
+"update.error.network" = "Network error: %@";
+"update.error.invalid_response" = "Invalid response from server";
+"update.error.download_failed" = "Download failed: %@";
+"update.error.file_system" = "File system error: %@";
+"update.error.no_update_available" = "No update available";
+"update.error.user_cancelled" = "Update cancelled by user";
+"update.error.unknown" = "Unknown error occurred";
+
+// Update Alerts
+"update.alert.title.force" = "Force Update";
+"update.alert.title.new_version" = "New Version Available";
+"update.alert.new_version" = "New Version: %@";
+"update.alert.ask_to_download" = "Download and install now?";
+"update.alert.action.remind_later" = "Remind Me Later";
+"update.alert.action.update_now" = "Update Now";

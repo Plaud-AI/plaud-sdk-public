@@ -1,0 +1,150 @@
+// Common
+"ok" = "确定";
+"cancel" = "取消";
+"confirm" = "确认";
+"error" = "错误";
+
+// Permission
+"permission_init_failed" = "SDK权限初始化失败，请联系开发者平台";
+"permission_denied" = "该功能暂无权限，请联系开发者平台";
+
+// Print
+"print_error" = "打印错误";
+"print_success" = "打印成功";
+"print_cancelled" = "打印已取消";
+"print_test_framework" = "测试静态库 --framework";
+
+// SDK Resource
+"sdk_resource_init_failed" = "资源初始化失败，请检查Host App 是否正确添加PlaudDeviceBasicSDK.bundle";
+
+// Binary File
+"binary_file_empty" = "二进制文件数据为空";
+"binary_data_not_available" = "错误：二进制数据不可用";
+"invalid_package_offset_size" = "错误：无效的数据包偏移量或大小";
+"binary_file_transfer_complete" = "二进制文件传输完成";
+"binary_file_transfer_succeed" = "二进制文件传输成功";
+
+
+
+// Device Scanning and Connection
+"scan_device" = "扫描设备";
+"refresh" = "刷新";
+"connect" = "连接";
+"signal_strength_format" = "信号强度: %ld dBm";
+"sn_format" = "SN: %@";
+"status_unbound" = "状态: 未绑定";
+"status_bound" = "状态: 已绑定";
+"device_connecting" = "设备连接中";
+"device_disconnected" = "设备未连接";
+"device_connect_failed" = "设备连接失败";
+"device_connect_unknown" = "未知连接状态";
+"device_already_bound" = "设备已绑定，不能绑定到新的设备";
+
+// WiFi Settings
+"wifi_setup" = "设置 Wi-Fi";
+"wifi_24g_only" = "仅支持 2.4GHz 网络";
+"wifi_name" = "名称";
+"wifi_password" = "密码";
+"wifi_name_placeholder" = "请输入Wi-Fi名称";
+"wifi_password_placeholder" = "请输入Wi-Fi密码";
+"wifi_test_connection" = "测试连接";
+"wifi_connected" = "已连接";
+"wifi_connecting" = "连接中，请稍候...";
+"wifi_forget" = "忘记此网络";
+"wifi_edit" = "编辑";
+"wifi_done" = "完成";
+"wifi_alert_title" = "提示";
+"wifi_alert_input_required" = "请输入完整的WiFi名称和密码";
+"wifi_alert_connection_success" = "连接成功";
+"wifi_alert_connection_success_message" = "WiFi连接测试成功";
+"wifi_alert_connection_failed" = "连接失败";
+"wifi_alert_forget_title" = "忘记网络";
+"wifi_alert_forget_message" = "确定要忘记这个WiFi网络吗？";
+"wifi_alert_forget_confirm" = "忘记";
+
+// WiFi Setting Page
+"wifi_cloud_title" = "Wi-Fi上云";
+"wifi_cloud_desc" = "NotePin 会自动连接到你配置的 Wi-Fi 网络，将录音上传到云端。你可以添加多个常用网络（例如家里、工作）。目前仅支持 2.4GHz 网络。";
+"wifi_cloud_switch" = "Wi-Fi上云";
+"wifi_cloud_set_address" = "设置地址";
+"wifi_cloud_info" = "Private Cloud Sync 是 Plaud.AI 为每位用户提供的独立私有云空间，用于安全备份数据并防止丢失。";
+"wifi_configure" = "配置 Wi-Fi";
+"wifi_network_list" = "网络列表";
+"wifi_other" = "其他...";
+"wifi_set_address_title" = "设置上传地址";
+"wifi_set_address_message" = "请输入服务器地址";
+"wifi_test_timeout" = "超时错误";
+"wifi_test_not_found" = "连接失败,未找到wifi";
+"wifi_test_wrong_password" = "连接失败,Wifi密码不正确";
+"wifi_test_failed" = "Wifi连接失败";
+"wifi_test_data_failed" = "连接失败,数据传输失败";
+"wifi_add_limit_title" = "添加失败";
+"wifi_add_limit_message" = "最多能配置 5 个 Wi-Fi，请先删除";
+
+// Audio Player
+"audio_player_title" = "音频播放";
+"audio_status_ready" = "准备播放";
+"audio_status_playing" = "播放中...";
+"audio_status_paused" = "已暂停";
+"audio_status_finished" = "已结束";
+"audio_status_complete" = "播放完成";
+"audio_status_error" = "播放出错";
+"audio_load_failed_format" = "音频加载失败: %@";
+"audio_decode_error_format" = "解码错误: %@";
+"audio_unknown_error" = "未知错误";
+
+// WiFi Test
+"wifi_test_timeout" = "超时错误";
+
+// File Download
+"file_downloading" = "流式文件下载中";
+"file_transcoding" = "转码中...";
+"file_download_complete" = "下载并转码完成";
+"file_transcode_error" = "转码错误";
+"file_transcode_error_no_permission" = "转码错误, 无权限";
+
+// Workflow Status
+"success" = "成功";
+"failure" = "失败";
+"cancelled" = "已取消";
+"timeout" = "超时";
+"pending" = "等待中";
+"running" = "运行中";
+"progress" = "进行中";
+
+
+// Workflow Task Types
+"audio_transcribe" = "音频转写";
+"ai_summarize" = "AI总结";
+"ai_etl" = "AI ETL";
+"audio_merge" = "音频合并";
+"custom" = "自定义";
+"unknown" = "未知";
+
+// Workflow Errors
+"invalid_url" = "无效URL";
+"network_error" = "网络错误";
+"invalid_response" = "无效响应";
+"server_error" = "服务器错误";
+"workflow_not_found" = "工作流未找到";
+"workflow_failed" = "工作流失败";
+"no_api_token" = "无API令牌";
+
+// Update Manager
+"update.message.no_update_available" = "暂无可用更新";
+"update.message.user_cancelled" = "用户已取消更新";
+"update.error.network" = "网络错误：%@";
+"update.error.invalid_response" = "服务器响应无效";
+"update.error.download_failed" = "下载失败：%@";
+"update.error.file_system" = "文件系统错误：%@";
+"update.error.no_update_available" = "暂无可用更新";
+"update.error.user_cancelled" = "用户已取消更新";
+"update.error.unknown" = "发生未知错误";
+
+// Update Alerts
+"update.alert.title.force" = "强制更新";
+"update.alert.title.new_version" = "发现新版本";
+"update.alert.new_version" = "新版本: %@";
+"update.alert.ask_to_download" = "是否立即下载更新？";
+"update.alert.action.remind_later" = "稍后提醒";
+"update.alert.action.update_now" = "立即更新";

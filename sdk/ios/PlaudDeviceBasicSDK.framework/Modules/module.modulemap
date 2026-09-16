@@ -1,0 +1,11 @@
+framework module PlaudDeviceBasicSDK {
+  umbrella header "PlaudDeviceBasicSDK.h"
+  export *
+
+  module * { export * }
+}
+
+module PlaudDeviceBasicSDK.Swift {
+  header "PlaudDeviceBasicSDK-Swift.h"
+  requires objc
+}
