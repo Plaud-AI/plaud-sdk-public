@@ -429,15 +429,38 @@ final class SettingsViewController: UIViewController {
             // Renewal: same account — apply live (SDK re-parses handshake identity + refetches keys).
             PlaudDeviceAgent.shared.setUserAccessToken(newToken)
             renderTokenInfo()
-            showAlert(title: "User Access Token",
-                      message: "Token renewed for \(newInfo.userId). Applied immediately.")
+            showQuitPrompt(
+                title: "User Access Token",
+                message: "Token renewed for \(newInfo.userId). Applied immediately — restart only if you want a clean session.",
+                dismissTitle: "OK"
+            )
         } else {
             // Account switch: persist the new identity; take effect on restart.
             RecordingStore.shared.userId = newInfo.userId
             renderTokenInfo()
-            showAlert(title: "Switch Account",
-                      message: "Token saved for \(newInfo.userId). Quit and relaunch the app to switch accounts.\n\nNote: a device bound to the previous account must be unpaired there before the new account can bind it.")
+            showQuitPrompt(
+                title: "Switch Account",
+                message: "Token saved for \(newInfo.userId). Restart the app to switch accounts.\n\nNote: a device bound to the previous account must be unpaired there before the new account can bind it."
+            )
         }
+    }
+
+    /// Account switches only take effect on a fresh launch, so offer to close the app the way
+    /// the Android template does. iOS has no API to relaunch, and Apple discourages quitting
+    /// programmatically — this exists because a tester otherwise has to remember to swipe the
+    /// app away by hand, and a half-switched account looks like a device-binding failure.
+    private func showQuitPrompt(title: String, message: String, dismissTitle: String = "Later") {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Exit Now", style: .destructive) { _ in
+            // Leave the run loop a moment so the alert dismissal and any pending
+            // UserDefaults write land before the process goes away.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                UserDefaults.standard.synchronize()
+                exit(0)
+            }
+        })
+        alert.addAction(UIAlertAction(title: dismissTitle, style: .cancel))
+        present(alert, animated: true)
     }
 
     // MARK: - API Key (transcription X-Client-Api-Key)
@@ -586,8 +609,8 @@ final class SettingsViewController: UIViewController {
                 guard domain != current else { return }
                 RecordingStore.shared.serverDomainOverride = domain
                 self?.renderEnvInfo()
-                self?.showAlert(title: "Server Environment",
-                                message: "Server switched to \(domain). Quit and relaunch the app to apply.")
+                self?.showQuitPrompt(title: "Server Environment",
+                                     message: "Server switched to \(domain). Restart the app to apply.")
             })
         }
         sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))

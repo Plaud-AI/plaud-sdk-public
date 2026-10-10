@@ -306,6 +306,16 @@ final class SyncManager: SyncManagerProtocol {
             self?.filesSubject.send(allFiles)
         }
 
+        // A transfer started by the beacon wake-up is still running: bringing the app to the
+        // foreground re-fetches the list, and restarting the queue here would hand the same
+        // session to exportAudio again — the SDK drops the partial file it already has and the
+        // download falls back to 0%. Keep the refreshed list, leave the transfer alone.
+        if let inFlight = currentExportSessionId {
+            silentFetch = false
+            AppLog.log("[SyncManager] handleFileList: download of \(inFlight) still running — keeping it, not restarting the queue")
+            return
+        }
+
         // Silent mode: fetch list only, auto-start download if new files exist
         if silentFetch {
             silentFetch = false

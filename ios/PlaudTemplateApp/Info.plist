@@ -15,17 +15,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.57</string>
+	<string>1.1.8</string>
 	<key>CFBundleVersion</key>
-	<string>57</string>
+	<string>70</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Bluetooth is required to connect to your Plaud recording device.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Bluetooth is required to connect to your Plaud recording device.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Local network access is required for WiFi fast transfer.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Allows the app to detect your Plaud device in the background and reconnect automatically to sync recordings.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location access is required for WiFi fast transfer to identify and connect to your Plaud device hotspot.</string>
+	<string>Location access is required for WiFi fast transfer and to discover your Plaud device nearby.</string>
 	<key>PartnerToken</key>
 	<string>$(PARTNER_TOKEN)</string>
 	<key>PlaudApiKey</key>
@@ -52,6 +54,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
+		<string>location</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>

@@ -17,6 +17,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             maxFileSize: 50 * 1024 * 1024     // 50 MB per file (1–100MB)
         )
 
+        // iBeacon background wake-up (SDK v1.0.15): MUST be called synchronously
+        // here — when the system cold-launches the app for a region event, any
+        // async dispatch (Task/DispatchQueue) would drop that pending event.
+        // DeviceManager assigns itself as the facade delegate in its init; it must
+        // exist BEFORE activation, or the pending-region wake-up trigger fires into
+        // a nil delegate and is lost until the 60s cooldown re-trigger.
+        _ = DeviceManager.shared
+        PlaudDeviceAgent.shared.activateBeaconMonitoring()
+        // Re-register the current bond list on every launch (idempotent; the SDK
+        // also self-registers once the Always permission lands).
+        PlaudDeviceAgent.shared.updateBeaconMonitoredDevices(
+            serialNumbers: RecordingStore.shared.pairedDeviceSNs
+        )
+
         // Build/version stamp so every exported log self-identifies which binary produced it.
         // The marker string also proves the running build includes the latest source — if a log
         // lacks it, the device is running a stale build / cached framework.

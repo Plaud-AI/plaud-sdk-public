@@ -47,8 +47,8 @@ targets:
     info:
       path: PlaudTemplateApp/Info.plist
       properties:
-        CFBundleShortVersionString: "1.0.57"
-        CFBundleVersion: "57"
+        CFBundleShortVersionString: "1.1.8"
+        CFBundleVersion: "70"
         UILaunchScreen:
           UIColorName: "systemBackground"
         UserAccessToken: $(USER_ACCESS_TOKEN)
@@ -58,9 +58,13 @@ targets:
         NSBluetoothAlwaysUsageDescription: Bluetooth is required to connect to your Plaud recording device.
         NSBluetoothPeripheralUsageDescription: Bluetooth is required to connect to your Plaud recording device.
         NSLocalNetworkUsageDescription: Local network access is required for WiFi fast transfer.
-        NSLocationWhenInUseUsageDescription: Location access is required for WiFi fast transfer to identify and connect to your Plaud device hotspot.
+        NSLocationWhenInUseUsageDescription: Location access is required for WiFi fast transfer and to discover your Plaud device nearby.
+        # iBeacon background wake-up (SDK v1.0.15) — both keys are mandatory:
+        # the SDK asserts at runtime if the location background mode is missing.
+        NSLocationAlwaysAndWhenInUseUsageDescription: Allows the app to detect your Plaud device in the background and reconnect automatically to sync recordings.
         UIBackgroundModes:
           - bluetooth-central
+          - location
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UIApplicationSceneManifest:

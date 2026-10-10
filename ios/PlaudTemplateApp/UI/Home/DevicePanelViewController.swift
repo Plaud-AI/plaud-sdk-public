@@ -1,5 +1,6 @@
 import UIKit
 import Combine
+import PlaudDeviceBasicSDK
 
 /// Device management page (full-screen push, not sheet)
 final class DevicePanelViewController: UIViewController {
@@ -37,6 +38,22 @@ final class DevicePanelViewController: UIViewController {
         return btn
     }()
 
+    // Card 1.5 — iBeacon wake-up ("Seamless Reconnect", SDK v1.0.15).
+    // Appears dimmed while the firmware capability is still unknown and becomes
+    // interactive once it lands; removed if the firmware turns out not to support it
+    // (isBeaconWakeupSupported is false while disconnected — never treat it as
+    // an offline capability table).
+    private let beaconCard = UIView()
+    private let beaconToggle = PlaudToggle()
+    private let beaconTitleLabel = UILabel()
+    private let beaconSubtitleLabel = UILabel()
+    /// Capability still unknown — card is visible but inert (see updateBeaconAvailability).
+    private var beaconAwaitingCapability = false
+    /// Invalidates an in-flight capability watch when a newer one starts.
+    private var beaconPollToken = 0
+    private var actionsTopToInfo: NSLayoutConstraint!
+    private var actionsTopToBeacon: NSLayoutConstraint!
+
     // Card 2 — Actions
     private let actionsCard = UIView()
     private lazy var disconnectButton: UIButton = {
@@ -55,6 +72,7 @@ final class DevicePanelViewController: UIViewController {
         setupLayout()
         setupBindings()
         populateData()
+        updateBeaconAvailability()
     }
 
     // MARK: - Navigation Bar
@@ -83,7 +101,12 @@ final class DevicePanelViewController: UIViewController {
         setupInfoCard()
         setupActionsCard()
 
-        [infoCard, actionsCard].forEach { contentView.addSubview($0) }
+        setupBeaconCard()
+        [infoCard, beaconCard, actionsCard].forEach { contentView.addSubview($0) }
+
+        actionsTopToInfo = actionsCard.topAnchor.constraint(equalTo: infoCard.bottomAnchor, constant: 24)
+        actionsTopToBeacon = actionsCard.topAnchor.constraint(equalTo: beaconCard.bottomAnchor, constant: 24)
+        actionsTopToInfo.isActive = true
 
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -101,7 +124,10 @@ final class DevicePanelViewController: UIViewController {
             infoCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             infoCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
 
-            actionsCard.topAnchor.constraint(equalTo: infoCard.bottomAnchor, constant: 24),
+            beaconCard.topAnchor.constraint(equalTo: infoCard.bottomAnchor, constant: 24),
+            beaconCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            beaconCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+
             actionsCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             actionsCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             actionsCard.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
@@ -201,9 +227,191 @@ final class DevicePanelViewController: UIViewController {
             .sink { [weak self] updated in
                 self?.device = updated
                 self?.populateData()
+                self?.updateBeaconAvailability()
             }
             .store(in: &cancellables)
 
+        // Switch state read back from the device (reads and writes share it).
+        // The device-side flag alone does not mean the feature works: region monitoring
+        // needs the phone's Always location permission, and that is lost whenever the app
+        // is reinstalled while the device keeps its flag set. Show the switch on only when
+        // both halves are in place, otherwise it reads as enabled while nothing can wake us.
+        DeviceManager.shared.beaconWakeupEnabledPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.beaconToggle.isOn = value == 1 && PlaudDeviceAgent.shared.isBeaconLocationAlwaysGranted
+            }
+            .store(in: &cancellables)
+
+        // Always permission revoked in system settings → monitoring is torn
+        // down, mirror it on the switch.
+        DeviceManager.shared.beaconAlwaysRevokedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.beaconToggle.isOn = false
+            }
+            .store(in: &cancellables)
+    }
+
+    // MARK: - iBeacon Wake-up ("Seamless Reconnect")
+
+    private func setupBeaconCard() {
+        beaconCard.backgroundColor = .white
+        beaconCard.layer.cornerRadius = 12
+        beaconCard.isHidden = true
+        beaconCard.translatesAutoresizingMaskIntoConstraints = false
+
+        let titleLabel = beaconTitleLabel
+        titleLabel.text = "Seamless Reconnect"
+        titleLabel.font = .systemFont(ofSize: 14)
+        titleLabel.textColor = .black
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        let subtitleLabel = beaconSubtitleLabel
+        subtitleLabel.text = "Wake the app in the background and auto-reconnect when your device is nearby"
+        subtitleLabel.font = .systemFont(ofSize: 13)
+        subtitleLabel.textColor = UIColor(hex: "#7A7A7A")
+        subtitleLabel.numberOfLines = 2
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        beaconToggle.isOn = RecordingStore.shared.isBeaconWakeupEnabled(sn: device.serialNumber)
+            && PlaudDeviceAgent.shared.isBeaconLocationAlwaysGranted
+        beaconToggle.translatesAutoresizingMaskIntoConstraints = false
+        beaconToggle.onToggle = { [weak self] isOn in
+            self?.beaconToggleChanged(isOn)
+        }
+
+        [titleLabel, subtitleLabel, beaconToggle].forEach { beaconCard.addSubview($0) }
+
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: beaconCard.topAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: beaconCard.leadingAnchor, constant: 16),
+
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 2),
+            subtitleLabel.leadingAnchor.constraint(equalTo: beaconCard.leadingAnchor, constant: 16),
+            subtitleLabel.trailingAnchor.constraint(equalTo: beaconToggle.leadingAnchor, constant: -12),
+            subtitleLabel.bottomAnchor.constraint(equalTo: beaconCard.bottomAnchor, constant: -16),
+
+            beaconToggle.centerYAnchor.constraint(equalTo: beaconCard.centerYAnchor),
+            beaconToggle.trailingAnchor.constraint(equalTo: beaconCard.trailingAnchor, constant: -16),
+            beaconToggle.widthAnchor.constraint(equalToConstant: 48),
+            beaconToggle.heightAnchor.constraint(equalToConstant: 26),
+        ])
+    }
+
+    /// The capability flag only turns true once the device answers the NewFeature
+    /// query, which lands a few seconds after bind, and it reads false whenever the
+    /// device is disconnected. The SDK exposes no "capability ready" callback, so the
+    /// panel shows the card in a dimmed, non-interactive waiting state and polls;
+    /// the switch becomes usable the moment the capability lands. If it never lands
+    /// within the window the firmware genuinely lacks beacon support (NewFeature
+    /// bit7) and the card is removed.
+    private func updateBeaconAvailability() {
+        // Supersede any watch already in flight so device updates can't stack polls.
+        beaconPollToken += 1
+        pollBeaconCapability(retriesLeft: 20, token: beaconPollToken)
+    }
+
+    private func pollBeaconCapability(retriesLeft: Int, token: Int) {
+        guard token == beaconPollToken else { return } // superseded by a newer watch
+        let supported = PlaudDeviceAgent.shared.isBeaconWakeupSupported
+        AppLog.log("[DevicePanel] beacon wakeup supported=\(supported) fw=\(device.firmwareVersion) retriesLeft=\(retriesLeft)", level: "BEACON")
+
+        if supported {
+            showBeaconCard(waiting: false)
+            PlaudDeviceAgent.shared.readIBeaconWakeupEnabled()
+            return
+        }
+        // Once resolved as supported the card stays — a later disconnect flips the
+        // flag back to false but must not tear down a switch the user is using.
+        guard beaconCard.isHidden || beaconAwaitingCapability else { return }
+        // Only worth waiting while a device is connected; otherwise it can never arrive.
+        // Firmware older than 1.7.0 never reports the capability, so showing the dimmed
+        // placeholder there would flash a card that then vanishes.
+        guard retriesLeft > 0,
+              firmwareMaySupportBeacon,
+              case .connected = DeviceManager.shared.currentConnectionState else {
+            hideBeaconCard()
+            return
+        }
+        showBeaconCard(waiting: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.pollBeaconCapability(retriesLeft: retriesLeft - 1, token: token)
+        }
+    }
+
+    /// Beacon wake-up needs NotePro firmware 1.7.0 or newer. The capability flag itself is
+    /// authoritative but only arrives seconds after connecting, so the version gates whether
+    /// it is worth showing the dimmed placeholder while we wait. An unknown or unparseable
+    /// version is treated as unsupported — better no card than one that appears and vanishes.
+    private var firmwareMaySupportBeacon: Bool {
+        let digits = device.firmwareVersion.drop { !$0.isNumber }   // "V1.7.0" / "T1.7.0" → "1.7.0"
+        let parts = digits.split(separator: ".").compactMap { Int($0) }
+        guard parts.count == 3 else { return false }
+        return (parts[0], parts[1], parts[2]) >= (1, 7, 0)
+    }
+
+    /// waiting = capability not confirmed yet: visible but dimmed and inert.
+    private func showBeaconCard(waiting: Bool) {
+        beaconAwaitingCapability = waiting
+        if beaconCard.isHidden {
+            beaconCard.isHidden = false
+            actionsTopToInfo.isActive = false
+            actionsTopToBeacon.isActive = true
+        }
+        beaconTitleLabel.alpha = waiting ? 0.4 : 1
+        beaconSubtitleLabel.alpha = waiting ? 0.4 : 1
+        beaconToggle.alpha = waiting ? 0.4 : 1
+        beaconToggle.isUserInteractionEnabled = !waiting
+    }
+
+    private func hideBeaconCard() {
+        beaconAwaitingCapability = false
+        guard !beaconCard.isHidden else { return }
+        beaconCard.isHidden = true
+        actionsTopToBeacon.isActive = false
+        actionsTopToInfo.isActive = true
+    }
+
+    private func beaconToggleChanged(_ isOn: Bool) {
+        guard isOn else {
+            PlaudDeviceAgent.shared.setIBeaconWakeupEnabled(value: 0)
+            return
+        }
+        // Turning on requires the Always location permission (two-stage flow).
+        if PlaudDeviceAgent.shared.isBeaconLocationAlwaysGranted {
+            PlaudDeviceAgent.shared.setIBeaconWakeupEnabled(value: 1)
+        } else if PlaudDeviceAgent.shared.canRequestBeaconLocationAlwaysUpgrade {
+            PlaudDeviceAgent.shared.requestBeaconLocationAlwaysPermission { [weak self] granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        PlaudDeviceAgent.shared.setIBeaconWakeupEnabled(value: 1)
+                    } else {
+                        self?.beaconToggle.isOn = false
+                    }
+                }
+            }
+        } else {
+            // The one-shot Always upgrade prompt was already spent for this
+            // install — the only remaining path is the system Settings app.
+            beaconToggle.isOn = false
+            presentBeaconSettingsAlert()
+        }
+    }
+
+    private func presentBeaconSettingsAlert() {
+        let alert = UIAlertController(
+            title: "Allow Location Access",
+            message: "Seamless Reconnect needs location set to \"Always\" so the system can wake the app when your device is nearby. Enable it in Settings > Privacy > Location Services.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
 
     // MARK: - Factory Methods

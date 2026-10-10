@@ -96,6 +96,16 @@ final class RecordingStore {
         set { UserDefaults.standard.set(newValue, forKey: Keys.autoSyncEnabled) }
     }
 
+    /// iBeacon wake-up switch per device — mirrors the device-side flag so the
+    /// permission-revocation path can flip it off while the device is offline.
+    func isBeaconWakeupEnabled(sn: String) -> Bool {
+        UserDefaults.standard.bool(forKey: "beaconWakeupEnabled.\(sn)")
+    }
+
+    func setBeaconWakeupEnabled(_ enabled: Bool, sn: String) {
+        UserDefaults.standard.set(enabled, forKey: "beaconWakeupEnabled.\(sn)")
+    }
+
     /// Entered the app from Welcome without pairing a device ("Connect device later").
     var hasSkippedOnboarding: Bool {
         get { UserDefaults.standard.bool(forKey: "hasSkippedOnboarding") }

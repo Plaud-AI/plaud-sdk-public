@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import UIKit
 import PlaudDeviceBasicSDK
 import PlaudBleSDK
 
@@ -67,6 +68,14 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
     /// User-facing alerts from cloud binding (e.g. device bound to another account)
     private let cloudAlertSubject = PassthroughSubject<String, Never>()
     var cloudAlertPublisher: AnyPublisher<String, Never> { cloudAlertSubject.eraseToAnyPublisher() }
+    /// iBeacon wake-up switch state read back from the device (0=off, 1=on).
+    /// Read and write share this callback (bleIBeaconWakeupEnabled).
+    private let beaconWakeupEnabledSubject = PassthroughSubject<Int, Never>()
+    var beaconWakeupEnabledPublisher: AnyPublisher<Int, Never> { beaconWakeupEnabledSubject.eraseToAnyPublisher() }
+    /// Fired when the user revokes Always location in system settings — region
+    /// monitoring is torn down, so the UI switch must flip off.
+    private let beaconAlwaysRevokedSubject = PassthroughSubject<Void, Never>()
+    var beaconAlwaysRevokedPublisher: AnyPublisher<Void, Never> { beaconAlwaysRevokedSubject.eraseToAnyPublisher() }
 
     /// Scan result cache: serialNumber -> BleDevice, used when connecting
     private var cachedBleDevices: [String: BleDevice] = [:]
@@ -122,6 +131,10 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
     /// Failure text used when a scan is refused because the phone's Bluetooth is off.
     static let bluetoothOffMessage = "Bluetooth is off. Turn it on to find your device."
 
+    /// iOS allows 20 monitored regions per app and the SDK uses 5 per device.
+    static let maxBeaconMonitoredDevices = 4
+
+
     /// User Access Token — runtime override (Settings → Replace, persisted) takes precedence,
     /// then the xcconfig-injected UserAccessToken, then the legacy PartnerToken.
     var userAccessToken: String {
@@ -161,12 +174,15 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
             maxFileAge: 7 * 24 * 60 * 60,
             maxFileSize: 20 * 1024 * 1024
         )
-        // Route the BLE SDK's internal handshake logs (mlog/wlog) to NSLog so they are captured
-        // in the exported .plaud file. Without this the export only holds scan-level NSLog and the
-        // RSA pre-handshake / first-handshake / disconnect-reason lines — the detail needed to
-        // diagnose a rejected connection — live only in the live Xcode console.
-        BleAgent.shared.openLog(true, logBlock: { NSLog("[BLE] %@", $0) },
-                                wlogBlock: { NSLog("[BLE] %@", $0) })
+        // Observe the BLE layer alongside the SDK's own file logging. Do NOT reach for
+        // BleAgent.openLog instead: that is blesdk's single global sink, so installing a block
+        // there replaces the SDK's wiring and silences the scan/handshake detail entirely.
+        PlaudDeviceAgent.shared.setBleLogObserver { message in
+            NSLog("[BLE] %@", message)
+        }
+        // Per-advertisement scan logging is off by default because it runs to roughly 10 MB
+        // every 90 seconds while scanning; turn it on only while diagnosing a discovery failure.
+        // PlaudDeviceAgent.shared.setBleScanLogVerbose(true)
     }
 
     // MARK: - Scanning
@@ -220,7 +236,9 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
         // Only remove the current device, don't clear all
         if let sn = currentSN {
             RecordingStore.shared.removePairedDevice(sn: sn)
+            RecordingStore.shared.setBeaconWakeupEnabled(false, sn: sn)
         }
+        syncBeaconMonitoredDevices()
         SyncManager.shared.reset()
 
         DispatchQueue.main.async { [weak self] in
@@ -469,6 +487,53 @@ final class DeviceManager: NSObject, DeviceManagerProtocol {
     /// reveals which layer refused (RSA pre-handshake vs the userToken handshake).
     @objc func bleConnectStage(sn: String?, stage: String, detail: String?) {
         AppLog.log("[DeviceManager] bleConnectStage sn=\(sn ?? "-") stage=\(stage) detail=\(detail ?? "-")")
+    }
+
+    // MARK: - iBeacon Wake-up (SDK v1.0.15)
+
+    /// Each monitored device takes 5 of the 20 iOS region slots, so only 4 fit. The SDK
+    /// enforces that by keeping the first four serial numbers it is handed — and the bond
+    /// list is oldest-first, so the device the user just paired is the one that silently
+    /// stops waking the app. Hand over the active device plus the most recently paired
+    /// ones instead, and record what was left out.
+    ///
+    /// Safe to call without the Always permission — the SDK re-registers once granted.
+    private func syncBeaconMonitoredDevices() {
+        var ordered = Array(RecordingStore.shared.pairedDeviceSNs.reversed())
+        if let active = RecordingStore.shared.activeDeviceSN,
+           let idx = ordered.firstIndex(of: active) {
+            ordered.remove(at: idx)
+            ordered.insert(active, at: 0)
+        }
+        let monitored = Array(ordered.prefix(Self.maxBeaconMonitoredDevices))
+        let dropped = ordered.dropFirst(Self.maxBeaconMonitoredDevices)
+        if !dropped.isEmpty {
+            AppLog.log(
+                "[DeviceManager] Beacon monitoring is limited to \(Self.maxBeaconMonitoredDevices) devices — not monitored: \(dropped.joined(separator: ", "))",
+                level: "BEACON"
+            )
+        }
+        AppLog.log("[DeviceManager] Beacon monitored devices: \(monitored.joined(separator: ", "))", level: "BEACON")
+        PlaudDeviceAgent.shared.updateBeaconMonitoredDevices(serialNumbers: monitored)
+    }
+
+    /// Set when a beacon wake-up starts a reconnect; consumed on the next
+    /// successful bind. In the background there is no HomeVC alive to drive the
+    /// post-connect file sync, so the wake-up path fills that gap itself —
+    /// foreground connects keep the existing HomeVC-driven flow untouched.
+    private var pendingBeaconWakeupSync = false
+
+    private func maybeStartBeaconWakeupSync() {
+        guard pendingBeaconWakeupSync else { return }
+        pendingBeaconWakeupSync = false
+        // Same 3s settle delay as the HomeVC path (wait for blePenState).
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            guard UIApplication.shared.applicationState == .background else { return }
+            // getFileList fails while the device is recording — skip like HomeVC does.
+            guard case .idle = RecordingManager.shared.stateSubject.value else { return }
+            AppLog.log("[DeviceManager] Beacon wake-up reconnect complete — background file sync", level: "BEACON")
+            SyncManager.shared.fetchFileList()
+        }
     }
 
     // MARK: - Cloud Binding (device lifecycle guide §3.1/§3.2)
@@ -783,6 +848,8 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
         cloudBind(sn: sn)
         let deviceName = PlaudDeviceAgent.shared.recentConnectDevice?.name ?? sn
         RecordingStore.shared.addPairedDevice(sn: sn, name: deviceName)
+        syncBeaconMonitoredDevices()
+        maybeStartBeaconWakeupSync()
         let raw = PlaudDeviceAgent.shared.recentConnectDevice
         let device = PlaudDevice(
             serialNumber: sn,
@@ -942,6 +1009,57 @@ extension DeviceManager: PlaudDeviceAgentProtocol {
 
     func bleWiFiClose(_ status: Int) {
         SyncManager.shared.handleWiFiClose()
+    }
+
+    // MARK: iBeacon Wake-up (SDK v1.0.15)
+
+    /// The system woke the app because a monitored device started advertising.
+    /// One call reconnects: the SDK scans, matches the SN and connects (30s
+    /// timeout built in). Results arrive through bleConnectState / bleBind.
+    func bleIBeaconWakeupTriggered(sn: String) {
+        AppLog.log("[DeviceManager] Beacon wake-up for \(sn) — reconnecting", level: "BEACON")
+        pendingBeaconWakeupSync = true
+        PlaudDeviceAgent.shared.connectBySN(sn)
+    }
+
+    /// Device-side switch state read back (0=off, 1=on). Shared by reads and
+    /// writes; persisted per SN so the revocation path can flip it off offline.
+    func bleIBeaconWakeupEnabled(value: Int) {
+        AppLog.log("[DeviceManager] Beacon wake-up switch = \(value)", level: "BEACON")
+        if let sn = connectedDeviceSubject.value?.serialNumber {
+            RecordingStore.shared.setBeaconWakeupEnabled(value == 1, sn: sn)
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.beaconWakeupEnabledSubject.send(value)
+        }
+    }
+
+    /// Always-location was revoked in system settings: region monitoring is
+    /// already torn down, so mirror that — flip local switches off and stop the
+    /// connected device from advertising for nothing.
+    func bleBeaconLocationAlwaysGrantedChanged(granted: Bool) {
+        AppLog.log("[DeviceManager] Beacon Always permission granted=\(granted)", level: "BEACON")
+        guard !granted else { return }
+        // Distinguish a real revocation from an install that never had the permission:
+        // this callback also fires at launch on a fresh install, and treating that as a
+        // revocation would burn the one-shot upgrade prompt before the user ever saw it,
+        // leaving the switch permanently unable to ask for Always.
+        let wasConfigured = RecordingStore.shared.pairedDeviceSNs.contains {
+            RecordingStore.shared.isBeaconWakeupEnabled(sn: $0)
+        }
+        RecordingStore.shared.pairedDeviceSNs.forEach {
+            RecordingStore.shared.setBeaconWakeupEnabled(false, sn: $0)
+        }
+        guard wasConfigured else { return }
+        if connectedDeviceSubject.value != nil {
+            PlaudDeviceAgent.shared.setIBeaconWakeupEnabled(value: 0)
+        }
+        // A user who had this working and then revoked the permission has made their
+        // decision; stop the SDK waiting on the one-shot prompt.
+        PlaudDeviceAgent.shared.markBeaconLocationAlwaysDecisionResolved()
+        DispatchQueue.main.async { [weak self] in
+            self?.beaconAlwaysRevokedSubject.send(())
+        }
     }
 }
 

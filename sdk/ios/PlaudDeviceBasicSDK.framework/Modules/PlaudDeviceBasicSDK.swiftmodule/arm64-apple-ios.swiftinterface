@@ -812,7 +812,8 @@ public enum WorkflowError : Swift.Error, Foundation.LocalizedError {
     get
   }
 }
-@_hasMissingDesignatedInitializers public class PlaudWorkflowManager {
+@_hasMissingDesignatedInitializers @available(*, deprecated, message: "Not supported by the Plaud SDK and scheduled for removal in a future release. Do not use.")
+public class PlaudWorkflowManager {
   public static let shared: PlaudDeviceBasicSDK.PlaudWorkflowManager
   public func submitWorkflow(_ request: PlaudDeviceBasicSDK.WorkflowSubmitRequest, completion: @escaping (PlaudDeviceBasicSDK.WorkflowResult<PlaudDeviceBasicSDK.WorkflowSubmitResponse>) -> Swift.Void)
   public func getWorkflowStatus(_ workflowId: Swift.String, completion: @escaping (PlaudDeviceBasicSDK.WorkflowResult<PlaudDeviceBasicSDK.WorkflowStatusResponse>) -> Swift.Void)
@@ -1157,6 +1158,9 @@ extension PlaudDeviceBasicSDK.ChaCha20 {
   @objc optional func bleScanOverTime()
   @objc optional func bleConnectState(state: Swift.Int)
   @objc optional func bleConnectStage(sn: Swift.String?, stage: Swift.String, detail: Swift.String?)
+  @objc optional func bleIBeaconWakeupEnabled(value: Swift.Int)
+  @objc optional func bleIBeaconWakeupTriggered(sn: Swift.String)
+  @objc optional func bleBeaconLocationAlwaysGrantedChanged(granted: Swift.Bool)
   @objc optional func bleBind(sn: Swift.String?, status: Swift.Int, protVersion: Swift.Int, timezone: Swift.Int)
   @objc optional func bleMicGain(_ value: Swift.Int)
   @objc optional func bleStorage(total: Swift.Int, free: Swift.Int, duration: Swift.Int)
@@ -1234,6 +1238,25 @@ extension PlaudDeviceBasicSDK.ChaCha20 {
   @objc public func setDeviceWiFi(open: Swift.Bool)
   @objc public func endWiFiTransfer()
   @objc public func setDeviceBinding(token: Swift.String)
+  @objc public func activateBeaconMonitoring()
+  @objc public func updateBeaconMonitoredDevices(serialNumbers: [Swift.String])
+  @objc public var isBeaconLocationAlwaysGranted: Swift.Bool {
+    @objc get
+  }
+  @objc public var canRequestBeaconLocationAlwaysUpgrade: Swift.Bool {
+    @objc get
+  }
+  @objc public func requestBeaconLocationAlwaysPermission(completion: @escaping (Swift.Bool) -> Swift.Void)
+  @objc public func markBeaconLocationAlwaysDecisionResolved()
+  @objc public var isBeaconWakeupSupported: Swift.Bool {
+    @objc get
+  }
+  @objc public func readIBeaconWakeupEnabled()
+  @objc public func setIBeaconWakeupEnabled(value: Swift.Int)
+  @objc public func setBeaconScanServiceFilter(_ serviceUUIDs: [Swift.String]?)
+  @objc public func setBleLogObserver(_ observer: ((Swift.String) -> Swift.Void)?)
+  @objc public func setBleScanLogVerbose(_ enabled: Swift.Bool)
+  @objc public func connectBySN(_ sn: Swift.String, timeout: Foundation.TimeInterval = 30)
   @objc public func startScan()
   @objc public func stopScan()
   @objc public func isConnected() -> Swift.Bool
@@ -1323,6 +1346,8 @@ extension PlaudDeviceBasicSDK.PlaudDeviceAgent : PlaudBleSDK.BleAgentProtocol {
   @objc dynamic public func bleSetActive(status: Swift.Int)
   public func bleCommonSetting(_ setting: Swift.Int)
   @objc dynamic public func bleIBeaconWakeupEnabled(_ value: Swift.Int)
+  @objc dynamic public func bleIBeaconWakeupTriggered(sn: Swift.String)
+  @objc dynamic public func bleBeaconLocationAlwaysGrantedChanged(_ granted: Swift.Bool)
   @objc dynamic public func bleSyncOtaFileInfo(uid: Swift.UInt32, start: Swift.UInt32, end: Swift.UInt32, toVersion: Swift.UInt32, toVersionType: Swift.UInt8, isSilent: Swift.Int, packetCheckOk: Swift.Int)
   @objc dynamic public func bleHeartbeat(status: Swift.Int)
   @objc dynamic public func bleBatteryMode(_ mode: Swift.Int)

@@ -611,6 +611,49 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BleAgent * _
 /// \param value：0：关闭 1：开启 
 ///
 - (void)setIBeaconWakeupEnabledWithValue:(NSInteger)value;
+/// 重新激活 iBeacon 后台唤醒的手机端区域监听（补投递系统可能清理的
+/// region）。App 启动时调用一次；未授权”始终允许”定位时不生效。
+- (void)activateBeaconMonitoring;
+/// 全量替换 iBeacon 后台唤醒要监听的设备列表（内部最多取前 4 个）。
+/// 即使当前未授权”始终允许”定位也会记住这份列表，一旦授权状态升级会自动补
+/// 注册。
+/// \param serialNumbers 要监听的设备序列号列表
+///
+- (void)updateBeaconMonitoredDevicesWithSerialNumbers:(NSArray<NSString *> * _Nonnull)serialNumbers;
+/// 当前是否已获得”始终允许”定位权限——iBeacon 后台唤醒生效的前提条件。直接查系统状态，
+/// 不经过 <code>beaconWakeupMonitor</code>：单纯查询权限不应该触发它的懒加载创建（其 init 会设置
+/// <code>allowsBackgroundLocationUpdates = true</code>，宿主未声明 <code>UIBackgroundModes: location</code> 时
+/// 运行时断言——纯状态查询不该有这个前置条件）。
+@property (nonatomic, readonly) BOOL isBeaconLocationAlwaysGranted;
+/// Whether an in-app “Always” location upgrade prompt can still be raised. <code>false</code> means the
+/// user has already made that decision once (granted it and later downgraded to “While Using
+/// the App” in system Settings, or declined the upgrade back then). iOS presents the upgrade
+/// prompt at most once per install; after that <code>requestAlwaysAuthorization()</code> is a silent
+/// no-op, so integrators must route the user to system Settings rather than call
+/// <code>requestBeaconLocationAlwaysPermission</code> again (which would only idle until its 30s timeout
+/// fallback). Also bypasses <code>beaconWakeupMonitor</code> — same reason as
+/// <code>isBeaconLocationAlwaysGranted</code>.
+@property (nonatomic, readonly) BOOL canRequestBeaconLocationAlwaysUpgrade;
+/// Records that the “Always” decision has already been made, for cases the SDK cannot observe
+/// itself. <code>canRequestBeaconLocationAlwaysUpgrade</code> returns <code>false</code> afterwards while the status
+/// is not <code>.authorizedAlways</code>.
+/// Needed because the memory behind that property only starts filling from the moment this SDK
+/// version runs: an installation that upgrades into it while already sitting in
+/// <code>.authorizedWhenInUse</code> with the prompt spent looks, to a fresh memory, like the prompt is
+/// still available. Call this whenever your own state proves the decision happened — e.g. a
+/// persisted “feature enabled” flag that could only have been written while Always was granted,
+/// meaning the current downgrade came from system Settings.
+- (void)markBeaconLocationAlwaysDecisionResolved;
+/// 两段式申请”始终允许”定位权限（先 whenInUse 再升级 always），iBeacon 后台唤醒依赖此权限。
+/// 用 completion 而非 <code>async</code>，保持跟本 SDK 其它 iBeacon API 一致的 Objective-C 可调用性。
+/// 调用即视为使用 iBeacon 功能，会触发 <code>beaconWakeupMonitor</code> 懒加载创建——前置条件跟
+/// <code>activateBeaconMonitoring()</code> 一致：宿主必须已在 Info.plist 声明 <code>UIBackgroundModes: location</code>。
+/// \param completion 最终是否拿到”始终允许”
+///
+- (void)requestBeaconLocationAlwaysPermissionWithCompletion:(void (^ _Nonnull)(BOOL))completion;
+/// 当前连接设备是否支持 iBeacon 后台唤醒（NewFeature byte0 bit7）。随 <code>getNewFeature</code>
+/// 响应解析更新；<code>resetSecretData()</code> 断线重置，避免残留上一台设备的能力位。
+@property (nonatomic, readonly) BOOL isBeaconWakeupSupported;
 /// 设置 设备 findmy 状态
 /// \param value 
 /// 0：未绑定状态 - 关闭广播
@@ -1188,6 +1231,20 @@ SWIFT_PROTOCOL("_TtP11PlaudBleSDK16BleAgentProtocol_")
 /// \param value 0：关闭    1：开启
 ///
 - (void)bleIBeaconWakeupEnabled:(NSInteger)value;
+@optional
+/// iBeacon 唤醒事件回调：手机在后台检测到设备的 iBeacon 广播后触发
+/// \param sn 触发唤醒的设备序列号
+///
+- (void)bleIBeaconWakeupTriggeredWithSn:(NSString * _Nonnull)sn;
+/// Phone-side “Always” location authorization changed — the precondition for iBeacon
+/// background wakeup. Fires on every observed transition, including the first status the
+/// system reports after launch, so an integrator that persists a per-device “seamless sync
+/// enabled” flag can reconcile it instead of showing a switch whose feature is dead.
+/// \param granted whether “Always” is granted after this change. <code>false</code> means all
+/// region monitoring has just been torn down (see <code>BeaconWakeupMonitor</code>).
+///
+- (void)bleBeaconLocationAlwaysGrantedChanged:(BOOL)granted;
+@required
 /// findmy 状态
 /// \param value 
 /// 0：未绑定状态 - 关闭广播

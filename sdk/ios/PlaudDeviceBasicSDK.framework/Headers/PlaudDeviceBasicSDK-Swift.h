@@ -589,6 +589,46 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaudDeviceA
 /// 避免接入方漏调导致设备滞留 WiFi 模式直至固件超时（约 2 分钟）。
 - (void)endWiFiTransfer;
 - (void)setDeviceBindingWithToken:(NSString * _Nonnull)token;
+/// 重新激活已持久化的 iBeacon 区域监听（补投递系统可能清理的 region）。
+/// ⚠️ 必须在 application(_:didFinishLaunchingWithOptions:) 内【同步】调用——
+/// 包进 Task/DispatchQueue.async 会有概率丢失本次冷启动要投递的区域事件。
+/// 前置：Info.plist 必须声明 UIBackgroundModes 含 location（缺失时底层运行时断言）+ 定位用途双文案。
+- (void)activateBeaconMonitoring;
+/// 全量替换 iBeacon 唤醒要监听的设备 SN 列表（内部最多取前 4 台 = iOS 20 region 上限）。
+/// 设备绑定/解绑变化时调用；未获得”始终允许”权限时也应正常调用，权限就绪后自动补注册。
+- (void)updateBeaconMonitoredDevicesWithSerialNumbers:(NSArray<NSString *> * _Nonnull)serialNumbers;
+/// 是否已获得”始终允许”定位权限——iBeacon 唤醒生效的前提条件。
+@property (nonatomic, readonly) BOOL isBeaconLocationAlwaysGranted;
+/// 是否还能在 App 内发起”始终允许”升级弹窗。false 且未授权时只能引导用户去系统设置。
+@property (nonatomic, readonly) BOOL canRequestBeaconLocationAlwaysUpgrade;
+/// 两段式申请”始终允许”定位权限（先 whenInUse 再升级 always）。
+- (void)requestBeaconLocationAlwaysPermissionWithCompletion:(void (^ _Nonnull)(BOOL))completion;
+/// 告知 SDK”始终允许”的决定已发生过（用于升级前提示已被用掉的存量安装，
+/// 通常在 bleBeaconLocationAlwaysGrantedChanged(granted: false) 里调用）。
+- (void)markBeaconLocationAlwaysDecisionResolved;
+/// 当前连接设备的固件是否支持 iBeacon 唤醒（连接态属性：断连恒为 false，不能当离线机型能力表；
+/// 需在连接成功且 NewFeature 已下发后读取）。
+@property (nonatomic, readonly) BOOL isBeaconWakeupSupported;
+/// 查询设备端 iBeacon 广播开关状态，结果经 bleIBeaconWakeupEnabled(value:) 回调。
+- (void)readIBeaconWakeupEnabled;
+/// 下发设备端 iBeacon 广播开关（0 关 / 1 开），结果经 bleIBeaconWakeupEnabled(value:) 回调。
+- (void)setIBeaconWakeupEnabledWithValue:(NSInteger)value;
+/// 设置后台扫描的 Service UUID 过滤器（Apple 要求后台扫描 withServices 必须非空，否则扫不到任何设备）。
+/// SDK 仅内置 Note Pro 默认值（504C）；接入其它机型必须显式设置本机型广播的 Service UUID。
+/// 传 nil 恢复默认行为。
+- (void)setBeaconScanServiceFilter:(NSArray<NSString *> * _Nullable)serviceUUIDs;
+/// 注册 BLE 底层日志观察者：与 SDK 自带的文件日志<em>并存</em>，不再互相覆盖（CSDK-56 ①）。
+/// 请用本方法，而不要直接调用 <code>BleAgent.openLog</code>——后者是单一 sink、会覆盖 SDK 的文件日志接线。
+/// 传 nil 取消观察。
+- (void)setBleLogObserver:(void (^ _Nullable)(NSString * _Nonnull))observer;
+/// 是否把高频扫描日志（scanned peripheral 等）也写入日志文件。默认 false：避免刷屏与
+/// 文件过大导致导出困难（CSDK-56 ②）；需要诊断后台扫描/设备可见性时置 true。
+- (void)setBleScanLogVerbose:(BOOL)enabled;
+/// 按 SN 扫描并连接——iBeacon 唤醒后回连的便捷入口（在 bleIBeaconWakeupTriggered(sn:) 里调用）。
+/// 内部完成 扫描 → 按 SN 匹配 → 停止扫描 → 连接；连接结果经 bleConnectState / bleBind 回调，
+/// 超时未扫到目标设备回调 bleConnectState(state: 2)。
+/// 注：后台唤醒态会把 timeout 压进 25s 后台窗口（见 beaconWakeupWindowSec），前台保持传入值。
+- (void)connectBySN:(NSString * _Nonnull)sn timeout:(NSTimeInterval)timeout;
 /// Start scan
 /// @see        stopScan()
 /// @see        Callback bleScanResult
@@ -927,6 +967,8 @@ enum PlaudFirmwarePhase : NSInteger;
 - (void)bleRateWithLossRate:(double)lossRate rate:(NSInteger)rate instantRate:(NSInteger)instantRate;
 - (void)bleSetActiveWithStatus:(NSInteger)status;
 - (void)bleIBeaconWakeupEnabled:(NSInteger)value;
+- (void)bleIBeaconWakeupTriggeredWithSn:(NSString * _Nonnull)sn;
+- (void)bleBeaconLocationAlwaysGrantedChanged:(BOOL)granted;
 - (void)bleSyncOtaFileInfoWithUid:(uint32_t)uid start:(uint32_t)start end:(uint32_t)end toVersion:(uint32_t)toVersion toVersionType:(uint8_t)toVersionType isSilent:(NSInteger)isSilent packetCheckOk:(NSInteger)packetCheckOk;
 - (void)bleHeartbeatWithStatus:(NSInteger)status;
 - (void)bleBatteryMode:(NSInteger)mode;
@@ -1041,6 +1083,15 @@ SWIFT_PROTOCOL("_TtP19PlaudDeviceBasicSDK24PlaudDeviceAgentProtocol_")
 /// user_rsa_public_key_empty / bind_token_empty / ok / status_1 (1 = token mismatch)
 ///
 - (void)bleConnectStageWithSn:(NSString * _Nullable)sn stage:(NSString * _Nonnull)stage detail:(NSString * _Nullable)detail;
+/// iBeacon wakeup broadcast switch state (shared by read & write; value: 0 = off / 1 = on)
+- (void)bleIBeaconWakeupEnabledWithValue:(NSInteger)value;
+/// The phone detected this sn device’s iBeacon broadcast in the background and woke up —
+/// call connectBySN(sn) inside this callback to reconnect
+- (void)bleIBeaconWakeupTriggeredWithSn:(NSString * _Nonnull)sn;
+/// “Always” location authorization changed; granted == false means region monitoring was
+/// just torn down — reconcile your persisted per-device switch and send
+/// setIBeaconWakeupEnabled(value: 0) to the connected device
+- (void)bleBeaconLocationAlwaysGrantedChangedWithGranted:(BOOL)granted;
 /// Connection callback
 /// \param status Status, 0: success, >0: rejected 1: Token mismatch 2: Screen project, currently recording, user cannot confirm temporarily 3: Screen project, user manually rejected 255: Recorder not in connection mode, reject handshake request in non-connection mode (unique to Heili three-stage switch) <0 verification failed -1: no SSN -2: network exception -3: server data exception or verification incorrect
 ///
@@ -1366,6 +1417,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaudFileUpl
 /// \param onFailure Failure callback with error
 ///
 - (void)uploadLogFileWithFilePath:(NSString * _Nonnull)filePath sn:(NSString * _Nonnull)sn onProgress:(void (^ _Nonnull)(double))onProgress onSuccess:(void (^ _Nonnull)(NSDictionary<NSString *, id> * _Nonnull))onSuccess onFailure:(void (^ _Nonnull)(NSError * _Nonnull))onFailure;
+/// SN → 设备类型。委托 PlaudDeviceAgent 的权威映射：
+/// notepro(881) / notepins(882)，其余前缀回退 notepro（TOB 产品线不支持 note/notepin）。
 + (NSString * _Nonnull)calculateSnTypeWithSn:(NSString * _Nonnull)sn SWIFT_WARN_UNUSED_RESULT;
 @end
 

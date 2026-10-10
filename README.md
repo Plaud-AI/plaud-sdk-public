@@ -154,6 +154,7 @@ The Template App is a fully functional app demonstrating every SDK capability �
 | 📥 **File Sync** | BLE sync with auto-download on connect |
 | ⚡ **WiFi Fast Transfer** | ~10x faster than BLE |
 | 🔄 **Firmware Update** | OTA upgrade with progress UI |
+| 📡 **Background Wake-up** | iOS: iBeacon wakes the app to reconnect and sync when a paired device comes back in range |
 | 📝 **Transcription** | Speech-to-text via S3 upload + API |
 | 🔊 **Audio Playback** | MP3 playback with floating player |
 
@@ -255,6 +256,15 @@ com.plaud.template/
 - `FirmwareUpdateSheetViewController`: bottom sheet with segmented progress bar
 - `isOTAInProgress` flag prevents auto-reconnect interference during OTA
 - Sheet waits for device restart + reconnect before dismissing
+</details>
+
+<details>
+<summary><strong>Background Wake-up (iOS)</strong></summary>
+
+- `activateBeaconMonitoring()` runs synchronously in `didFinishLaunching` — a background relaunch delivers its region event during launch
+- `updateBeaconMonitoredDevices` after every bind/unpair: active device first, then the most recently paired, capped at 4 (each takes 5 of the 20 iOS region slots)
+- `bleIBeaconWakeupTriggered` → `connectBySN`; a background relaunch has no Home screen, so file sync starts once the device binds
+- Device panel switch is shown when `isBeaconWakeupSupported` (NotePro firmware 1.7.0+) and reads on only when the device flag and the Always permission are both set
 </details>
 
 <details>
@@ -400,6 +410,45 @@ PlaudDeviceAgent.shared.startFirmwareUpdate(
     }
 )
 ```
+
+#### Background Wake-up (iBeacon)
+
+A disconnected device keeps advertising an iBeacon; when it comes back in range, iOS relaunches the app in the background (even after it was killed) and the SDK reconnects. Requires NotePro on the latest firmware and the user's **Always** location permission.
+
+Info.plist: add `location` to `UIBackgroundModes` (next to `bluetooth-central`) — the SDK asserts at runtime without it — plus `NSLocationWhenInUseUsageDescription` and `NSLocationAlwaysAndWhenInUseUsageDescription`.
+
+```swift
+// application(_:didFinishLaunchingWithOptions:) — call synchronously, not inside a Task
+PlaudDeviceAgent.shared.activateBeaconMonitoring()
+
+// After pairing or unpairing (up to 4 devices; safe to call before Always is granted)
+PlaudDeviceAgent.shared.updateBeaconMonitoredDevices(serialNumbers: pairedSNs)
+
+// Settings switch — show it only when the connected device supports it
+if PlaudDeviceAgent.shared.isBeaconWakeupSupported {
+    if PlaudDeviceAgent.shared.isBeaconLocationAlwaysGranted {
+        PlaudDeviceAgent.shared.setIBeaconWakeupEnabled(value: 1)    // 0 = off, 1 = on
+    } else if PlaudDeviceAgent.shared.canRequestBeaconLocationAlwaysUpgrade {
+        PlaudDeviceAgent.shared.requestBeaconLocationAlwaysPermission { granted in
+            if granted { PlaudDeviceAgent.shared.setIBeaconWakeupEnabled(value: 1) }
+        }
+    } else {
+        // The one-time upgrade prompt was already used — send the user to Settings
+    }
+}
+
+// PlaudDeviceAgentProtocol
+func bleIBeaconWakeupTriggered(sn: String) {
+    PlaudDeviceAgent.shared.connectBySN(sn)    // scan → match → connect, 30 s timeout
+}
+func bleIBeaconWakeupEnabled(value: Int) { /* switch state; reads and writes both report here */ }
+func bleBeaconLocationAlwaysGrantedChanged(granted: Bool) {
+    // Always was revoked: turn the switch off, send setIBeaconWakeupEnabled(value: 0) if connected,
+    // then call markBeaconLocationAlwaysDecisionResolved()
+}
+```
+
+The background scan filter defaults to NotePro's service UUID; other models need `setBeaconScanServiceFilter([...])`.
 
 ### Android
 

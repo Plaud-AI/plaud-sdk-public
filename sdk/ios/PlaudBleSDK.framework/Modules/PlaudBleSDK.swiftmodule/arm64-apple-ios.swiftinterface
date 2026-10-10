@@ -4,6 +4,7 @@
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface
 import CommonCrypto
 import CoreBluetooth
+import CoreLocation
 import CryptoKit
 import Foundation
 @_exported import PlaudBleSDK
@@ -100,6 +101,8 @@ public typealias Int2Void = (Swift.Int) -> Swift.Void
   @objc func bleRecordingAfterDisConnetEnabled(_ value: Swift.Int)
   @objc func bleSyncWhenIdleEnabled(_ value: Swift.Int)
   @objc func bleIBeaconWakeupEnabled(_ value: Swift.Int)
+  @objc optional func bleIBeaconWakeupTriggered(sn: Swift.String)
+  @objc optional func bleBeaconLocationAlwaysGrantedChanged(_ granted: Swift.Bool)
   @objc func bleFindMyState(_ value: Swift.Int)
   @objc func bleVPUCLKState(_ value: Swift.Int)
   @objc func bleStopRecordingAfterCharging(_ value: Swift.Int)
@@ -331,6 +334,19 @@ public typealias Int2Void = (Swift.Int) -> Swift.Void
   @objc public func setSyncWhenIdleEnabled(value: Swift.Int)
   @objc public func readIBeaconWakeupEnabled()
   @objc public func setIBeaconWakeupEnabled(value: Swift.Int)
+  @objc public func activateBeaconMonitoring()
+  @objc public func updateBeaconMonitoredDevices(serialNumbers: [Swift.String])
+  @objc public var isBeaconLocationAlwaysGranted: Swift.Bool {
+    @objc get
+  }
+  @objc public var canRequestBeaconLocationAlwaysUpgrade: Swift.Bool {
+    @objc get
+  }
+  @objc public func markBeaconLocationAlwaysDecisionResolved()
+  @objc public func requestBeaconLocationAlwaysPermission(completion: @escaping (Swift.Bool) -> Swift.Void)
+  @objc public var isBeaconWakeupSupported: Swift.Bool {
+    get
+  }
   @objc public func setFindMyState(value: Swift.Int)
   @objc public func readFindMyState()
   @objc public func setVPUCLK(value: Swift.Int)
