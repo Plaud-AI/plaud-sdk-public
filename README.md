@@ -81,7 +81,7 @@ PLAUD_API_KEY = your-api-key
 >
 > **Where to get these:**
 > - `USER_ACCESS_TOKEN`: Your backend calls `POST /open/partner/users/access-token` to obtain this per-user JWT.
-> - `PLAUD_CLIENT_ID` + `PLAUD_API_KEY`: Create in the [Plaud Developer Portal](https://platform.plaud.ai/developer/portal). See the QUICKSTART guide for details.
+> - `PLAUD_CLIENT_ID` + `PLAUD_API_KEY`: Create in the Plaud Developer Portal. ([Apply to become a partner](https://dev.plaud.ai/contact) for access to the portal.)
 
 #### 2. Update Project Settings
 
@@ -577,7 +577,7 @@ These APIs are called directly by the application, not through the SDK.
 
 Uses `X-Client-Id` + `X-Client-Api-Key` headers. Configure `PLAUD_CLIENT_ID` and `PLAUD_API_KEY` in `PartnerConfig.xcconfig` (iOS) or `local.properties` (Android). These are separate from the `USER_ACCESS_TOKEN` used for SDK initialization.
 
-API keys can be created in the [Plaud Developer Portal](https://platform.plaud.ai/developer/portal) under your application's API Keys panel.
+API keys can be created in the Plaud Developer Portal under your application's API Keys panel. ([Apply to become a partner](https://dev.plaud.ai/contact) for access to the portal.)
 
 ### Workflow
 
